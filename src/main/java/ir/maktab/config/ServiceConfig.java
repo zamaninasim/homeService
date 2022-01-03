@@ -51,4 +51,11 @@ public class ServiceConfig {
         return subServiceService;
     }
 
+    @Bean
+    public SuggestionService suggestionService(SuggestionDao suggestionDao) {
+        SuggestionService suggestionService = new SuggestionService();
+        suggestionService.setSuggestionDao(suggestionDao);
+        return suggestionService;
+    }
+
 }
