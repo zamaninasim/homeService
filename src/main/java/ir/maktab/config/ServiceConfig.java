@@ -1,13 +1,7 @@
 package ir.maktab.config;
 
-import ir.maktab.dao.CommentDao;
-import ir.maktab.dao.CustomerDao;
-import ir.maktab.dao.ExpertDao;
-import ir.maktab.dao.MainServiceDao;
-import ir.maktab.service.CommentService;
-import ir.maktab.service.CustomerService;
-import ir.maktab.service.ExpertService;
-import ir.maktab.service.MainServiceService;
+import ir.maktab.dao.*;
+import ir.maktab.service.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -41,6 +35,13 @@ public class ServiceConfig {
         MainServiceService mainServiceService = new MainServiceService();
         mainServiceService.setMainServiceDao(mainServiceDao);
         return mainServiceService;
+    }
+
+    @Bean
+    public OrderService orderService(OrderDao orderDao) {
+        OrderService orderService = new OrderService();
+        orderService.setOrderDao(orderDao);
+        return orderService;
     }
 
 }
