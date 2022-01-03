@@ -12,4 +12,5 @@ public class User {
     private String password;
     private UserStatus userStatus;
     private Date registrationDate;
+    private Long credit;
 }
