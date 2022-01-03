@@ -12,7 +12,7 @@ public class MainServiceDao {
     public void save(MainService mainService) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.persist(mainService);
+        session.save(mainService);
         transaction.commit();
         session.close();
     }
