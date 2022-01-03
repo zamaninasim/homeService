@@ -2,8 +2,10 @@ package ir.maktab.config;
 
 import ir.maktab.dao.CommentDao;
 import ir.maktab.dao.CustomerDao;
+import ir.maktab.dao.ExpertDao;
 import ir.maktab.service.CommentService;
 import ir.maktab.service.CustomerService;
+import ir.maktab.service.ExpertService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -23,6 +25,13 @@ public class ServiceConfig {
         CustomerService customerService = new CustomerService();
         customerService.setCustomerDao(customerDao);
         return customerService;
+    }
+
+    @Bean
+    public ExpertService expertService(ExpertDao expertDao) {
+        ExpertService expertService = new ExpertService();
+        expertService.setExpertDao(expertDao);
+        return expertService;
     }
 
 }
