@@ -7,10 +7,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class DaoConfig {
-    @Bean
-    public MainServiceDao mainServiceDao() {
-        return new MainServiceDao();
-    }
 
     @Bean
     public CommentDao commentDao() {
@@ -25,6 +21,11 @@ public class DaoConfig {
     @Bean
     public ExpertDao expertDao() {
         return new ExpertDao();
+    }
+
+    @Bean
+    public MainServiceDao mainServiceDao() {
+        return new MainServiceDao();
     }
 
     @Bean
