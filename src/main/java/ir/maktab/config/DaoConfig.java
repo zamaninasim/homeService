@@ -34,8 +34,8 @@ public class DaoConfig {
     }
 
     @Bean
-    public SubService subService() {
-        return new SubService();
+    public SubServiceDao subServiceDao() {
+        return new SubServiceDao();
     }
 
     @Bean

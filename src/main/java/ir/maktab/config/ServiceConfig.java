@@ -44,4 +44,11 @@ public class ServiceConfig {
         return orderService;
     }
 
+    @Bean
+    public SubServiceService subServiceService(SubServiceDao subServiceDao) {
+        SubServiceService subServiceService = new SubServiceService();
+        subServiceService.setSubServiceDao(subServiceDao);
+        return subServiceService;
+    }
+
 }
