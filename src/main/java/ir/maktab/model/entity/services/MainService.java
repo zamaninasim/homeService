@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.util.Set;
 @Entity
 @Data
-@Builder
 @NoArgsConstructor
 public class MainService {
     @Id
