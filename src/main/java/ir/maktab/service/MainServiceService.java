@@ -1,6 +1,7 @@
 package ir.maktab.service;
 
 import ir.maktab.dao.MainServiceDao;
+import ir.maktab.exception.NotExistException;
 import ir.maktab.model.entity.services.MainService;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,14 +17,10 @@ public class MainServiceService {
         mainServiceDao.save(mainService);
     }
 
-    public Boolean isMainServiceExist(String name) {
-        Boolean exist = false;
+    public void isMainServiceExist(String name) {
         Optional<MainService> mainService = mainServiceDao.findByName(name);
-        if (mainService.isPresent()) {
-            exist=true;
-        } else {
-            throw new RuntimeException("this mainService not exist!");
+        if (!mainService.isPresent()) {
+            throw new NotExistException("this mainService not exist!");
         }
-        return exist;
     }
 }
