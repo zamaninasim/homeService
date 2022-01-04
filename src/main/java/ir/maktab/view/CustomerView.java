@@ -37,4 +37,20 @@ public class CustomerView {
             System.out.println(e.getMessage());
         }
     }
+
+    public void customerSignUp() {
+        try {
+            System.out.println("enter your info :(firstname,lastname,emailAddress,password):");
+            String info = scanner.nextLine();
+            String[] splitInfo = info.split(",");
+            String firstname = splitInfo[0];
+            String lastname = splitInfo[1];
+            String emailAddress = splitInfo[2];
+            String password = splitInfo[3];
+            customerService.isExist(emailAddress);
+
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
