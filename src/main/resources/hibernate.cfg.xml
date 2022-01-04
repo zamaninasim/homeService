@@ -11,6 +11,7 @@
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
         <property name="dialect">org.hibernate.dialect.MySQL8Dialect</property>
+        <property name="hibernate.connection.pool_size">20</property>
         <property name="hbm2ddl.auto">create</property>
 
         <mapping class="ir.maktab.model.entity.services.MainService"/>
