@@ -1,5 +1,6 @@
-package ir.maktab.model.entity.users;
+package ir.maktab.model.builder;
 
+import ir.maktab.model.entity.users.Customer;
 import ir.maktab.model.enumeration.UserStatus;
 
 import java.util.Date;
