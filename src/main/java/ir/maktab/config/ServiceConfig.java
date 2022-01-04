@@ -38,6 +38,13 @@ public class ServiceConfig {
     }
 
     @Bean
+    public ManagerService managerService(ManagerDao managerDao) {
+        ManagerService managerService = new ManagerService();
+        managerService.setManagerDao(managerDao);
+        return managerService;
+    }
+
+    @Bean
     public OrderService orderService(OrderDao orderDao) {
         OrderService orderService = new OrderService();
         orderService.setOrderDao(orderDao);
