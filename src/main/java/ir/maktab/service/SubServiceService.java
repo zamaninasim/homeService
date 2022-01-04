@@ -1,8 +1,7 @@
 package ir.maktab.service;
 
 import ir.maktab.dao.SubServiceDao;
-import ir.maktab.exception.NotExistException;
-import ir.maktab.model.entity.services.MainService;
+import ir.maktab.exception.ExistException;
 import ir.maktab.model.entity.services.SubService;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,9 +20,9 @@ public class SubServiceService {
     public SubService isSubServiceExist(String name) {
         Optional<SubService> subService = subServiceDao.findByName(name);
         if (subService.isPresent()) {
-            return subService.get();
+            throw new ExistException("this subService exist!");
         } else {
-            throw new NotExistException("this subService not exist!");
+            return subService.get();
         }
     }
 }
