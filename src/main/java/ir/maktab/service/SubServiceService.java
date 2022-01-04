@@ -6,6 +6,7 @@ import ir.maktab.model.entity.services.SubService;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Optional;
 
 @Getter
@@ -24,5 +25,9 @@ public class SubServiceService {
         } else {
             return false;
         }
+    }
+
+    public List<SubService> findAll() {
+        return subServiceDao.findAll();
     }
 }
