@@ -19,9 +19,8 @@ public class MainServiceService {
 
     public MainService isMainServiceExist(String name) {
         Optional<MainService> mainService = mainServiceDao.findByName(name);
-        if (!mainService.isPresent()) {
-            MainService foundedMainService = mainService.get();
-            return foundedMainService
+        if (mainService.isPresent()) {
+            return mainService.get();
         } else {
             throw new NotExistException("this mainService not exist!");
         }
