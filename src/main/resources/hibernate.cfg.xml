@@ -11,7 +11,7 @@
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
         <property name="dialect">org.hibernate.dialect.MySQL8Dialect</property>
-        <property name="hbm2ddl.auto">update</property>
+        <property name="hbm2ddl.auto">create</property>
 
         <mapping class="ir.maktab.model.entity.services.MainService"/>
         <mapping class="ir.maktab.model.entity.services.SubService"/>
@@ -19,7 +19,7 @@
         <mapping class="ir.maktab.model.entity.users.Expert"/>
         <mapping class="ir.maktab.model.entity.users.User"/>
         <mapping class="ir.maktab.model.entity.Comment"/>
-        <mapping class="ir.maktab.model.entity.Order"/>
-        <mapping class="ir.maktab.model.entity.Suggestion"/>
+        <mapping class="ir.maktab.model.entity.Orders"/>
+        <mapping class="ir.maktab.model.entity.Offer"/>
     </session-factory>
 </hibernate-configuration>
