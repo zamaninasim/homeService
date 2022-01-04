@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public class SubServiceDao {
@@ -29,5 +30,15 @@ public class SubServiceDao {
         transaction.commit();
         session.close();
         return subService;
+    }
+
+    public List<SubService> findAll() {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Query<SubService> query = session.createQuery("FROM SubService");
+        List<SubService> subServices = query.list();
+        transaction.commit();
+        session.close();
+        return subServices;
     }
 }
