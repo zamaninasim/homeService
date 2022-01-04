@@ -18,11 +18,12 @@ public class Main {
                 case 2:
                     System.out.println("1)login\n2)signUp");
                     choice = Integer.parseInt(scanner.nextLine());
-                    switch (choice){
+                    switch (choice) {
                         case 1:
                             customerView.customerLogin();
                             break;
                         case 2:
+                            customerView.customerSignUp();
                             break;
                     }
                     break;

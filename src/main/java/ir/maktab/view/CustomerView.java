@@ -2,7 +2,9 @@ package ir.maktab.view;
 
 import ir.maktab.config.ServiceConfig;
 import ir.maktab.exception.InvalidPasswordException;
+import ir.maktab.model.builder.CustomerBuilder;
 import ir.maktab.model.entity.users.Customer;
+import ir.maktab.model.enumeration.UserStatus;
 import ir.maktab.service.CustomerService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -48,6 +50,15 @@ public class CustomerView {
             String emailAddress = splitInfo[2];
             String password = splitInfo[3];
             customerService.isExist(emailAddress);
+            Customer customer = CustomerBuilder
+                    .aCustomer()
+                    .withFirstname(firstname)
+                    .withLastname(lastname)
+                    .withEmailAddress(emailAddress)
+                    .withPassword(password)
+                    .withCredit(0L)
+                    .withUserStatus(UserStatus.WAITING)
+                    .build();
 
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
