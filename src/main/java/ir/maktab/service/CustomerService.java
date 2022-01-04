@@ -1,6 +1,8 @@
 package ir.maktab.service;
 
 import ir.maktab.dao.CustomerDao;
+import ir.maktab.exception.ExistException;
+import ir.maktab.model.entity.services.SubService;
 import ir.maktab.model.entity.users.Customer;
 import ir.maktab.model.entity.users.Manager;
 import lombok.Getter;
@@ -23,6 +25,15 @@ public class CustomerService {
             return foundedCustomer;
         } else {
             throw new RuntimeException("emailAddress not exist!");
+        }
+    }
+
+    public boolean isExist(String emailAddress) {
+        Optional<Customer> customer = customerDao.findByEmailAddress(emailAddress);
+        if (customer.isPresent()) {
+            throw new ExistException("this emailAddress exist!");
+        } else {
+            return false;
         }
     }
 }
