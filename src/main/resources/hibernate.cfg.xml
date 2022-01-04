@@ -12,7 +12,7 @@
         <property name="format_sql">true</property>
         <property name="dialect">org.hibernate.dialect.MySQL8Dialect</property>
         <property name="hibernate.connection.pool_size">20</property>
-        <property name="hbm2ddl.auto">create</property>
+        <property name="hbm2ddl.auto">update</property>
 
         <mapping class="ir.maktab.model.entity.services.MainService"/>
         <mapping class="ir.maktab.model.entity.services.SubService"/>
@@ -22,5 +22,6 @@
         <mapping class="ir.maktab.model.entity.Comment"/>
         <mapping class="ir.maktab.model.entity.Orders"/>
         <mapping class="ir.maktab.model.entity.Offer"/>
+        <mapping class="ir.maktab.model.entity.users.Manager"/>
     </session-factory>
 </hibernate-configuration>
