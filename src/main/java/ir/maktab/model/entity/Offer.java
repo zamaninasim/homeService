@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Entity
 @Data
-public class Suggestion {
+public class Offer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
