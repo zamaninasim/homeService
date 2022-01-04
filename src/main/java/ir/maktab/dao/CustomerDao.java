@@ -1,7 +1,6 @@
 package ir.maktab.dao;
 
 import ir.maktab.model.entity.users.Customer;
-import ir.maktab.model.entity.users.Manager;
 import ir.maktab.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,6 +11,7 @@ import java.util.Optional;
 
 public class CustomerDao {
     private SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+
     public void save(Customer customer) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
