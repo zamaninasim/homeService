@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
         while (true) {
-            System.out.println("choose your role:\n1)manager\n2)user\nexpert");
+            System.out.println("choose your role:\n1)manager\n2)user\n3)expert");
             int choice = Integer.parseInt(scanner.nextLine());
             switch (choice) {
                 case 1:
