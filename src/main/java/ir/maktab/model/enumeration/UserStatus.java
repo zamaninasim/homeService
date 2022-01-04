@@ -1,12 +1,14 @@
 package ir.maktab.model.enumeration;
 
 public enum UserStatus {
-    CONFIRMED, WAITING;
+    CONFIRMED, WAITING, NEW;
 
     public static UserStatus getValue(String status) {
-        switch (status) {
+        switch (status.toLowerCase()) {
             case "confirmed":
                 return CONFIRMED;
+            case "new":
+                return NEW;
             default:
                 return WAITING;
         }
