@@ -17,12 +17,12 @@ public class SubServiceService {
         subServiceDao.save(subService);
     }
 
-    public SubService isSubServiceExist(String name) {
+    public boolean isSubServiceExist(String name) {
         Optional<SubService> subService = subServiceDao.findByName(name);
         if (subService.isPresent()) {
             throw new ExistException("this subService exist!");
         } else {
-            return subService.get();
+            return false;
         }
     }
 }
