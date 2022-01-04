@@ -15,6 +15,6 @@ public class MainService {
     private Integer id;
     @Column(unique = true)
     private String name;
-    @OneToMany
+    @OneToMany(mappedBy = "mainService")
     private Set<SubService> subServices;
 }
