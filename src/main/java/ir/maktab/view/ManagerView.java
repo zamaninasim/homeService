@@ -9,6 +9,7 @@ import ir.maktab.model.entity.services.SubService;
 import ir.maktab.model.entity.users.Manager;
 import ir.maktab.service.MainServiceService;
 import ir.maktab.service.ManagerService;
+import ir.maktab.service.SubServiceService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -19,6 +20,7 @@ public class ManagerView {
     ApplicationContext context = new AnnotationConfigApplicationContext(ServiceConfig.class);
     ManagerService managerService = context.getBean(ManagerService.class);
     MainServiceService mainServiceService = context.getBean(MainServiceService.class);
+    SubServiceService subServiceService = context.getBean(SubServiceService.class);
 
     public void managerLogin() {
         try {
@@ -65,6 +67,7 @@ public class ManagerView {
             MainService mainService = mainServiceService.isMainServiceExist(mainServiceName);
             System.out.println("enter sub service name:");
             String name = scanner.nextLine();
+            subServiceService.isSubServiceExist(name);
             System.out.println("basePrice:");
             long basePrice = Long.parseLong(scanner.nextLine());
             System.out.println("description:");
@@ -76,6 +79,7 @@ public class ManagerView {
                     .withDescription(description)
                     .withMainService(mainService)
                     .build();
+            subServiceService.save(subService);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
