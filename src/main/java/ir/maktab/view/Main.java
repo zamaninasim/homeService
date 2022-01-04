@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Main {
     final static ManagerView managerView = new ManagerView();
     final static CustomerView customerView = new CustomerView();
+    final static ExpertView expertView = new ExpertView();
     final static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -28,8 +29,18 @@ public class Main {
                     }
                     break;
                 case 3:
-                    break;
-                default:
+                    System.out.println("1)login\n2)signUp");
+                    choice = Integer.parseInt(scanner.nextLine());
+                    switch (choice) {
+                        case 1:
+                            expertView.expertLogin();
+                            break;
+                        case 2:
+                            expertView.expertSignUp();
+                            break;
+                        default:
+                            break;
+                    }
                     break;
             }
         }
