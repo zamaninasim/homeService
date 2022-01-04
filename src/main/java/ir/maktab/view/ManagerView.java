@@ -3,7 +3,9 @@ package ir.maktab.view;
 import ir.maktab.config.ServiceConfig;
 import ir.maktab.exception.InvalidPasswordException;
 import ir.maktab.model.builder.MainServiceBuilder;
+import ir.maktab.model.builder.SubServiceBuilder;
 import ir.maktab.model.entity.services.MainService;
+import ir.maktab.model.entity.services.SubService;
 import ir.maktab.model.entity.users.Manager;
 import ir.maktab.service.MainServiceService;
 import ir.maktab.service.ManagerService;
@@ -27,12 +29,14 @@ public class ManagerView {
             String password = scanner.nextLine();
             if (password.equals(manager.getPassword())) {
                 //TODO
-                System.out.println("1)add maniService");
+                System.out.println("1)add maniService\n2)addSubService");
                 int choice = Integer.parseInt(scanner.nextLine());
                 switch (choice) {
                     case 1:
                         addMainService();
                         break;
+                    case 2:
+                        addSubService();
                 }
             } else {
                 throw new InvalidPasswordException("wrong password!");
@@ -42,7 +46,7 @@ public class ManagerView {
         }
     }
 
-    public void addMainService() {
+    private void addMainService() {
         System.out.println("enter main service name:");
         String mainServiceName = scanner.nextLine();
         try {
@@ -51,6 +55,29 @@ public class ManagerView {
         } catch (RuntimeException e) {
             MainService mainService = MainServiceBuilder.aMainService().withName(mainServiceName).build();
             mainServiceService.save(mainService);
+        }
+    }
+
+    private void addSubService() {
+        System.out.println("enter main service name:");
+        String mainServiceName = scanner.nextLine();
+        try {
+            MainService mainService = mainServiceService.isMainServiceExist(mainServiceName);
+            System.out.println("enter sub service name:");
+            String name = scanner.nextLine();
+            System.out.println("basePrice:");
+            long basePrice = Long.parseLong(scanner.nextLine());
+            System.out.println("description:");
+            String description = scanner.nextLine();
+            SubService subService = SubServiceBuilder
+                    .aSubService()
+                    .withName(name)
+                    .withBasePrice(basePrice)
+                    .withDescription(description)
+                    .withMainService(mainService)
+                    .build();
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
         }
     }
 }
