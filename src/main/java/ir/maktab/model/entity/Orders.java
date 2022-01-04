@@ -11,7 +11,8 @@ import java.util.Set;
 
 @Entity
 @Data
-public class Order {
+//@Table(name = "instruction")
+public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -27,5 +28,5 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
     @OneToMany
-    private Set<Suggestion> suggestions;
+    private Set<Offer> suggestions;
 }
