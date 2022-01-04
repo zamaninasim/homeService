@@ -1,7 +1,6 @@
 package ir.maktab.service;
 
 import ir.maktab.dao.ManagerDao;
-import ir.maktab.model.entity.services.MainService;
 import ir.maktab.model.entity.users.Manager;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,5 +25,15 @@ public class ManagerService {
             throw new RuntimeException("username not exist!");
         }
         return exist;
+    }
+
+    public Manager findByUsername(String username) {
+        Optional<Manager> manager = managerDao.findByUsername(username);
+        if (manager.isPresent()) {
+            Manager foundedManager = manager.get();
+            return foundedManager;
+        } else {
+            throw new RuntimeException("username not exist!");
+        }
     }
 }
