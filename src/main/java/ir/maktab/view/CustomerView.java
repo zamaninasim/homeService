@@ -21,19 +21,24 @@ public class CustomerView {
             System.out.println("enter your emailAddress:");
             String emailAddress = scanner.nextLine();
             Customer customer = customerService.findByEmailAddress(emailAddress);
-            System.out.println("enter your password");
-            String password = scanner.nextLine();
-            if (password.equals(customer.getPassword())) {
-                //TODO
-                System.out.println("1)\n2)");
-                int choice = Integer.parseInt(scanner.nextLine());
-                switch (choice) {
-                    case 1:
-                        break;
-                    case 2:
-                }
+            UserStatus userStatus = customer.getUserStatus();
+            if (userStatus.equals(UserStatus.WAITING)) {
+                System.out.println("Your account is awaiting approval.");
             } else {
-                throw new InvalidPasswordException("wrong password!");
+                System.out.println("enter your password");
+                String password = scanner.nextLine();
+                if (password.equals(customer.getPassword())) {
+                    //TODO
+                    System.out.println("1)\n2)");
+                    int choice = Integer.parseInt(scanner.nextLine());
+                    switch (choice) {
+                        case 1:
+                            break;
+                        case 2:
+                    }
+                } else {
+                    throw new InvalidPasswordException("wrong password!");
+                }
             }
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
@@ -59,6 +64,7 @@ public class CustomerView {
                     .withCredit(0L)
                     .withUserStatus(UserStatus.WAITING)
                     .build();
+            customerService.save(customer);
 
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
