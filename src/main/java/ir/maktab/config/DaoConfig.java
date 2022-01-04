@@ -1,7 +1,6 @@
 package ir.maktab.config;
 
 import ir.maktab.dao.*;
-import ir.maktab.model.entity.services.SubService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,6 +25,11 @@ public class DaoConfig {
     @Bean
     public MainServiceDao mainServiceDao() {
         return new MainServiceDao();
+    }
+
+    @Bean
+    public ManagerDao managerDao() {
+        return new ManagerDao();
     }
 
     @Bean
