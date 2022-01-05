@@ -1,8 +1,8 @@
 package ir.maktab.view;
 
 import ir.maktab.config.ServiceConfig;
-import ir.maktab.validation.exception.InvalidPasswordException;
 import ir.maktab.model.builder.ExpertBuilder;
+import ir.maktab.validation.exception.InvalidPasswordException;
 import ir.maktab.model.entity.users.Expert;
 import ir.maktab.model.enumeration.UserStatus;
 import ir.maktab.service.ExpertService;
@@ -55,7 +55,7 @@ public class ExpertView {
             String emailAddress = splitInfo[2];
             String password = splitInfo[3];
             expertService.isExist(emailAddress);
-            //TODO upload Photo
+
             Expert expert = ExpertBuilder.anExpert()
                     .withFirstname(firstname)
                     .withLastname(lastname)

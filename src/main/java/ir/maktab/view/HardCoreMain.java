@@ -2,16 +2,12 @@ package ir.maktab.view;
 
 import ir.maktab.config.ServiceConfig;
 import ir.maktab.model.ImageReader;
-import ir.maktab.model.builder.ExpertBuilder;
-import ir.maktab.model.entity.users.Expert;
-import ir.maktab.model.entity.users.User;
-import ir.maktab.model.enumeration.UserStatus;
+import ir.maktab.model.entity.services.SubService;
 import ir.maktab.service.*;
 import ir.maktab.validation.Validation;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class HardCoreMain {
@@ -27,10 +23,8 @@ public class HardCoreMain {
     final static Validation validation = new Validation();
 
     public static void main(String[] args) {
-
-
         //اضافه کردن سرویس اصلی
-        /*try {
+/*        try {
             mainServiceService.findMainService("Home Appliances");
             System.out.println("this main service is exist");
         } catch (RuntimeException e) {
@@ -68,17 +62,17 @@ public class HardCoreMain {
         } catch (RuntimeException e) {
             MainService mainService = MainServiceBuilder.aMainService().withName("vehicles").build();
             mainServiceService.save(mainService);
-        }*/
+        }
         // خدمت تکراری
-        /*try {
+        try {
             mainServiceService.findMainService("vehicles");
             System.out.println("this main service is exist");
         } catch (RuntimeException e) {
             MainService mainService = MainServiceBuilder.aMainService().withName("vehicles").build();
             mainServiceService.save(mainService);
-        }*/
+        }
         //اضافه کردن سرویس فرعی
-        /*try {
+        try {
             MainService mainService = mainServiceService.findMainService("Cleaning and hygiene");
             subServiceService.isSubServiceExist("cleaning");
             SubService subService = SubServiceBuilder
@@ -105,9 +99,9 @@ public class HardCoreMain {
             subServiceService.save(subService);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
-        }*/
+        }
         //زیر خدمت تکراری
-        /*try {
+        try {
             MainService mainService = mainServiceService.findMainService("Cleaning and hygiene");
             subServiceService.isSubServiceExist("cleaning");
             SubService subService = SubServiceBuilder
@@ -138,7 +132,7 @@ public class HardCoreMain {
         }*/
         //اضافه کردن مشتری
         /*try {
-            String firstname= "nasim";
+            String firstname = "nasim";
             boolean validateFirstname = validation.validateName(firstname);
             String lastname = "zamani";
             boolean validateLastname = validation.validateName(lastname);
@@ -147,7 +141,7 @@ public class HardCoreMain {
             String password = "Nasim1374";
             boolean validatePassword = validation.validatePassword(password);
             customerService.isExist(email);
-            Customer customer = CustomerBuilder
+            User customer = CustomerBuilder
                     .aCustomer()
                     .withFirstname(firstname)
                     .withLastname(lastname)
@@ -156,13 +150,13 @@ public class HardCoreMain {
                     .withCredit(0L)
                     .withUserStatus(UserStatus.NEW)
                     .build();
-            customerService.save(customer);
+            userService.save(customer);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }*/
         //اضافه کردن متخصص
-        try {
-            String firstname= "ali";
+        /*try {
+            String firstname = "ali";
             boolean validateFirstname = validation.validateName(firstname);
             String lastname = "jafari";
             boolean validateLastname = validation.validateName(lastname);
@@ -171,7 +165,7 @@ public class HardCoreMain {
             String password = "Aliiii1234";
             boolean validatePassword = validation.validatePassword(password);
             expertService.isExist(email);
-            String imagePath ="\\nasim.jpg";
+            String imagePath = "\\nasim.jpg";
             byte[] image = myImage.fileToBytes(imagePath);
             User expert = ExpertBuilder.anExpert()
                     .withFirstname(firstname)
@@ -186,8 +180,31 @@ public class HardCoreMain {
             userService.save(expert);
         } catch (RuntimeException | IOException e) {
             System.out.println(e.getMessage());
-        }
+        }*/
         //تغییر رمز کاربر
+        /*try {
+            User user = userService.findByEmailAddress("zamaninasim213@gmail.com");
+            String password = user.getPassword();
+            String inputPassword = "Nasim1374";
+            String newPassword = "nasimZ642840";
+            boolean validatePassword = validation.validatePassword(password);
+            if (password.equals(inputPassword)){
+                user.setPassword(newPassword);
+            }
+            userService.update(user);
+        }catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }*/
+        //اضافه کردن متخصص به زیر خدمت
+        try {
+            //SubService subService = subServiceService.findByName("Kitchen appliances");
+            SubService subService = subServiceService.findByNameCriteria("Kitchen appliances");
+            //Expert expert = expertService.findByEmailAddress("zamaninasim213@gmail.com");
+            System.out.println(subService);
+            //subService.getExperts().add(expert);
+           // subServiceService.update(subService);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
     }
-
 }

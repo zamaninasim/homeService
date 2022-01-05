@@ -17,4 +17,12 @@ public class MainService {
     private String name;
     @OneToMany(mappedBy = "mainService")
     private Set<SubService> subServices;
+
+    @Override
+    public String toString() {
+        return "MainService{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

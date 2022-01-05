@@ -30,13 +30,17 @@ public class SubServiceService {
         return false;
     }
 
+    public SubService findByNameCriteria(String name) {
+        return subServiceDao.findByNameCriteria(name);
+    }
+
     public SubService findByName(String name) {
         Optional<SubService> subService = subServiceDao.findByName(name);
         if (subService.isPresent()) {
             SubService foundedSubService = subService.get();
             return foundedSubService;
         }
-        throw new ExistException("this subService exist!");
+        throw new ExistException("this subService not exist!");
     }
 
     public List<SubService> findAll() {
