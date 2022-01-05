@@ -14,7 +14,7 @@ public class Validation {
     }
 
     public boolean validateName(String name) throws InvalidNameException {
-        if (name.length() > 4 && name.matches("^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$")) {
+        if (name.length() > 2 && name.matches("^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$")) {
             return true;
         }
         throw new InvalidNameException("invalid name!");
