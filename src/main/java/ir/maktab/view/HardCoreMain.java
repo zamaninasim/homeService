@@ -6,6 +6,7 @@ import ir.maktab.model.builder.CustomerBuilder;
 import ir.maktab.model.builder.ExpertBuilder;
 import ir.maktab.model.builder.MainServiceBuilder;
 import ir.maktab.model.builder.SubServiceBuilder;
+import ir.maktab.model.dto.UserDto;
 import ir.maktab.model.entity.services.MainService;
 import ir.maktab.model.entity.services.SubService;
 import ir.maktab.model.entity.users.Expert;
@@ -13,12 +14,15 @@ import ir.maktab.model.entity.users.User;
 import ir.maktab.model.enumeration.Role;
 import ir.maktab.model.enumeration.UserStatus;
 import ir.maktab.service.*;
+import ir.maktab.service.mapper.Mapper;
 import ir.maktab.validation.Validation;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class HardCoreMain {
     final static Scanner scanner = new Scanner(System.in);
@@ -34,7 +38,7 @@ public class HardCoreMain {
 
     public static void main(String[] args) {
         //اضافه کردن سرویس اصلی
-        try {
+/*        try {
             mainServiceService.findMainService("Home Appliances");
             System.out.println("this main service is exist");
         } catch (RuntimeException e) {
@@ -288,10 +292,12 @@ public class HardCoreMain {
             subServiceService.update(subService);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
-        }
+        }*/
         //جستجو یوزر
-        /*List<User> userByCondition = userService.findUserByCondition("nasim", "zamani", "zamaninasim213@gmail.com", Role.CUSTOMER);
-        System.out.println(userByCondition);*/
+        Mapper mapper = new Mapper();
+        List<User> users = userService.findUserByCondition("nasim", "zamani", "zamaninasim213@gmail.com", Role.EXPERT);
+        List<UserDto> userDtos = users.stream().map(user -> mapper.userDto(user)).collect(Collectors.toList());
+        System.out.println(userDtos);
         //جستجو حوزه تخصصی متخصصان
     }
 }
