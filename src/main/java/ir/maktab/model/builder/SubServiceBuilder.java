@@ -4,6 +4,7 @@ import ir.maktab.model.entity.services.MainService;
 import ir.maktab.model.entity.services.SubService;
 import ir.maktab.model.entity.users.Expert;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public final class SubServiceBuilder {
@@ -12,7 +13,7 @@ public final class SubServiceBuilder {
     private Long basePrice;
     private String description;
     private MainService mainService;
-    private Set<Expert> experts;
+    private Set<Expert> experts = new HashSet<>();
 
     private SubServiceBuilder() {
     }

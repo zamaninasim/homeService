@@ -5,12 +5,13 @@ import ir.maktab.model.entity.users.Expert;
 import ir.maktab.model.enumeration.UserStatus;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 public final class ExpertBuilder {
     private byte[] photo;
     private Double score;
-    private Set<SubService> services;
+    private Set<SubService> services = new HashSet<>();
     private Integer id;
     private String firstname;
     private String lastname;
