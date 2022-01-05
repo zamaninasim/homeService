@@ -1,6 +1,7 @@
 package ir.maktab.model.builder;
 
 import ir.maktab.model.entity.users.Customer;
+import ir.maktab.model.enumeration.Role;
 import ir.maktab.model.enumeration.UserStatus;
 
 import java.util.Date;
@@ -14,6 +15,7 @@ public final class CustomerBuilder {
     private UserStatus userStatus;
     private Date registrationDate;
     private Long credit;
+    private Role role;
 
     private CustomerBuilder() {
     }
@@ -62,6 +64,11 @@ public final class CustomerBuilder {
         return this;
     }
 
+    public CustomerBuilder withRole(Role role) {
+        this.role = role;
+        return this;
+    }
+
     public Customer build() {
         Customer customer = new Customer();
         customer.setId(id);
@@ -72,6 +79,7 @@ public final class CustomerBuilder {
         customer.setUserStatus(userStatus);
         customer.setRegistrationDate(registrationDate);
         customer.setCredit(credit);
+        customer.setRole(role);
         return customer;
     }
 }

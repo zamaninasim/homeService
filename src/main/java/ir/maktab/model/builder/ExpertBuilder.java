@@ -2,6 +2,7 @@ package ir.maktab.model.builder;
 
 import ir.maktab.model.entity.services.SubService;
 import ir.maktab.model.entity.users.Expert;
+import ir.maktab.model.enumeration.Role;
 import ir.maktab.model.enumeration.UserStatus;
 
 import java.util.Date;
@@ -20,6 +21,7 @@ public final class ExpertBuilder {
     private UserStatus userStatus;
     private Date registrationDate;
     private Long credit;
+    private Role role;
 
     private ExpertBuilder() {
     }
@@ -83,6 +85,11 @@ public final class ExpertBuilder {
         return this;
     }
 
+    public ExpertBuilder withRole(Role role) {
+        this.role = role;
+        return this;
+    }
+
     public Expert build() {
         Expert expert = new Expert();
         expert.setPhoto(photo);
@@ -96,6 +103,7 @@ public final class ExpertBuilder {
         expert.setUserStatus(userStatus);
         expert.setRegistrationDate(registrationDate);
         expert.setCredit(credit);
+        expert.setRole(role);
         return expert;
     }
 }
