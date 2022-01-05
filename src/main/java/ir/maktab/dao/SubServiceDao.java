@@ -29,11 +29,10 @@ public class SubServiceDao {
         session.close();
     }
 
-    public SubService findByNameCriteria(String name) {
+    public SubService findByNameWhitCriteria(String name) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Criteria criteria = session.createCriteria(SubService.class, "s");
-        //criteria.createAlias("s.experts", "e");
         criteria.setFetchMode("experts", FetchMode.EAGER);
         criteria.add(Restrictions.eq("s.name", name));
         List<SubService> list = criteria.list();
@@ -46,7 +45,7 @@ public class SubServiceDao {
     public Optional<SubService> findByName(String name) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        Query<SubService> query = session.createQuery("FROM SubService s join fetch s.experts WHERE s.name=:nameValue");
+        Query<SubService> query = session.createQuery("FROM SubService s WHERE s.name=:nameValue");
         query.setParameter("nameValue", name);
         Optional<SubService> subService = Optional.ofNullable(query.uniqueResult());
         transaction.commit();
