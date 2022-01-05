@@ -3,6 +3,7 @@ package ir.maktab.model.builder;
 import ir.maktab.model.entity.Instruction;
 import ir.maktab.model.entity.Offer;
 import ir.maktab.model.entity.users.Expert;
+import ir.maktab.model.enumeration.OfferStatus;
 
 import java.util.Date;
 
@@ -14,6 +15,7 @@ public final class OfferBuilder {
     private Long proposedPrice;
     private int durationOfWork;
     private Date startTime;
+    private OfferStatus offerStatus;
 
     private OfferBuilder() {
     }
@@ -57,6 +59,11 @@ public final class OfferBuilder {
         return this;
     }
 
+    public OfferBuilder withOfferStatus(OfferStatus offerStatus) {
+        this.offerStatus = offerStatus;
+        return this;
+    }
+
     public Offer build() {
         Offer offer = new Offer();
         offer.setId(id);
@@ -66,6 +73,7 @@ public final class OfferBuilder {
         offer.setProposedPrice(proposedPrice);
         offer.setDurationOfWork(durationOfWork);
         offer.setStartTime(startTime);
+        offer.setOfferStatus(offerStatus);
         return offer;
     }
 }
