@@ -15,6 +15,8 @@ public class Offer {
     private Integer id;
     @ManyToOne
     private Expert expert;
+    @ManyToOne
+    private Instruction instruction;
     @CreationTimestamp
     private Date registrationDate;
     private Long proposedPrice;
