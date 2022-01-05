@@ -1,5 +1,6 @@
 package ir.maktab.model.entity;
 
+import ir.maktab.model.entity.services.SubService;
 import ir.maktab.model.entity.users.Customer;
 import ir.maktab.model.enumeration.OrderStatus;
 import lombok.Data;
@@ -15,6 +16,8 @@ public class Instruction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @ManyToOne
+    private SubService subService;
     private Long proposedPrice;
     private String jobDescription;
     @CreationTimestamp
