@@ -2,17 +2,17 @@ package ir.maktab.view;
 
 import ir.maktab.config.Config;
 import ir.maktab.model.ImageReader;
-import ir.maktab.model.builder.CustomerBuilder;
-import ir.maktab.model.builder.ExpertBuilder;
-import ir.maktab.model.builder.MainServiceBuilder;
-import ir.maktab.model.builder.SubServiceBuilder;
+import ir.maktab.model.builder.*;
 import ir.maktab.model.dto.ExpertDto;
 import ir.maktab.model.dto.SubServiceDto;
 import ir.maktab.model.dto.UserDto;
+import ir.maktab.model.entity.Instruction;
 import ir.maktab.model.entity.services.MainService;
 import ir.maktab.model.entity.services.SubService;
+import ir.maktab.model.entity.users.Customer;
 import ir.maktab.model.entity.users.Expert;
 import ir.maktab.model.entity.users.User;
+import ir.maktab.model.enumeration.OrderStatus;
 import ir.maktab.model.enumeration.Role;
 import ir.maktab.model.enumeration.UserStatus;
 import ir.maktab.service.*;
@@ -22,6 +22,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
@@ -36,11 +39,13 @@ public class HardCoreMain {
     final static CustomerService customerService = context.getBean(CustomerService.class);
     final static ExpertService expertService = context.getBean(ExpertService.class);
     final static UserService userService = context.getBean(UserService.class);
+    final static InstructionService instructionService = context.getBean(InstructionService.class);
     final static ImageReader myImage = new ImageReader();
     final static Mapper mapper = new Mapper();
     final static Validation validation = new Validation();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
+        InstructionService instructionService = context.getBean(InstructionService.class);
         //اضافه کردن سرویس اصلی
 /*        try {
             mainServiceService.findMainService("Home Appliances");
@@ -320,8 +325,18 @@ public class HardCoreMain {
         List<ExpertDto> expertDtos = experts.stream().map(mapper::expertDto).collect(Collectors.toList());
         System.out.println(expertDtos);*/
         //ایجاد سفارش
-        
-
+        Customer customer = customerService.findByEmailAddress("maryamgoli213@gmail.com");
+        Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse("1400-10-15 12:30");
+        Instruction instruction = InstructionBuilder
+                .anInstruction()
+                .withProposedPrice(1000000L)
+                .withJobDescription("description")
+                .withDateOfWorkPerformed(date)
+                .withAddress("address")
+                .withCustomer(customer)
+                .withOrderStatus(OrderStatus.FIRST)
+                .build();
+        instructionService.save(instruction);
 
     }
 }
