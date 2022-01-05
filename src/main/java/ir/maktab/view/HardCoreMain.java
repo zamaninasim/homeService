@@ -6,6 +6,7 @@ import ir.maktab.model.builder.CustomerBuilder;
 import ir.maktab.model.builder.ExpertBuilder;
 import ir.maktab.model.builder.MainServiceBuilder;
 import ir.maktab.model.builder.SubServiceBuilder;
+import ir.maktab.model.dto.SubServiceDto;
 import ir.maktab.model.dto.UserDto;
 import ir.maktab.model.entity.services.MainService;
 import ir.maktab.model.entity.services.SubService;
@@ -305,13 +306,15 @@ public class HardCoreMain {
         //جستجو یوزر
         Mapper mapper = new Mapper();
         List<User> users = userService.findUserByCondition("nasim", "zamani", "zamaninasim213@gmail.com", Role.EXPERT);
-        List<UserDto> userDtos = users.stream().map(user -> mapper.userDto(user)).collect(Collectors.toList());
+        List<UserDto> userDtos = users.stream().map(mapper::userDto).collect(Collectors.toList());
         System.out.println(userDtos);
         //جستجو حوزه تخصصی متخصصان
         Expert expert = expertService.findByEmailAddress("zamaninasim213@gmail.com");
         Set<SubService> services = expert.getServices();
-        System.out.println(services);
+        List<SubServiceDto> serviceDtos = services.stream().map(mapper::subServiceDto).collect(Collectors.toList());
+        System.out.println(serviceDtos);
         //جستجو مختصصان یک حوزه
+
 
     }
 }
