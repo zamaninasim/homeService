@@ -2,6 +2,9 @@ package ir.maktab.model.builder;
 
 import ir.maktab.model.entity.services.MainService;
 import ir.maktab.model.entity.services.SubService;
+import ir.maktab.model.entity.users.Expert;
+
+import java.util.Set;
 
 public final class SubServiceBuilder {
     private Integer id;
@@ -9,6 +12,7 @@ public final class SubServiceBuilder {
     private Long basePrice;
     private String description;
     private MainService mainService;
+    private Set<Expert> experts;
 
     private SubServiceBuilder() {
     }
@@ -42,6 +46,11 @@ public final class SubServiceBuilder {
         return this;
     }
 
+    public SubServiceBuilder withExperts(Set<Expert> experts) {
+        this.experts = experts;
+        return this;
+    }
+
     public SubService build() {
         SubService subService = new SubService();
         subService.setId(id);
@@ -49,6 +58,7 @@ public final class SubServiceBuilder {
         subService.setBasePrice(basePrice);
         subService.setDescription(description);
         subService.setMainService(mainService);
+        subService.setExperts(experts);
         return subService;
     }
 }
