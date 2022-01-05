@@ -22,6 +22,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class HardCoreMain {
@@ -38,7 +39,7 @@ public class HardCoreMain {
 
     public static void main(String[] args) {
         //اضافه کردن سرویس اصلی
-/*        try {
+        try {
             mainServiceService.findMainService("Home Appliances");
             System.out.println("this main service is exist");
         } catch (RuntimeException e) {
@@ -284,6 +285,14 @@ public class HardCoreMain {
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
+        try {
+            SubService subService = subServiceService.findByName("Kitchen appliances");
+            Expert expert = expertService.findByEmailAddress("zamaninasim213@gmail.com");
+            subService.getExperts().add(expert);
+            subServiceService.update(subService);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
         //حذف متخصص از زیر خدمت
         try {
             SubService subService = subServiceService.findByName("cleaning");
@@ -292,12 +301,17 @@ public class HardCoreMain {
             subServiceService.update(subService);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
-        }*/
+        }
         //جستجو یوزر
         Mapper mapper = new Mapper();
         List<User> users = userService.findUserByCondition("nasim", "zamani", "zamaninasim213@gmail.com", Role.EXPERT);
         List<UserDto> userDtos = users.stream().map(user -> mapper.userDto(user)).collect(Collectors.toList());
         System.out.println(userDtos);
         //جستجو حوزه تخصصی متخصصان
+        Expert expert = expertService.findByEmailAddress("zamaninasim213@gmail.com");
+        Set<SubService> services = expert.getServices();
+        System.out.println(services);
+        //جستجو مختصصان یک حوزه
+
     }
 }
