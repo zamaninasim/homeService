@@ -348,7 +348,7 @@ public class HardCoreMain {
         Set<SubService> expertServices = nasim.getServices();
         boolean contains = expertServices.contains(subService);
         if (contains){
-            Date startDate = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse("1400-10-15 12:30");
+            Date startDate = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse("1400-10-15 13:30");
             Offer offer = OfferBuilder
                     .anOffer()
                     .withExpert(nasim)
@@ -358,6 +358,5 @@ public class HardCoreMain {
                     .withStartTime(startDate)
                     .build();
         }
-
     }
 }
