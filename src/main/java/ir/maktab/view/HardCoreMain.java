@@ -3,6 +3,7 @@ package ir.maktab.view;
 import ir.maktab.config.ServiceConfig;
 import ir.maktab.model.ImageReader;
 import ir.maktab.model.entity.services.SubService;
+import ir.maktab.model.entity.users.Expert;
 import ir.maktab.service.*;
 import ir.maktab.validation.Validation;
 import org.springframework.context.ApplicationContext;
@@ -155,7 +156,7 @@ public class HardCoreMain {
             System.out.println(e.getMessage());
         }*/
         //اضافه کردن متخصص
-        /*try {
+      /*  try {
             String firstname = "ali";
             boolean validateFirstname = validation.validateName(firstname);
             String lastname = "jafari";
@@ -198,11 +199,12 @@ public class HardCoreMain {
         //اضافه کردن متخصص به زیر خدمت
         try {
             //SubService subService = subServiceService.findByName("Kitchen appliances");
-            SubService subService = subServiceService.findByNameCriteria("Kitchen appliances");
-            //Expert expert = expertService.findByEmailAddress("zamaninasim213@gmail.com");
+            SubService subService = subServiceService.findByName("Kitchen appliances");
             System.out.println(subService);
-            //subService.getExperts().add(expert);
-           // subServiceService.update(subService);
+            Expert expert = expertService.findByEmailAddress("alijafari@gmail.com");
+            //System.out.println(subService);
+            subService.getExperts().add(expert);
+           subServiceService.update(subService);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
