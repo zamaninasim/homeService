@@ -1,8 +1,10 @@
 package ir.maktab.model.entity.services;
 
+import ir.maktab.model.entity.users.Expert;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Data
@@ -17,4 +19,6 @@ public class SubService {
     private String description;
     @ManyToOne
     private MainService mainService;
+    @ManyToMany
+    private Set<Expert> experts;
 }
