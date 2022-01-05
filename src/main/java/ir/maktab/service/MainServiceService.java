@@ -17,7 +17,7 @@ public class MainServiceService {
         mainServiceDao.save(mainService);
     }
 
-    public MainService isMainServiceExist(String name) {
+    public MainService findMainService(String name) {
         Optional<MainService> mainService = mainServiceDao.findByName(name);
         if (mainService.isPresent()) {
             return mainService.get();

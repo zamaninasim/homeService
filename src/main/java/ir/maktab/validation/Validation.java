@@ -3,6 +3,7 @@ package ir.maktab.validation;
 import ir.maktab.validation.exception.InvalidEmailException;
 import ir.maktab.validation.exception.InvalidNameException;
 import ir.maktab.validation.exception.InvalidNumberException;
+import ir.maktab.validation.exception.InvalidPasswordException;
 
 public class Validation {
     public boolean validateEmail(String email) throws InvalidEmailException {
@@ -24,5 +25,11 @@ public class Validation {
             return true;
         }
         throw new InvalidNameException("invalid number!");
+    }
+    public boolean validatePassword(String password) throws InvalidPasswordException {
+        if (password.matches("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$")) {
+            return true;
+        }
+        throw new InvalidNameException("invalid password!");
     }
 }
