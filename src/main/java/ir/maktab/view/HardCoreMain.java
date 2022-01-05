@@ -7,6 +7,7 @@ import ir.maktab.model.dto.ExpertDto;
 import ir.maktab.model.dto.SubServiceDto;
 import ir.maktab.model.dto.UserDto;
 import ir.maktab.model.entity.Instruction;
+import ir.maktab.model.entity.Offer;
 import ir.maktab.model.entity.services.MainService;
 import ir.maktab.model.entity.services.SubService;
 import ir.maktab.model.entity.users.Customer;
@@ -309,7 +310,8 @@ public class HardCoreMain {
             subServiceService.update(subService);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
-        }
+        }*/
+        /*
         //جستجو یوزر
         List<User> users = userService.findUserByCondition("nasim", "zamani", "zamaninasim213@gmail.com", Role.EXPERT);
         List<UserDto> userDtos = users.stream().map(mapper::userDto).collect(Collectors.toList());
@@ -323,10 +325,11 @@ public class HardCoreMain {
         SubService subService = subServiceService.findByName("cleaning");
         Set<Expert> experts = subService.getExperts();
         List<ExpertDto> expertDtos = experts.stream().map(mapper::expertDto).collect(Collectors.toList());
-        System.out.println(expertDtos);*/
+        System.out.println(expertDtos);
         //ایجاد سفارش
         Customer customer = customerService.findByEmailAddress("maryamgoli213@gmail.com");
         Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse("1400-10-15 12:30");
+        SubService subService1 = subServiceService.findByName("cleaning");
         Instruction instruction = InstructionBuilder
                 .anInstruction()
                 .withProposedPrice(1000000L)
@@ -335,8 +338,26 @@ public class HardCoreMain {
                 .withAddress("address")
                 .withCustomer(customer)
                 .withOrderStatus(OrderStatus.FIRST)
+                .withSubService(subService1)
                 .build();
-        instructionService.save(instruction);
+        instructionService.save(instruction);*/
+        // ایجاد پیشنهاد برای یک سفارش
+        Instruction instruction = instructionService.get(1);
+        Expert nasim = expertService.findByEmailAddress("zamaninasim213@gmail.com");
+        SubService subService = instruction.getSubService();
+        Set<SubService> expertServices = nasim.getServices();
+        boolean contains = expertServices.contains(subService);
+        if (contains){
+            Date startDate = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse("1400-10-15 12:30");
+            Offer offer = OfferBuilder
+                    .anOffer()
+                    .withExpert(nasim)
+                    .withInstruction(instruction)
+                    .withProposedPrice(500000L)
+                    .withDurationOfWork(5)
+                    .withStartTime(startDate)
+                    .build();
+        }
 
     }
 }
