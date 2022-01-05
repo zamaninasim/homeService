@@ -19,4 +19,13 @@ public class InstructionDao {
         transaction.commit();
         session.close();
     }
+
+    public Instruction get(Integer id) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Instruction instruction = session.get(Instruction.class, id);
+        transaction.commit();
+        session.close();
+        return instruction;
+    }
 }

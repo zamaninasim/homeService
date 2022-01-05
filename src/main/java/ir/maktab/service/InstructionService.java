@@ -17,4 +17,8 @@ public class InstructionService {
     public void save(Instruction instruction) {
         instructionDao.save(instruction);
     }
+
+    public Instruction get(Integer id) {
+        return instructionDao.get(id);
+    }
 }
