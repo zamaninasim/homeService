@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -30,7 +31,19 @@ public class SubService {
                 ", name='" + name + '\'' +
                 ", basePrice=" + basePrice +
                 ", description='" + description + '\'' +
-                ", mainService=" + mainService +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SubService that = (SubService) o;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(basePrice, that.basePrice) && Objects.equals(description, that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, basePrice, description);
     }
 }
