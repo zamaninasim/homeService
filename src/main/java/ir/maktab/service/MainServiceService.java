@@ -4,14 +4,18 @@ import ir.maktab.dao.MainServiceDao;
 import ir.maktab.validation.exception.NotExistException;
 import ir.maktab.model.entity.services.MainService;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Getter
 @Setter
+@Service
+@RequiredArgsConstructor
 public class MainServiceService {
-    private MainServiceDao mainServiceDao;
+    private final MainServiceDao mainServiceDao;
 
     public void save(MainService mainService) {
         mainServiceDao.save(mainService);

@@ -1,15 +1,15 @@
 package ir.maktab.view;
 
-import ir.maktab.config.ServiceConfig;
-import ir.maktab.model.builder.SubServiceBuilder;
-import ir.maktab.validation.exception.InvalidPasswordException;
+import ir.maktab.config.Config;
 import ir.maktab.model.builder.MainServiceBuilder;
+import ir.maktab.model.builder.SubServiceBuilder;
 import ir.maktab.model.entity.services.MainService;
 import ir.maktab.model.entity.services.SubService;
 import ir.maktab.model.entity.users.Manager;
 import ir.maktab.service.MainServiceService;
 import ir.maktab.service.ManagerService;
 import ir.maktab.service.SubServiceService;
+import ir.maktab.validation.exception.InvalidPasswordException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -17,7 +17,7 @@ import java.util.Scanner;
 
 public class ManagerView {
     final static Scanner scanner = new Scanner(System.in);
-    ApplicationContext context = new AnnotationConfigApplicationContext(ServiceConfig.class);
+    ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
     ManagerService managerService = context.getBean(ManagerService.class);
     MainServiceService mainServiceService = context.getBean(MainServiceService.class);
     SubServiceService subServiceService = context.getBean(SubServiceService.class);

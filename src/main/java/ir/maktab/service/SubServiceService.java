@@ -4,15 +4,19 @@ import ir.maktab.dao.SubServiceDao;
 import ir.maktab.model.entity.services.SubService;
 import ir.maktab.validation.exception.ExistException;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Getter
 @Setter
+@Service
+@RequiredArgsConstructor
 public class SubServiceService {
-    private SubServiceDao subServiceDao;
+    private final SubServiceDao subServiceDao;
 
     public void save(SubService subService) {
         subServiceDao.save(subService);

@@ -3,14 +3,18 @@ package ir.maktab.service;
 import ir.maktab.dao.ManagerDao;
 import ir.maktab.model.entity.users.Manager;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Getter
 @Setter
+@Service
+@RequiredArgsConstructor
 public class ManagerService {
-    private ManagerDao managerDao;
+    private final ManagerDao managerDao;
 
     public void save(Manager manager) {
         managerDao.save(manager);

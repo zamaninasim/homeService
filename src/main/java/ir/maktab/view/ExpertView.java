@@ -1,6 +1,6 @@
 package ir.maktab.view;
 
-import ir.maktab.config.ServiceConfig;
+import ir.maktab.config.Config;
 import ir.maktab.model.builder.ExpertBuilder;
 import ir.maktab.validation.exception.InvalidPasswordException;
 import ir.maktab.model.entity.users.Expert;
@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class ExpertView {
     final static Scanner scanner = new Scanner(System.in);
-    ApplicationContext context = new AnnotationConfigApplicationContext(ServiceConfig.class);
+    ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
     ExpertService expertService = context.getBean(ExpertService.class);
 
     public void expertLogin() {

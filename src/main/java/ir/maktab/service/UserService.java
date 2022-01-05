@@ -4,15 +4,19 @@ import ir.maktab.dao.UserDao;
 import ir.maktab.model.entity.users.User;
 import ir.maktab.model.enumeration.Role;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Getter
 @Setter
+@Service
+@RequiredArgsConstructor
 public class UserService {
-    private UserDao userDao;
+    private final UserDao userDao;
 
     public void save(User user) {
         userDao.save(user);

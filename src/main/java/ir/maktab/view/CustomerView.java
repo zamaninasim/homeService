@@ -1,11 +1,11 @@
 package ir.maktab.view;
 
-import ir.maktab.config.ServiceConfig;
+import ir.maktab.config.Config;
 import ir.maktab.model.builder.CustomerBuilder;
-import ir.maktab.validation.exception.InvalidPasswordException;
 import ir.maktab.model.entity.users.Customer;
 import ir.maktab.model.enumeration.UserStatus;
 import ir.maktab.service.CustomerService;
+import ir.maktab.validation.exception.InvalidPasswordException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class CustomerView {
     final static Scanner scanner = new Scanner(System.in);
-    ApplicationContext context = new AnnotationConfigApplicationContext(ServiceConfig.class);
+    ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
     CustomerService customerService = context.getBean(CustomerService.class);
 
     public void customerLogin() {

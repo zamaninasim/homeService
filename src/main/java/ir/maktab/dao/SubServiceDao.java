@@ -1,17 +1,19 @@
 package ir.maktab.dao;
 
 import ir.maktab.model.entity.services.SubService;
-import ir.maktab.util.HibernateUtil;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.*;
-import org.hibernate.criterion.*;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
-import org.hibernate.transform.Transformers;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
+@RequiredArgsConstructor
 public class SubServiceDao {
-    private SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+    private final SessionFactory sessionFactory;
 
     public void save(SubService subService) {
         Session session = sessionFactory.openSession();

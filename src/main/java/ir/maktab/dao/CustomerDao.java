@@ -1,16 +1,18 @@
 package ir.maktab.dao;
 
 import ir.maktab.model.entity.users.Customer;
-import ir.maktab.util.HibernateUtil;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-
+@Repository
+@RequiredArgsConstructor
 public class CustomerDao {
-    private SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+    private final SessionFactory sessionFactory;
 
     public void save(Customer customer) {
         Session session = sessionFactory.openSession();

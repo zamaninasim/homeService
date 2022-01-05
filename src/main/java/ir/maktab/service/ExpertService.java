@@ -4,14 +4,18 @@ import ir.maktab.dao.ExpertDao;
 import ir.maktab.validation.exception.ExistException;
 import ir.maktab.model.entity.users.Expert;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Getter
 @Setter
+@Service
+@RequiredArgsConstructor
 public class ExpertService {
-    private ExpertDao expertDao;
+    private final ExpertDao expertDao;
     public void save(Expert expert) {
         expertDao.save(expert);
     }

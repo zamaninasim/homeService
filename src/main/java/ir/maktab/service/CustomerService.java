@@ -4,14 +4,18 @@ import ir.maktab.dao.CustomerDao;
 import ir.maktab.validation.exception.ExistException;
 import ir.maktab.model.entity.users.Customer;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Getter
 @Setter
+@Service
+@RequiredArgsConstructor
 public class CustomerService {
-    private CustomerDao customerDao;
+    private final CustomerDao customerDao;
     public void save(Customer customer) {
         customerDao.save(customer);
     }

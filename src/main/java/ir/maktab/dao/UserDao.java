@@ -2,21 +2,22 @@ package ir.maktab.dao;
 
 import ir.maktab.model.entity.users.User;
 import ir.maktab.model.enumeration.Role;
-import ir.maktab.util.HibernateUtil;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.criterion.SimpleExpression;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
+@RequiredArgsConstructor
 public class UserDao {
-    private SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+    private final SessionFactory sessionFactory;
 
     public void save(User user) {
         Session session = sessionFactory.openSession();
