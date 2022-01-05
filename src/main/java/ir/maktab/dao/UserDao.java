@@ -1,6 +1,5 @@
 package ir.maktab.dao;
 
-import ir.maktab.model.entity.users.Expert;
 import ir.maktab.model.entity.users.User;
 import ir.maktab.util.HibernateUtil;
 import org.hibernate.Session;
@@ -20,6 +19,15 @@ public class UserDao {
         transaction.commit();
         session.close();
     }
+
+    public void update(User user) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.update(user);
+        transaction.commit();
+        session.close();
+    }
+
     public Optional<User> findByEmailAddress(String email) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();

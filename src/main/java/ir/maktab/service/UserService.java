@@ -16,6 +16,10 @@ public class UserService {
         userDao.save(user);
     }
 
+    public void update(User user) {
+        userDao.update(user);
+    }
+
     public User findByEmailAddress(String emailAddress) {
         Optional<User> expert = userDao.findByEmailAddress(emailAddress);
         if (expert.isPresent()) {
