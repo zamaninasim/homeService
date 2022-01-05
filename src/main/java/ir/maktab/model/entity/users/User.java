@@ -1,5 +1,6 @@
 package ir.maktab.model.entity.users;
 
+import ir.maktab.model.enumeration.Role;
 import ir.maktab.model.enumeration.UserStatus;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -23,4 +24,6 @@ public class User {
     @CreationTimestamp
     private Date registrationDate;
     private Long credit;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }
