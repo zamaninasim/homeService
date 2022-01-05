@@ -1,6 +1,5 @@
 package ir.maktab.dao;
 
-import ir.maktab.model.entity.users.Customer;
 import ir.maktab.model.entity.users.Expert;
 import ir.maktab.util.HibernateUtil;
 import org.hibernate.Session;
