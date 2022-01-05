@@ -31,19 +31,6 @@ public class SubServiceDao {
         session.close();
     }
 
-    public SubService findByNameWhitCriteria(String name) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        Criteria criteria = session.createCriteria(SubService.class, "s");
-        criteria.setFetchMode("experts", FetchMode.EAGER);
-        criteria.add(Restrictions.eq("s.name", name));
-        List<SubService> list = criteria.list();
-        SubService subService = list.get(0);
-        transaction.commit();
-        session.close();
-        return subService;
-    }
-
     public Optional<SubService> findByName(String name) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
