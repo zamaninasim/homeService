@@ -162,16 +162,18 @@ public class HardCoreMain {
 
         //اضافه کردن متخصص
         try {
-            String firstname= "nasim";
+            String firstname= "ali";
             boolean validateFirstname = validation.validateName(firstname);
-            String lastname = "zamani";
+            String lastname = "jafari";
             boolean validateLastname = validation.validateName(lastname);
-            String email = "zamaninasim213@gmail.com";
+            String email = "alijafari@gmail.com";
             boolean validateEmail = validation.validateEmail(email);
-            String password = "Nasim1374";
+            String password = "Aliiii1234";
             boolean validatePassword = validation.validatePassword(password);
             expertService.isExist(email);
-            byte[] image = myImage.fileToBytes("\\nasim.jpg");
+            String imagePath ="\\nasim.jpg";
+            byte[] image = myImage.fileToBytes(imagePath);
+           // byte[] image = myImage.fileToBytes("\\ali.jpg");
             Expert expert = ExpertBuilder.anExpert()
                     .withFirstname(firstname)
                     .withLastname(lastname)
