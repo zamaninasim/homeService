@@ -1,6 +1,7 @@
 package ir.maktab.model.entity;
 
 import ir.maktab.model.entity.users.Expert;
+import ir.maktab.model.enumeration.OfferStatus;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -23,4 +24,6 @@ public class Offer {
     private int durationOfWork;
     @Temporal(TemporalType.TIMESTAMP)
     private Date startTime;
+    @Enumerated(EnumType.STRING)
+    private OfferStatus offerStatus;
 }
