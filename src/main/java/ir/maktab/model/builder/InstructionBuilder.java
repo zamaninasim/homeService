@@ -2,6 +2,7 @@ package ir.maktab.model.builder;
 
 import ir.maktab.model.entity.Instruction;
 import ir.maktab.model.entity.Offer;
+import ir.maktab.model.entity.services.SubService;
 import ir.maktab.model.entity.users.Customer;
 import ir.maktab.model.enumeration.OrderStatus;
 
@@ -10,6 +11,7 @@ import java.util.Set;
 
 public final class InstructionBuilder {
     private Integer id;
+    private SubService subService;
     private Long proposedPrice;
     private String jobDescription;
     private Date orderRegistrationDate;
@@ -28,6 +30,11 @@ public final class InstructionBuilder {
 
     public InstructionBuilder withId(Integer id) {
         this.id = id;
+        return this;
+    }
+
+    public InstructionBuilder withSubService(SubService subService) {
+        this.subService = subService;
         return this;
     }
 
@@ -74,6 +81,7 @@ public final class InstructionBuilder {
     public Instruction build() {
         Instruction instruction = new Instruction();
         instruction.setId(id);
+        instruction.setSubService(subService);
         instruction.setProposedPrice(proposedPrice);
         instruction.setJobDescription(jobDescription);
         instruction.setOrderRegistrationDate(orderRegistrationDate);
