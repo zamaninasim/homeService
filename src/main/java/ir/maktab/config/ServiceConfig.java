@@ -65,4 +65,11 @@ public class ServiceConfig {
         return suggestionService;
     }
 
+    @Bean
+    public UserService userService(UserDao userDao) {
+        UserService userService = new UserService();
+        userService.setUserDao(userDao);
+        return userService;
+    }
+
 }

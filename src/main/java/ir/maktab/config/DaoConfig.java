@@ -46,4 +46,9 @@ public class DaoConfig {
     public SuggestionDao suggestionDao() {
         return new SuggestionDao();
     }
+
+    @Bean
+    public UserDao userDao() {
+        return new UserDao();
+    }
 }
