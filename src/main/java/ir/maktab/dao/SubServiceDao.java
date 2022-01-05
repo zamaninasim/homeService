@@ -21,6 +21,14 @@ public class SubServiceDao {
         session.close();
     }
 
+    public void update(SubService subService) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.update(subService);
+        transaction.commit();
+        session.close();
+    }
+
     public Optional<SubService> findByName(String name) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();

@@ -18,6 +18,10 @@ public class SubServiceService {
         subServiceDao.save(subService);
     }
 
+    public void update(SubService subService) {
+        subServiceDao.update(subService);
+    }
+
     public boolean isSubServiceExist(String name) {
         Optional<SubService> subService = subServiceDao.findByName(name);
         if (subService.isPresent()) {
