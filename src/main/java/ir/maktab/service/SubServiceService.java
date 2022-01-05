@@ -1,7 +1,7 @@
 package ir.maktab.service;
 
 import ir.maktab.dao.SubServiceDao;
-import ir.maktab.exception.ExistException;
+import ir.maktab.validation.exception.ExistException;
 import ir.maktab.model.entity.services.SubService;
 import lombok.Getter;
 import lombok.Setter;

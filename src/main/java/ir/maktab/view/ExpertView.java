@@ -1,12 +1,11 @@
 package ir.maktab.view;
 
 import ir.maktab.config.ServiceConfig;
-import ir.maktab.exception.InvalidPasswordException;
+import ir.maktab.validation.exception.InvalidPasswordException;
 import ir.maktab.model.builder.ExpertBuilder;
 import ir.maktab.model.entity.users.Expert;
 import ir.maktab.model.enumeration.UserStatus;
 import ir.maktab.service.ExpertService;
-import ir.maktab.service.SubServiceService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -16,6 +15,7 @@ public class ExpertView {
     final static Scanner scanner = new Scanner(System.in);
     ApplicationContext context = new AnnotationConfigApplicationContext(ServiceConfig.class);
     ExpertService expertService = context.getBean(ExpertService.class);
+
     public void expertLogin() {
         try {
             System.out.println("enter your emailAddress:");
