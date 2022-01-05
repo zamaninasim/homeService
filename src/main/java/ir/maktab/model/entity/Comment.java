@@ -17,5 +17,5 @@ public class Comment {
     @ManyToOne
     private Customer customer;
     @OneToOne
-    private Orders order;
+    private Instruction order;
 }

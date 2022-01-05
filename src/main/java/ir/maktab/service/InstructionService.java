@@ -1,6 +1,6 @@
 package ir.maktab.service;
 
-import ir.maktab.dao.OrderDao;
+import ir.maktab.dao.InstructionDao;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -10,6 +10,6 @@ import org.springframework.stereotype.Service;
 @Setter
 @Service
 @RequiredArgsConstructor
-public class OrderService {
-    private final OrderDao orderDao;
+public class InstructionService {
+    private final InstructionDao orderDao;
 }

@@ -2,7 +2,7 @@ package ir.maktab.config;
 
 import ir.maktab.model.entity.Comment;
 import ir.maktab.model.entity.Offer;
-import ir.maktab.model.entity.Orders;
+import ir.maktab.model.entity.Instruction;
 import ir.maktab.model.entity.services.MainService;
 import ir.maktab.model.entity.services.SubService;
 import ir.maktab.model.entity.users.Customer;
@@ -36,7 +36,7 @@ public class HibernateConfig {
         configuration.addAnnotatedClass(Expert.class);
         configuration.addAnnotatedClass(MainService.class);
         configuration.addAnnotatedClass(Manager.class);
-        configuration.addAnnotatedClass(Orders.class);
+        configuration.addAnnotatedClass(Instruction.class);
         configuration.addAnnotatedClass(SubService.class);
         configuration.addAnnotatedClass(Offer.class);
         configuration.addAnnotatedClass(User.class);

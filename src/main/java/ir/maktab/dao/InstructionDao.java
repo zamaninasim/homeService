@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class OrderDao {
+public class InstructionDao {
     private final SessionFactory sessionFactory;
 }

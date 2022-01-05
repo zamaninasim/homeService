@@ -11,8 +11,7 @@ import java.util.Set;
 
 @Entity
 @Data
-//@Table(name = "instruction")
-public class Orders {
+public class Instruction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
