@@ -1,8 +1,8 @@
 package ir.maktab.view;
 
 import ir.maktab.config.ServiceConfig;
-import ir.maktab.validation.exception.InvalidPasswordException;
 import ir.maktab.model.builder.CustomerBuilder;
+import ir.maktab.validation.exception.InvalidPasswordException;
 import ir.maktab.model.entity.users.Customer;
 import ir.maktab.model.enumeration.UserStatus;
 import ir.maktab.service.CustomerService;
