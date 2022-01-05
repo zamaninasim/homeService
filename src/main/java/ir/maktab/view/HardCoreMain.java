@@ -6,6 +6,7 @@ import ir.maktab.model.builder.CustomerBuilder;
 import ir.maktab.model.builder.ExpertBuilder;
 import ir.maktab.model.builder.MainServiceBuilder;
 import ir.maktab.model.builder.SubServiceBuilder;
+import ir.maktab.model.dto.ExpertDto;
 import ir.maktab.model.dto.SubServiceDto;
 import ir.maktab.model.dto.UserDto;
 import ir.maktab.model.entity.services.MainService;
@@ -36,11 +37,12 @@ public class HardCoreMain {
     final static ExpertService expertService = context.getBean(ExpertService.class);
     final static UserService userService = context.getBean(UserService.class);
     final static ImageReader myImage = new ImageReader();
+    final static Mapper mapper = new Mapper();
     final static Validation validation = new Validation();
 
     public static void main(String[] args) {
         //اضافه کردن سرویس اصلی
-        try {
+/*        try {
             mainServiceService.findMainService("Home Appliances");
             System.out.println("this main service is exist");
         } catch (RuntimeException e) {
@@ -304,7 +306,6 @@ public class HardCoreMain {
             System.out.println(e.getMessage());
         }
         //جستجو یوزر
-        Mapper mapper = new Mapper();
         List<User> users = userService.findUserByCondition("nasim", "zamani", "zamaninasim213@gmail.com", Role.EXPERT);
         List<UserDto> userDtos = users.stream().map(mapper::userDto).collect(Collectors.toList());
         System.out.println(userDtos);
@@ -314,6 +315,10 @@ public class HardCoreMain {
         List<SubServiceDto> serviceDtos = services.stream().map(mapper::subServiceDto).collect(Collectors.toList());
         System.out.println(serviceDtos);
         //جستجو مختصصان یک حوزه
+        SubService subService = subServiceService.findByName("cleaning");
+        Set<Expert> experts = subService.getExperts();
+        List<ExpertDto> expertDtos = experts.stream().map(mapper::expertDto).collect(Collectors.toList());
+        System.out.println(expertDtos);*/
 
 
     }

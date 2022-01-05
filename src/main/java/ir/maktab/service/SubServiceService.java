@@ -9,7 +9,6 @@ import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Getter
 @Setter
@@ -27,20 +26,17 @@ public class SubServiceService {
     }
 
     public boolean isSubServiceExist(String name) {
-        Optional<SubService> subService = subServiceDao.findByName(name);
-        if (subService.isPresent()) {
+        List<SubService> subServices = subServiceDao.findByName(name);
+        if (!subServices.isEmpty()) {
             throw new ExistException("this subService exist!");
         }
         return false;
     }
 
     public SubService findByName(String name) {
-        Optional<SubService> subService = subServiceDao.findByName(name);
-        if (subService.isPresent()) {
-            SubService foundedSubService = subService.get();
-            return foundedSubService;
-        }
-        throw new ExistException("this subService not exist!");
+        List<SubService> subServices = subServiceDao.findByName(name);
+        SubService subService = subServices.get(0);
+        return subService;
     }
 
     public List<SubService> findAll() {

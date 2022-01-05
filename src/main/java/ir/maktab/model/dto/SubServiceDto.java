@@ -1,11 +1,9 @@
 package ir.maktab.model.dto;
 
 import ir.maktab.model.entity.services.MainService;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class SubServiceDto {
     private String name;
     private Long basePrice;

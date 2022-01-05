@@ -8,7 +8,6 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -31,17 +30,6 @@ public class SubServiceDao {
         session.close();
     }
 
-    public Optional<SubService> findByName(String name) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        Query<SubService> query = session.createQuery("FROM SubService s WHERE s.name=:nameValue");
-        query.setParameter("nameValue", name);
-        Optional<SubService> subService = Optional.ofNullable(query.uniqueResult());
-        transaction.commit();
-        session.close();
-        return subService;
-    }
-
     public List<SubService> findAll() {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
@@ -50,5 +38,17 @@ public class SubServiceDao {
         transaction.commit();
         session.close();
         return subServices;
+    }
+
+    public List<SubService> findByName(String name) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Criteria criteria = session.createCriteria(SubService.class, "s");
+        criteria.setFetchMode("experts", FetchMode.EAGER);
+        criteria.add(Restrictions.eq("s.name", name));
+        List<SubService> subServiceList = criteria.list();
+        transaction.commit();
+        session.close();
+        return subServiceList;
     }
 }
