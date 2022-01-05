@@ -26,6 +26,6 @@ public class Instruction {
     private Customer customer;
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
-    @OneToMany
+    @OneToMany(mappedBy = "instruction")
     private Set<Offer> suggestions;
 }
