@@ -2,13 +2,15 @@ package ir.maktab.service;
 
 import ir.maktab.dao.InstructionDao;
 import ir.maktab.model.entity.Instruction;
-import ir.maktab.model.entity.users.Customer;
+import ir.maktab.model.entity.Offer;
+import ir.maktab.model.enumeration.InstructionStatus;
+import ir.maktab.model.enumeration.OfferStatus;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -25,7 +27,18 @@ public class InstructionService {
         return instructionDao.get(id);
     }
 
-    public List<Instruction> findByCustomer(Customer customer) {
-        return instructionDao.findByCustomer(customer);
+    public Offer findAcceptedOfferOfInstruction(Instruction instruction) {
+        Offer acceptedOffer = null;
+        if (instruction.getOrderStatus().equals(InstructionStatus.PAID)) {
+            Set<Offer> offers = instruction.getOffers();
+            for (Offer offer : offers) {
+                if (offer.getOfferStatus().equals(OfferStatus.ACCEPTED)) {
+                    acceptedOffer = offer;
+                }
+            }
+            return acceptedOffer;
+        } else {
+            throw new RuntimeException("Instruction not Paid!");
+        }
     }
 }
