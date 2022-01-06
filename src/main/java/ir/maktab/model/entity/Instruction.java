@@ -30,5 +30,18 @@ public class Instruction {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
     @OneToMany(mappedBy = "instruction")
-    private Set<Offer> suggestions;
+    private Set<Offer> offers;
+
+    @Override
+    public String toString() {
+        return "Instruction{" +
+                "id=" + id +
+                ", proposedPrice=" + proposedPrice +
+                ", jobDescription='" + jobDescription + '\'' +
+                ", orderRegistrationDate=" + orderRegistrationDate +
+                ", dateOfWorkPerformed=" + dateOfWorkPerformed +
+                ", address='" + address + '\'' +
+                ", orderStatus=" + orderStatus +
+                '}';
+    }
 }
