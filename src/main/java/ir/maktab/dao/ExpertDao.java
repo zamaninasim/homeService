@@ -33,4 +33,12 @@ public class ExpertDao {
         session.close();
         return expert;
     }
+
+    public void update(Expert expert) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.update(expert);
+        transaction.commit();
+        session.close();
+    }
 }
