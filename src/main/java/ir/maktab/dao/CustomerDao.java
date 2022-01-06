@@ -9,6 +9,7 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class CustomerDao {
@@ -28,6 +29,31 @@ public class CustomerDao {
         Query<Customer> query = session.createQuery("FROM Customer customer WHERE customer.emailAddress=:emailValue");
         query.setParameter("emailValue", email);
         Optional<Customer> customer = Optional.ofNullable(query.uniqueResult());
+        transaction.commit();
+        session.close();
+        return customer;
+    }
+
+    public void delete(Customer customer) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.delete(customer);
+        transaction.commit();
+        session.close();
+    }
+
+    public void update(Customer customer) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.update(customer);
+        transaction.commit();
+        session.close();
+    }
+
+    public Customer findById(Integer id) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Customer customer = session.get(Customer.class, id);
         transaction.commit();
         session.close();
         return customer;
