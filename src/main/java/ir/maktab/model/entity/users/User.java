@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -40,5 +41,18 @@ public class User {
                 ", credit=" + credit +
                 ", role=" + role +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) && Objects.equals(firstname, user.firstname) && Objects.equals(lastname, user.lastname) && Objects.equals(emailAddress, user.emailAddress) && Objects.equals(password, user.password) && userStatus == user.userStatus && Objects.equals(registrationDate, user.registrationDate) && Objects.equals(credit, user.credit) && role == user.role;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstname, lastname, emailAddress, password, userStatus, registrationDate, credit, role);
     }
 }

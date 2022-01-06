@@ -4,7 +4,9 @@ import ir.maktab.model.entity.services.SubService;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Data
@@ -22,5 +24,21 @@ public class Expert extends User {
         return super.toString() +
                 "score=" + score +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Expert expert = (Expert) o;
+        return Arrays.equals(photo, expert.photo) && Objects.equals(score, expert.score) && Objects.equals(services, expert.services);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(super.hashCode(), score, services);
+        result = 31 * result + Arrays.hashCode(photo);
+        return result;
     }
 }
