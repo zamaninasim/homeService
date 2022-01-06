@@ -36,8 +36,7 @@ public class UserService {
     public User findByEmailAddress(String emailAddress) {
         Optional<User> expert = userDao.findByEmailAddress(emailAddress);
         if (expert.isPresent()) {
-            User foundedUser = expert.get();
-            return foundedUser;
+            return expert.get();
         } else {
             throw new RuntimeException("emailAddress not exist!");
         }
@@ -45,5 +44,14 @@ public class UserService {
 
     public List<User> findUserByCondition(String firstname, String lastname, String email, Role role) {
         return userDao.findUserByCondition(firstname, lastname, email, role);
+    }
+
+    public void changePassword(User user,String currentPassword, String newPassword) {
+        String password = user.getPassword();
+        if (password.equals(currentPassword)) {
+            user.setPassword(newPassword);
+            update(user);
+            System.out.println("your password change successfully.");
+        }
     }
 }
