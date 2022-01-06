@@ -33,4 +33,29 @@ public class ManagerDao {
         session.close();
         return mainService;
     }
+
+    public void delete(Manager manager) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.delete(manager);
+        transaction.commit();
+        session.close();
+    }
+
+    public void update(Manager manager) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.update(manager);
+        transaction.commit();
+        session.close();
+    }
+
+    public Manager findById(Integer id) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Manager manager = session.get(Manager.class, id);
+        transaction.commit();
+        session.close();
+        return manager;
+    }
 }
