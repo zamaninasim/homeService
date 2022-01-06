@@ -26,4 +26,19 @@ public class User {
     private Long credit;
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Override
+    public String toString() {
+        return "{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", password='" + password + '\'' +
+                ", userStatus=" + userStatus +
+                ", registrationDate=" + registrationDate +
+                ", credit=" + credit +
+                ", role=" + role +
+                '}';
+    }
 }
