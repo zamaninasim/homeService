@@ -51,4 +51,21 @@ public class SubServiceDao {
         session.close();
         return subServiceList;
     }
+
+    public void delete(SubService subService) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.delete(subService);
+        transaction.commit();
+        session.close();
+    }
+
+    public SubService findById(Integer id) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        SubService subService = session.get(SubService.class, id);
+        transaction.commit();
+        session.close();
+        return subService;
+    }
 }
