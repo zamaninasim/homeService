@@ -67,4 +67,21 @@ public class UserDao {
         session.close();
         return users;
     }
+
+    public void delete(User user) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.delete(user);
+        transaction.commit();
+        session.close();
+    }
+
+    public User findById(Integer id) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        User user = session.get(User.class, id);
+        transaction.commit();
+        session.close();
+        return user;
+    }
 }
