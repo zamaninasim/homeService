@@ -20,7 +20,23 @@ public class InstructionDao {
         session.close();
     }
 
-    public Instruction get(Integer id) {
+    public void delete(Instruction instruction) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.delete(instruction);
+        transaction.commit();
+        session.close();
+    }
+
+    public void update(Instruction instruction) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.update(instruction);
+        transaction.commit();
+        session.close();
+    }
+
+    public Instruction findById(Integer id) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Instruction instruction = session.get(Instruction.class, id);

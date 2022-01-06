@@ -24,7 +24,7 @@ public class InstructionService {
     }
 
     public Instruction get(Integer id) {
-        return instructionDao.get(id);
+        return instructionDao.findById(id);
     }
 
     public Offer findAcceptedOfferOfInstruction(Instruction instruction) {
