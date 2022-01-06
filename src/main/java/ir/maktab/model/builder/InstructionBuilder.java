@@ -19,7 +19,7 @@ public final class InstructionBuilder {
     private String address;
     private Customer customer;
     private OrderStatus orderStatus;
-    private Set<Offer> suggestions;
+    private Set<Offer> offers;
 
     private InstructionBuilder() {
     }
@@ -73,8 +73,8 @@ public final class InstructionBuilder {
         return this;
     }
 
-    public InstructionBuilder withSuggestions(Set<Offer> suggestions) {
-        this.suggestions = suggestions;
+    public InstructionBuilder withOffers(Set<Offer> offers) {
+        this.offers = offers;
         return this;
     }
 
@@ -89,7 +89,7 @@ public final class InstructionBuilder {
         instruction.setAddress(address);
         instruction.setCustomer(customer);
         instruction.setOrderStatus(orderStatus);
-        instruction.setSuggestions(suggestions);
+        instruction.setOffers(offers);
         return instruction;
     }
 }
