@@ -3,6 +3,7 @@ package ir.maktab.service;
 import ir.maktab.dao.UserDao;
 import ir.maktab.model.entity.users.User;
 import ir.maktab.model.enumeration.Role;
+import ir.maktab.validation.exception.IsExistException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -19,7 +20,13 @@ public class UserService {
     private final UserDao userDao;
 
     public void save(User user) {
-        userDao.save(user);
+        Optional<User> foundedUser = userDao.findByEmailAddress(user.getEmailAddress());
+        if (foundedUser.isPresent()) {
+            throw new IsExistException("this emailAddress exist!");
+        } else {
+            userDao.save(user);
+            System.out.println("user whit '" + user.getEmailAddress() + "' emailAddress saved.");
+        }
     }
 
     public void update(User user) {
@@ -37,6 +44,6 @@ public class UserService {
     }
 
     public List<User> findUserByCondition(String firstname, String lastname, String email, Role role) {
-        return userDao.findUserByCondition(firstname,lastname,email,role);
+        return userDao.findUserByCondition(firstname, lastname, email, role);
     }
 }
