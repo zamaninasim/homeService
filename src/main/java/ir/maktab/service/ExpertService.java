@@ -2,7 +2,6 @@ package ir.maktab.service;
 
 import ir.maktab.dao.ExpertDao;
 import ir.maktab.model.entity.users.Expert;
-import ir.maktab.model.entity.users.User;
 import ir.maktab.validation.exception.IsExistException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +25,6 @@ public class ExpertService {
             expertDao.save(expert);
             System.out.println("expert whit '" + expert.getEmailAddress() + "' emailAddress saved.");
         }
-
     }
 
     public Expert findByEmailAddress(String emailAddress) {
