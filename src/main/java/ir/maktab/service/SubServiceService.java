@@ -58,5 +58,12 @@ public class SubServiceService {
     public void addExpertToSubService(Expert expert, SubService subService) {
         subService.getExperts().add(expert);
         update(subService);
+        System.out.println("expert add successfully");
+    }
+
+    public void removeExpertFromSubService(Expert expert, SubService subService) {
+        subService.getExperts().remove(expert);
+        update(subService);
+        System.out.println("expert remove successfully");
     }
 }
