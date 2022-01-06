@@ -1,8 +1,10 @@
 package ir.maktab.service;
 
 import ir.maktab.dao.SubServiceDao;
+import ir.maktab.model.dto.ExpertDto;
 import ir.maktab.model.entity.services.SubService;
 import ir.maktab.model.entity.users.Expert;
+import ir.maktab.service.mapper.Mapper;
 import ir.maktab.validation.exception.IsExistException;
 import ir.maktab.validation.exception.NotExistException;
 import lombok.Getter;
@@ -11,6 +13,8 @@ import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -19,6 +23,7 @@ import java.util.List;
 public class SubServiceService {
     private final SubServiceDao subServiceDao;
     private final MainServiceService mainServiceService;
+    Mapper mapper = new Mapper();
 
     public void save(SubService subService) {
         List<SubService> subServices = subServiceDao.findByName(subService.getName());
@@ -65,5 +70,12 @@ public class SubServiceService {
         subService.getExperts().remove(expert);
         update(subService);
         System.out.println("expert remove successfully");
+    }
+
+    public List<ExpertDto> findExpertsByName(String name) {
+        SubService subService = findByName(name);
+        Set<Expert> experts = subService.getExperts();
+        List<ExpertDto> expertDtos = experts.stream().map(mapper::expertDto).collect(Collectors.toList());
+        return expertDtos;
     }
 }
