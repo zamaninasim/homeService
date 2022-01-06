@@ -1,6 +1,5 @@
 package ir.maktab.model.entity;
 
-import ir.maktab.model.entity.users.Customer;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,8 +13,6 @@ public class Comment {
     private Double score;
     @Lob
     private String opinion;
-    @ManyToOne
-    private Customer customer;
     @OneToOne
-    private Instruction order;
+    private Instruction instruction;
 }
