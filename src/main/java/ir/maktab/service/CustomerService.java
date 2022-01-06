@@ -1,7 +1,7 @@
 package ir.maktab.service;
 
 import ir.maktab.dao.CustomerDao;
-import ir.maktab.validation.exception.ExistException;
+import ir.maktab.validation.exception.IsExistException;
 import ir.maktab.model.entity.users.Customer;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,13 @@ import java.util.Optional;
 public class CustomerService {
     private final CustomerDao customerDao;
     public void save(Customer customer) {
-        customerDao.save(customer);
+        Optional<Customer> foundedCustomer = customerDao.findByEmailAddress(customer.getEmailAddress());
+        if (foundedCustomer.isPresent()) {
+            throw new IsExistException("this emailAddress exist!");
+        } else {
+            customerDao.save(customer);
+            System.out.println("customer whit '" + customer.getEmailAddress() + "' emailAddress saved.");
+        }
     }
 
     public Customer findByEmailAddress(String emailAddress) {
@@ -33,7 +39,7 @@ public class CustomerService {
     public boolean isExist(String emailAddress) {
         Optional<Customer> customer = customerDao.findByEmailAddress(emailAddress);
         if (customer.isPresent()) {
-            throw new ExistException("this emailAddress exist!");
+            throw new IsExistException("this emailAddress exist!");
         } else {
             return false;
         }
