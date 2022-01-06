@@ -41,4 +41,21 @@ public class ExpertDao {
         transaction.commit();
         session.close();
     }
+
+    public void delete(Expert expert) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.delete(expert);
+        transaction.commit();
+        session.close();
+    }
+
+    public Expert findById(Integer id) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Expert expert = session.get(Expert.class, id);
+        transaction.commit();
+        session.close();
+        return expert;
+    }
 }
