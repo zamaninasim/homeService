@@ -2,12 +2,13 @@ package ir.maktab.model.entity;
 
 import ir.maktab.model.entity.services.SubService;
 import ir.maktab.model.entity.users.Customer;
-import ir.maktab.model.enumeration.OrderStatus;
+import ir.maktab.model.enumeration.InstructionStatus;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -28,8 +29,8 @@ public class Instruction {
     @ManyToOne
     private Customer customer;
     @Enumerated(EnumType.STRING)
-    private OrderStatus orderStatus;
-    @OneToMany(mappedBy = "instruction")
+    private InstructionStatus orderStatus;
+    @OneToMany(mappedBy = "instruction",fetch = FetchType.EAGER)
     private Set<Offer> offers;
 
     @Override
@@ -43,5 +44,18 @@ public class Instruction {
                 ", address='" + address + '\'' +
                 ", orderStatus=" + orderStatus +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Instruction that = (Instruction) o;
+        return Objects.equals(id, that.id) && Objects.equals(proposedPrice, that.proposedPrice) && Objects.equals(jobDescription, that.jobDescription) && Objects.equals(orderRegistrationDate, that.orderRegistrationDate) && Objects.equals(dateOfWorkPerformed, that.dateOfWorkPerformed) && Objects.equals(address, that.address) && orderStatus == that.orderStatus;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, proposedPrice, jobDescription, orderRegistrationDate, dateOfWorkPerformed, address, orderStatus);
     }
 }
