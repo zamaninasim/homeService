@@ -2,7 +2,7 @@ package ir.maktab.service;
 
 import ir.maktab.dao.SubServiceDao;
 import ir.maktab.model.entity.services.SubService;
-import ir.maktab.validation.exception.ExistException;
+import ir.maktab.validation.exception.IsExistException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -16,9 +16,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SubServiceService {
     private final SubServiceDao subServiceDao;
+    private final MainServiceService mainServiceService;
 
     public void save(SubService subService) {
-        subServiceDao.save(subService);
+        List<SubService> subServices = subServiceDao.findByName(subService.getName());
+        if (!subServices.isEmpty()) {
+            throw new IsExistException("this subService exist!");
+        } else {
+            subServiceDao.save(subService);
+            System.out.println("SubService " + subService.getName() + " saved.");
+        }
     }
 
     public void update(SubService subService) {
@@ -28,7 +35,7 @@ public class SubServiceService {
     public boolean isSubServiceExist(String name) {
         List<SubService> subServices = subServiceDao.findByName(name);
         if (!subServices.isEmpty()) {
-            throw new ExistException("this subService exist!");
+            throw new IsExistException("this subService exist!");
         }
         return false;
     }
