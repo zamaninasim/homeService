@@ -308,7 +308,6 @@ public class HardCoreMain {
         }catch (RuntimeException e){
             System.out.println(e.getMessage());
         }*/
-
         // ایجاد پیشنهاد برای یک سفارش
         /*try {
             Instruction instruction = instructionService.get(1);
@@ -345,10 +344,8 @@ public class HardCoreMain {
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }*/
-
-
         //نظر دادن راجع به سفارش
-        try {
+        /*try {
             Instruction instruction = instructionService.get(1);
             Offer acceptedOffer = instructionService.findAcceptedOfferOfInstruction(instruction);
             Expert expert = acceptedOffer.getExpert();
@@ -362,6 +359,6 @@ public class HardCoreMain {
             commentService.save(comment);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
-        }
+        }*/
     }
 }

@@ -19,4 +19,29 @@ public class CommentDao {
         transaction.commit();
         session.close();
     }
+
+    public void delete(Comment comment) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.delete(comment);
+        transaction.commit();
+        session.close();
+    }
+
+    public void update(Comment comment) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.update(comment);
+        transaction.commit();
+        session.close();
+    }
+
+    public Comment findById(Integer id) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Comment comment = session.get(Comment.class, id);
+        transaction.commit();
+        session.close();
+        return comment;
+    }
 }
