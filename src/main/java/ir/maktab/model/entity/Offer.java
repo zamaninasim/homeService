@@ -26,4 +26,16 @@ public class Offer {
     private Date startTime;
     @Enumerated(EnumType.STRING)
     private OfferStatus offerStatus;
+
+    @Override
+    public String toString() {
+        return "Offer{" +
+                "id=" + id +
+                ", registrationDate=" + registrationDate +
+                ", proposedPrice=" + proposedPrice +
+                ", durationOfWork=" + durationOfWork +
+                ", startTime=" + startTime +
+                ", offerStatus=" + offerStatus +
+                '}';
+    }
 }
