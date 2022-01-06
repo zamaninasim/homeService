@@ -57,10 +57,17 @@ public class ExpertService {
         expertDao.update(expert);
     }
 
-    public List<SubServiceDto> findServicesByEmail(String emailAddress){
+    public List<SubServiceDto> findServicesByEmail(String emailAddress) {
         Expert expert = findByEmailAddress("zamaninasim213@gmail.com");
         Set<SubService> services = expert.getServices();
         List<SubServiceDto> serviceDtos = services.stream().map(mapper::subServiceDto).collect(Collectors.toList());
         return serviceDtos;
+    }
+
+    public void updateScore(Expert expert, Double instructionsScore) {
+        Double expertScore = expert.getScore();
+        Double newScore = (expertScore + instructionsScore) / 2;
+        expert.setScore(newScore);
+        update(expert);
     }
 }
