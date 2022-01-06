@@ -52,7 +52,7 @@ public class ManagerView {
         System.out.println("enter main service name:");
         String mainServiceName = scanner.nextLine();
         try {
-            mainServiceService.findMainService(mainServiceName);
+            mainServiceService.findByName(mainServiceName);
             System.out.println("this main service is exist");
         } catch (RuntimeException e) {
             MainService mainService = MainServiceBuilder.aMainService().withName(mainServiceName).build();
@@ -64,7 +64,7 @@ public class ManagerView {
         System.out.println("enter main service name:");
         String mainServiceName = scanner.nextLine();
         try {
-            MainService mainService = mainServiceService.findMainService(mainServiceName);
+            MainService mainService = mainServiceService.findByName(mainServiceName);
             System.out.println("enter sub service name:");
             String name = scanner.nextLine();
             subServiceService.isSubServiceExist(name);
