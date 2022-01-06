@@ -19,4 +19,29 @@ public class OfferDao {
         transaction.commit();
         session.close();
     }
+
+    public void delete(Offer offer) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.delete(offer);
+        transaction.commit();
+        session.close();
+    }
+
+    public void update(Offer offer) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.update(offer);
+        transaction.commit();
+        session.close();
+    }
+
+    public Offer findById(Integer id) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Offer offer = session.get(Offer.class, id);
+        transaction.commit();
+        session.close();
+        return offer;
+    }
 }
