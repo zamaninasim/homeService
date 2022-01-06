@@ -4,7 +4,7 @@ import ir.maktab.model.entity.Instruction;
 import ir.maktab.model.entity.Offer;
 import ir.maktab.model.entity.services.SubService;
 import ir.maktab.model.entity.users.Customer;
-import ir.maktab.model.enumeration.OrderStatus;
+import ir.maktab.model.enumeration.InstructionStatus;
 
 import java.util.Date;
 import java.util.Set;
@@ -18,7 +18,7 @@ public final class InstructionBuilder {
     private Date dateOfWorkPerformed;
     private String address;
     private Customer customer;
-    private OrderStatus orderStatus;
+    private InstructionStatus orderStatus;
     private Set<Offer> offers;
 
     private InstructionBuilder() {
@@ -68,7 +68,7 @@ public final class InstructionBuilder {
         return this;
     }
 
-    public InstructionBuilder withOrderStatus(OrderStatus orderStatus) {
+    public InstructionBuilder withOrderStatus(InstructionStatus orderStatus) {
         this.orderStatus = orderStatus;
         return this;
     }
