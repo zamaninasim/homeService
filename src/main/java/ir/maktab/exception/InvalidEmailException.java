@@ -1,4 +1,4 @@
-package ir.maktab.validation.exception;
+package ir.maktab.exception;
 
 public class InvalidEmailException extends RuntimeException{
     public InvalidEmailException(String message) {

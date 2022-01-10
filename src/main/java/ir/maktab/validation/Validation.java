@@ -1,9 +1,9 @@
 package ir.maktab.validation;
 
-import ir.maktab.validation.exception.InvalidEmailException;
-import ir.maktab.validation.exception.InvalidNameException;
-import ir.maktab.validation.exception.InvalidNumberException;
-import ir.maktab.validation.exception.InvalidPasswordException;
+import ir.maktab.exception.InvalidEmailException;
+import ir.maktab.exception.InvalidNameException;
+import ir.maktab.exception.InvalidNumberException;
+import ir.maktab.exception.InvalidPasswordException;
 
 public class Validation {
     public boolean validateEmail(String email) throws InvalidEmailException {

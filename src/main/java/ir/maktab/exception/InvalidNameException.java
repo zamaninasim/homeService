@@ -1,4 +1,4 @@
-package ir.maktab.validation.exception;
+package ir.maktab.exception;
 
 public class InvalidNameException extends RuntimeException{
     public InvalidNameException(String message) {
