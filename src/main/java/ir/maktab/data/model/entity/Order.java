@@ -43,7 +43,7 @@ public class Order {
     private Customer customer;
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
-    @OneToMany(mappedBy = "order",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
     private Set<Offer> offers = new HashSet<>();
     @ManyToOne
     private Expert expert;

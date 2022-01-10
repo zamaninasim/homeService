@@ -2,7 +2,6 @@ package ir.maktab.data.model.entity.users;
 
 import ir.maktab.data.model.entity.Order;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;

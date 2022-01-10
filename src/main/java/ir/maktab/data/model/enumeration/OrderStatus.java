@@ -1,6 +1,6 @@
-package ir.maktab.model.enumeration;
+package ir.maktab.data.model.enumeration;
 
-public enum InstructionStatus {
+public enum OrderStatus {
     WAITING_FOR_EXPERT_SUGGESTIONS,
     WAITING_FOR_EXPERT_SELECTION,
     WAITING_FOR_THE_EXPERT_TO_ARRIVE,
