@@ -1,11 +1,17 @@
-package ir.maktab.model.dto;
+package ir.maktab.dto;
 
-import ir.maktab.model.enumeration.Role;
-import ir.maktab.model.enumeration.UserStatus;
+import ir.maktab.data.model.enumeration.Role;
+import ir.maktab.data.model.enumeration.UserStatus;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDto {
     private String firstname;
     private String lastname;
