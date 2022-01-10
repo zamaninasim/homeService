@@ -1,4 +1,4 @@
-package ir.maktab.model;
+package ir.maktab.service.reader;
 
 import java.io.*;
 
