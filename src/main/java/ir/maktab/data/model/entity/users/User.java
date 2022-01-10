@@ -1,8 +1,12 @@
-package ir.maktab.model.entity.users;
+package ir.maktab.data.model.entity.users;
 
-import ir.maktab.model.enumeration.Role;
-import ir.maktab.model.enumeration.UserStatus;
+import ir.maktab.data.model.enumeration.Role;
+import ir.maktab.data.model.enumeration.UserStatus;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -12,6 +16,9 @@ import java.util.Objects;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Data
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)

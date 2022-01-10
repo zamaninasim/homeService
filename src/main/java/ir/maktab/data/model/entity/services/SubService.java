@@ -1,7 +1,10 @@
-package ir.maktab.model.entity.services;
+package ir.maktab.data.model.entity.services;
 
-import ir.maktab.model.entity.users.Expert;
+import ir.maktab.data.model.entity.users.Expert;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,6 +13,9 @@ import java.util.Set;
 
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SubService {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +23,7 @@ public class SubService {
     @Column(unique = true)
     private String name;
     private Long basePrice;
-    @Lob
+    @Column(length = 300)
     private String description;
     @ManyToOne
     private MainService mainService;

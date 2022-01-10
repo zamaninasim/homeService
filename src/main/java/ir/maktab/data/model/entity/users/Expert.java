@@ -1,7 +1,11 @@
-package ir.maktab.model.entity.users;
+package ir.maktab.data.model.entity.users;
 
-import ir.maktab.model.entity.services.SubService;
+import ir.maktab.data.model.entity.services.SubService;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.Arrays;
@@ -11,9 +15,12 @@ import java.util.Set;
 
 @Data
 @Entity
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Expert extends User {
     @Lob
-    @Column(columnDefinition = "BLOB")
+    @Column(columnDefinition = "BLOB",length = 300000)
     private byte[] photo;
     private Double score;
     @ManyToMany(mappedBy = "experts",fetch = FetchType.EAGER)

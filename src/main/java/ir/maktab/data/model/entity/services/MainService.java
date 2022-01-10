@@ -1,5 +1,7 @@
-package ir.maktab.model.entity.services;
+package ir.maktab.data.model.entity.services;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +12,9 @@ import java.util.Set;
 
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class MainService {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +22,7 @@ public class MainService {
     @Column(unique = true)
     private String name;
     @OneToMany(mappedBy = "mainService")
-    private Set<SubService> subServices= new HashSet<>();;
+    private Set<SubService> subServices= new HashSet<>();
 
     @Override
     public String toString() {

@@ -1,37 +1,52 @@
-package ir.maktab.model.entity;
+package ir.maktab.data.model.entity;
 
-import ir.maktab.model.entity.services.SubService;
-import ir.maktab.model.entity.users.Customer;
-import ir.maktab.model.enumeration.InstructionStatus;
+import ir.maktab.data.model.entity.services.SubService;
+import ir.maktab.data.model.entity.users.Customer;
+import ir.maktab.data.model.entity.users.Expert;
+import ir.maktab.data.model.enumeration.OrderStatus;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@Table(name = "orders")
 @Data
-public class Instruction {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne
+    @JoinColumn(nullable = false)
     private SubService subService;
     private Long proposedPrice;
+    @Column(length = 300)
     private String jobDescription;
     @CreationTimestamp
     private Date orderRegistrationDate;
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateOfWorkPerformed;
-    private String address;
+    @OneToOne
+    private Address address;
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Customer customer;
     @Enumerated(EnumType.STRING)
-    private InstructionStatus orderStatus;
-    @OneToMany(mappedBy = "instruction",fetch = FetchType.EAGER)
-    private Set<Offer> offers;
+    private OrderStatus orderStatus;
+    @OneToMany(mappedBy = "order",fetch = FetchType.EAGER)
+    private Set<Offer> offers = new HashSet<>();
+    @ManyToOne
+    private Expert expert;
 
     @Override
     public String toString() {
@@ -50,7 +65,7 @@ public class Instruction {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Instruction that = (Instruction) o;
+        Order that = (Order) o;
         return Objects.equals(id, that.id) && Objects.equals(proposedPrice, that.proposedPrice) && Objects.equals(jobDescription, that.jobDescription) && Objects.equals(orderRegistrationDate, that.orderRegistrationDate) && Objects.equals(dateOfWorkPerformed, that.dateOfWorkPerformed) && Objects.equals(address, that.address) && orderStatus == that.orderStatus;
     }
 
