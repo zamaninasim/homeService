@@ -1,33 +1,29 @@
 package ir.maktab.service;
 
-import ir.maktab.dao.OfferDao;
-import ir.maktab.model.entity.Offer;
-import ir.maktab.model.entity.services.SubService;
-import ir.maktab.model.enumeration.InstructionStatus;
-import lombok.Getter;
+import ir.maktab.data.dao.OfferRepository;
+import ir.maktab.data.model.entity.Offer;
+import ir.maktab.data.model.entity.services.SubService;
+import ir.maktab.data.model.enumeration.OrderStatus;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
-@Getter
-@Setter
 @Service
 @RequiredArgsConstructor
 public class OfferService {
-    private final OfferDao offerDao;
+    private final OfferRepository offerRepository;
 
     public void save(Offer offer) {
-        offerDao.save(offer);
+        offerRepository.save(offer);
     }
 
     public void addOfferToInstruction(Offer offer) {
         Set<SubService> expertServices = offer.getExpert().getServices();
-        SubService subService = offer.getInstruction().getSubService();
+        SubService subService = offer.getOrder().getSubService();
         if (expertServices.contains(subService)) {
             save(offer);
-            offer.getInstruction().setOrderStatus(InstructionStatus.WAITING_FOR_EXPERT_SELECTION);
+            offer.getOrder().setOrderStatus(OrderStatus.WAITING_FOR_EXPERT_SELECTION);
         } else {
             throw new RuntimeException("this Instruction service is not in your field.");
         }

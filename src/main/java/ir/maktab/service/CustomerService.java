@@ -1,45 +1,43 @@
 package ir.maktab.service;
 
-import ir.maktab.dao.CustomerDao;
-import ir.maktab.validation.exception.IsExistException;
-import ir.maktab.model.entity.users.Customer;
-import lombok.Getter;
+import ir.maktab.data.dao.CustomerRepository;
+import ir.maktab.data.model.entity.users.Customer;
+import ir.maktab.exception.EntityIsExistException;
+import ir.maktab.exception.EntityNotExistException;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Getter
-@Setter
 @Service
 @RequiredArgsConstructor
 public class CustomerService {
-    private final CustomerDao customerDao;
+    private final CustomerRepository customerRepository;
+
     public void save(Customer customer) {
-        Optional<Customer> foundedCustomer = customerDao.findByEmailAddress(customer.getEmailAddress());
+        Optional<Customer> foundedCustomer = customerRepository.findByEmailAddress(customer.getEmailAddress());
         if (foundedCustomer.isPresent()) {
-            throw new IsExistException("this emailAddress exist!");
+            throw new EntityIsExistException("this emailAddress exist!");
         } else {
-            customerDao.save(customer);
-            System.out.println("customer whit '" + customer.getEmailAddress() + "' emailAddress saved.");
+            customerRepository.save(customer);
         }
     }
 
     public Customer findByEmailAddress(String emailAddress) {
-        Optional<Customer> customer = customerDao.findByEmailAddress(emailAddress);
-        if (customer.isPresent()) {
+        Optional<Customer> customer = customerRepository.findByEmailAddress(emailAddress);
+        return customer.orElseThrow(()->new EntityNotExistException("emailAddress not exist!"));
+        /*if (customer.isPresent()) {
             Customer foundedCustomer = customer.get();
             return foundedCustomer;
         } else {
             throw new RuntimeException("emailAddress not exist!");
-        }
+        }*/
     }
 
     public boolean isExist(String emailAddress) {
-        Optional<Customer> customer = customerDao.findByEmailAddress(emailAddress);
+        Optional<Customer> customer = customerRepository.findByEmailAddress(emailAddress);
         if (customer.isPresent()) {
-            throw new IsExistException("this emailAddress exist!");
+            throw new EntityIsExistException("this emailAddress exist!");
         } else {
             return false;
         }

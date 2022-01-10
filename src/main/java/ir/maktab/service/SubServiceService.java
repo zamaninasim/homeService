@@ -1,63 +1,62 @@
 package ir.maktab.service;
 
-import ir.maktab.dao.SubServiceDao;
-import ir.maktab.model.dto.ExpertDto;
-import ir.maktab.model.entity.services.SubService;
-import ir.maktab.model.entity.users.Expert;
-import ir.maktab.service.mapper.Mapper;
-import ir.maktab.validation.exception.IsExistException;
-import ir.maktab.validation.exception.NotExistException;
-import lombok.Getter;
+import ir.maktab.data.dao.SubServiceRepository;
+import ir.maktab.data.model.entity.services.SubService;
+import ir.maktab.data.model.entity.users.Expert;
+import ir.maktab.dto.ExpertDto;
+import ir.maktab.dto.mapper.Mapper;
+import ir.maktab.exception.EntityIsExistException;
+import ir.maktab.exception.EntityNotExistException;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Getter
-@Setter
+
 @Service
 @RequiredArgsConstructor
 public class SubServiceService {
-    private final SubServiceDao subServiceDao;
+    private final SubServiceRepository subServiceRepository;
     private final MainServiceService mainServiceService;
-    Mapper mapper = new Mapper();
+    private final Mapper mapper;
 
     public void save(SubService subService) {
-        List<SubService> subServices = subServiceDao.findByName(subService.getName());
-        if (!subServices.isEmpty()) {
-            throw new IsExistException("this subService exist!");
+        Optional<SubService> subService1 = subServiceRepository.findByName(subService.getName());
+        if (subService1.isPresent()) {
+            throw new EntityIsExistException("this subService exist!");
         } else {
-            subServiceDao.save(subService);
-            System.out.println("SubService " + subService.getName() + " saved.");
+            subServiceRepository.save(subService);
         }
     }
 
     public void update(SubService subService) {
-        subServiceDao.update(subService);
+        subServiceRepository.save(subService);
     }
 
     public boolean isSubServiceExist(String name) {
-        List<SubService> subServices = subServiceDao.findByName(name);
-        if (!subServices.isEmpty()) {
-            throw new IsExistException("this subService exist!");
+        Optional<SubService> subService = subServiceRepository.findByName(name);
+        if (subService.isPresent()) {
+            throw new EntityIsExistException("this subService exist!");
         }
         return false;
     }
 
     public SubService findByName(String name) {
-        List<SubService> subServices = subServiceDao.findByName(name);
-        if (subServices.isEmpty()) {
-            throw new NotExistException("this subService not exist!");
+        Optional<SubService> subService = subServiceRepository.findByName(name);
+        if (subService.isPresent()) {
+            SubService foundedSubService = subService.get();
+            return foundedSubService;
+        } else {
+            throw new EntityNotExistException("this subService not exist!");
         }
-        SubService subService = subServices.get(0);
-        return subService;
     }
 
-    public List<SubService> findAll() {
-        return subServiceDao.findAll();
+    //TODO iterable ro bekhonam
+    public Iterable<SubService> findAll() {
+        return subServiceRepository.findAll();
     }
 
     public void addExpertToSubService(Expert expert, SubService subService) {

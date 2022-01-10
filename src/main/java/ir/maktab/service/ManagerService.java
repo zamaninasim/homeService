@@ -1,28 +1,24 @@
 package ir.maktab.service;
 
-import ir.maktab.dao.ManagerDao;
-import ir.maktab.model.entity.users.Manager;
-import lombok.Getter;
+import ir.maktab.data.dao.ManagerRepository;
+import ir.maktab.data.model.entity.users.Manager;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Getter
-@Setter
 @Service
 @RequiredArgsConstructor
 public class ManagerService {
-    private final ManagerDao managerDao;
+    private final ManagerRepository managerRepository;
 
     public void save(Manager manager) {
-        managerDao.save(manager);
+        managerRepository.save(manager);
     }
 
     public Boolean isManagerExist(String username) {
         Boolean exist = false;
-        Optional<Manager> manager = managerDao.findByUsername(username);
+        Optional<Manager> manager = managerRepository.findByUsername(username);
         if (manager.isPresent()) {
             exist = true;
         } else {
@@ -32,7 +28,7 @@ public class ManagerService {
     }
 
     public Manager findByUsername(String username) {
-        Optional<Manager> manager = managerDao.findByUsername(username);
+        Optional<Manager> manager = managerRepository.findByUsername(username);
         if (manager.isPresent()) {
             Manager foundedManager = manager.get();
             return foundedManager;

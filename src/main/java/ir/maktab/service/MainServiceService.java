@@ -1,40 +1,35 @@
 package ir.maktab.service;
 
-import ir.maktab.dao.MainServiceDao;
-import ir.maktab.validation.exception.IsExistException;
-import ir.maktab.validation.exception.NotExistException;
-import ir.maktab.model.entity.services.MainService;
-import lombok.Getter;
+import ir.maktab.data.dao.MainServiceRepository;
+import ir.maktab.data.model.entity.services.MainService;
+import ir.maktab.exception.EntityIsExistException;
+import ir.maktab.exception.EntityNotExistException;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Getter
-@Setter
 @Service
 @RequiredArgsConstructor
 public class MainServiceService {
-    private final MainServiceDao mainServiceDao;
+    private final MainServiceRepository mainServiceRepository;
 
-    public void save(MainService mainService) {
-        Optional<MainService> foundedMainService = mainServiceDao.findByName(mainService.getName());
+    public MainService save(MainService mainService) {
+        Optional<MainService> foundedMainService = mainServiceRepository.findByName(mainService.getName());
         if (foundedMainService.isPresent()) {
-            throw new IsExistException("this mainService exist!");
+            throw new EntityIsExistException("this mainService exist!");
         } else {
-            mainServiceDao.save(mainService);
-            System.out.println("mainService "+mainService.getName()+" saved.");
+            MainService savedMainService = mainServiceRepository.save(mainService);
+            return savedMainService;
         }
-
     }
 
     public MainService findByName(String name) {
-        Optional<MainService> mainService = mainServiceDao.findByName(name);
+        Optional<MainService> mainService = mainServiceRepository.findByName(name);
         if (mainService.isPresent()) {
             return mainService.get();
         } else {
-            throw new NotExistException("this mainService not exist!");
+            throw new EntityNotExistException("this mainService not exist!");
         }
     }
 }
