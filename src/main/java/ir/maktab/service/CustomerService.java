@@ -14,12 +14,12 @@ import java.util.Optional;
 public class CustomerService {
     private final CustomerRepository customerRepository;
 
-    public void save(Customer customer) {
+    public Customer save(Customer customer) {
         Optional<Customer> foundedCustomer = customerRepository.findByEmailAddress(customer.getEmailAddress());
         if (foundedCustomer.isPresent()) {
             throw new EntityIsExistException("this emailAddress exist!");
         } else {
-            customerRepository.save(customer);
+            return customerRepository.save(customer);
         }
     }
 
