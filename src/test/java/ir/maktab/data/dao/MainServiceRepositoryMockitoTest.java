@@ -15,14 +15,14 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class MainServiceRepositoryTest {
+public class MainServiceRepositoryMockitoTest {
     @Mock
     private MainServiceRepository mainServiceRepository;
     @InjectMocks
     private MainServiceService mainServiceService;
     @Test
     public void whenSaveMainService_shouldReturnMainService() {
-        MainService mainService = MainService.builder().name("a").build();
+        MainService mainService = MainService.builder().name("Home Appliances").build();
         when(mainServiceRepository.save(ArgumentMatchers.any(MainService.class))).thenReturn(mainService);
         MainService created = mainServiceService.save(mainService);
         assertThat(created.getName()).isSameAs(mainService.getName());
