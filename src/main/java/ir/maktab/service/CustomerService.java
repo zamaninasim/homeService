@@ -25,21 +25,6 @@ public class CustomerService {
 
     public Customer findByEmailAddress(String emailAddress) {
         Optional<Customer> customer = customerRepository.findByEmailAddress(emailAddress);
-        return customer.orElseThrow(()->new EntityNotExistException("emailAddress not exist!"));
-        /*if (customer.isPresent()) {
-            Customer foundedCustomer = customer.get();
-            return foundedCustomer;
-        } else {
-            throw new RuntimeException("emailAddress not exist!");
-        }*/
-    }
-
-    public boolean isExist(String emailAddress) {
-        Optional<Customer> customer = customerRepository.findByEmailAddress(emailAddress);
-        if (customer.isPresent()) {
-            throw new EntityIsExistException("this emailAddress exist!");
-        } else {
-            return false;
-        }
+        return customer.orElseThrow(() -> new EntityNotExistException("emailAddress not exist!"));
     }
 }
