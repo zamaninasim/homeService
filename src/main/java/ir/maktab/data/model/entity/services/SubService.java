@@ -27,7 +27,7 @@ public class SubService {
     private String description;
     @ManyToOne
     private MainService mainService;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Expert> experts = new HashSet<>();
 
     @Override
