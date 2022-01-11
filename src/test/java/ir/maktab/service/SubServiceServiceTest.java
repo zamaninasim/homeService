@@ -14,12 +14,12 @@ import static org.junit.Assert.*;
 public class SubServiceServiceTest {
     ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
     SubServiceService subServiceService = context.getBean(SubServiceService.class);
-    MainServiceService mainServiceService= context.getBean(MainServiceService.class);
-    MainService existMainService= mainServiceService.findByName("Cleaning and hygiene");
-    MainService notExistMainService= MainService.builder().name("aaa").build();
+    MainServiceService mainServiceService = context.getBean(MainServiceService.class);
     SubService subService;
+
     @Test
-    public void givenNewSubServiceWhitExistMainService_WhenSave_ThenReturnSubService(){
+    public void givenNewSubServiceWhitExistMainService_WhenSave_ThenReturnSubService() {
+        MainService existMainService = mainServiceService.findByName("Cleaning and hygiene");
         subService = SubService.builder()
                 .name("cleaning")
                 .basePrice(100000L)
@@ -27,10 +27,24 @@ public class SubServiceServiceTest {
                 .mainService(existMainService)
                 .build();
         SubService savedSubService = subServiceService.save(subService);
-        assertEquals(subService,savedSubService);
+        assertEquals(subService, savedSubService);
     }
     @Test
-    public void givenNewSubServiceWhitNotExistMainService_WhenSave_ThenReturnSubService(){
+    public void givenExistSubServiceNameWhitExistMainService_WhenSave_ThenThrowException() {
+        MainService existMainService = mainServiceService.findByName("Cleaning and hygiene");
+        subService = SubService.builder()
+                .name("cleaning")
+                .basePrice(100000L)
+                .description("description")
+                .mainService(existMainService)
+                .build();
+        EntityIsExistException thrown = assertThrows(EntityIsExistException.class, () -> subServiceService.save(subService));
+        assertTrue(thrown.getMessage().contains("this subService exist!"));
+    }
+
+    @Test
+    public void givenNewSubServiceWhitNotExistMainService_WhenSave_ThenThrowException() {
+        MainService notExistMainService = MainService.builder().name("aaa").build();
         subService = SubService.builder()
                 .name("cleaning")
                 .basePrice(100000L)
@@ -52,5 +66,14 @@ public class SubServiceServiceTest {
         EntityNotExistException thrown = assertThrows(EntityNotExistException.class, () -> subServiceService.findByName("aaa"));
         assertTrue(thrown.getMessage().contains("this subService not exist!"));
     }
+
+    @Test
+    public void givenExistSubService_WhenUpdate_ThenReturnSubService() {
+        SubService existSubService = subServiceService.findByName("cleaning");
+        existSubService.setDescription("new description");
+        SubService updatedSubService = subServiceService.update(existSubService);
+        assertEquals(existSubService, updatedSubService);
+    }
+
 
 }
