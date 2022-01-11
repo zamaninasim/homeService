@@ -30,7 +30,7 @@ public class SubServiceServiceTest {
         assertEquals(subService, savedSubService);
     }
     @Test
-    public void givenExistSubServiceNameWhitExistMainService_WhenSave_ThenThrowException() {
+    public void givenExistSubServiceWhitExistMainService_WhenSave_ThenThrowException() {
         MainService existMainService = mainServiceService.findByName("Cleaning and hygiene");
         subService = SubService.builder()
                 .name("cleaning")
