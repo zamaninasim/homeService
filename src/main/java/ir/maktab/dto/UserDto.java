@@ -13,6 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
+    private Long identificationNumber;
     private String firstname;
     private String lastname;
     private String emailAddress;
