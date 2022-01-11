@@ -57,7 +57,7 @@ public class ExpertServiceTest {
     }
 
     @Test
-    public void givenExistCustomerEmail_WhenFindByEmailAddress_ThenReturnMainService() {
+    public void givenExistCustomerEmail_WhenFindByEmailAddress_ThenReturnCustomer() {
         Expert expert = expertService.findByEmailAddress("aliakbargodarzi@gmail.com");
         assertNotNull(expert);
     }

@@ -46,7 +46,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void givenExistCustomerEmail_WhenFindByEmailAddress_ThenReturnMainService() {
+    public void givenExistCustomerEmail_WhenFindByEmailAddress_ThenReturnCustomer() {
         Customer customer = customerService.findByEmailAddress("maryamgoli213@gmail.com");
         assertNotNull(customer);
     }
