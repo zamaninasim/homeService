@@ -4,10 +4,10 @@ import ir.maktab.data.dao.UserRepository;
 import ir.maktab.data.model.entity.users.User;
 import ir.maktab.data.model.enumeration.Role;
 import ir.maktab.dto.UserDto;
-import ir.maktab.dto.mapper.OfferMapper;
 import ir.maktab.dto.mapper.UserMapper;
 import ir.maktab.exception.EntityIsExistException;
 import ir.maktab.exception.EntityNotExistException;
+import ir.maktab.exception.InCorrectException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,17 +22,17 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    public void save(User user) {
+    public User save(User user) {
         Optional<User> foundedUser = userRepository.findByEmailAddress(user.getEmailAddress());
         if (foundedUser.isPresent()) {
             throw new EntityIsExistException("this emailAddress exist!");
         } else {
-            userRepository.save(user);
+            return userRepository.save(user);
         }
     }
 
-    public void update(User user) {
-        userRepository.save(user);
+    public User update(User user) {
+        return userRepository.save(user);
     }
 
     public User findByEmailAddress(String emailAddress) {
@@ -50,12 +50,14 @@ public class UserService {
         return userDtos;
     }
 
-    public void changePassword(User user, String currentPassword, String newPassword) {
+    public User changePassword(User user, String currentPassword, String newPassword) {
         String password = user.getPassword();
         if (password.equals(currentPassword)) {
             user.setPassword(newPassword);
-            update(user);
             System.out.println("your password change successfully.");
+            return update(user);
+        }else {
+            throw new InCorrectException("password is wrong!");
         }
     }
 }
