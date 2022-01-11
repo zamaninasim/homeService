@@ -4,11 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -23,5 +21,6 @@ public class Address {
     private String state;
     private String streetAddress;
     private String houseNumber;
-    private String zipCode;
+    @Column(unique = true)
+    private Long zipCode;
 }
