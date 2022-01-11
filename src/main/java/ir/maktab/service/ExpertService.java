@@ -21,12 +21,12 @@ public class ExpertService {
     private final ExpertRepository expertRepository;
     private final SubServiceMapper subServiceMapper;
 
-    public void save(Expert expert) {
+    public Expert save(Expert expert) {
         Optional<Expert> foundedExpert = expertRepository.findByEmailAddress(expert.getEmailAddress());
         if (foundedExpert.isPresent()) {
             throw new EntityIsExistException("this emailAddress exist!");
         } else {
-            expertRepository.save(expert);
+            return expertRepository.save(expert);
         }
     }
 
