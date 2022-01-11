@@ -1,23 +1,30 @@
 package ir.maktab.view;
 
 import ir.maktab.config.Config;
-import ir.maktab.model.ImageReader;
-import ir.maktab.model.builder.CommentBuilder;
-import ir.maktab.model.entity.Comment;
-import ir.maktab.model.entity.Instruction;
-import ir.maktab.model.entity.Offer;
-import ir.maktab.model.entity.users.Expert;
-import ir.maktab.model.enumeration.InstructionStatus;
-import ir.maktab.model.enumeration.OfferStatus;
+import ir.maktab.data.model.entity.Address;
+import ir.maktab.data.model.entity.Offer;
+import ir.maktab.data.model.entity.Order;
+import ir.maktab.data.model.entity.services.MainService;
+import ir.maktab.data.model.entity.services.SubService;
+import ir.maktab.data.model.entity.users.Customer;
+import ir.maktab.data.model.entity.users.Expert;
+import ir.maktab.data.model.entity.users.User;
+import ir.maktab.data.model.enumeration.OfferStatus;
+import ir.maktab.data.model.enumeration.OrderStatus;
+import ir.maktab.data.model.enumeration.Role;
+import ir.maktab.data.model.enumeration.UserStatus;
+import ir.maktab.service.reader.ImageReader;
 import ir.maktab.service.*;
-import ir.maktab.service.mapper.Mapper;
+import ir.maktab.dto.mapper.OfferMapper;
 import ir.maktab.validation.Validation;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
-import java.util.Set;
 
 public class HardCoreMain {
     final static Scanner scanner = new Scanner(System.in);
@@ -28,75 +35,72 @@ public class HardCoreMain {
     final static CustomerService customerService = context.getBean(CustomerService.class);
     final static ExpertService expertService = context.getBean(ExpertService.class);
     final static UserService userService = context.getBean(UserService.class);
-    final static InstructionService instructionService = context.getBean(InstructionService.class);
+    final static OrderService orderService = context.getBean(OrderService.class);
     final static OfferService offerService = context.getBean(OfferService.class);
     final static CommentService commentService = context.getBean(CommentService.class);
     final static ImageReader myImage = new ImageReader();
-    final static Mapper mapper = new Mapper();
     final static Validation validation = new Validation();
 
     public static void main(String[] args) throws ParseException {
 
         //اضافه کردن سرویس اصلی
        /*try {
-           MainService mainService = MainServiceBuilder.aMainService().withName("Home Appliances").build();
+           MainService mainService = MainService.builder().name("Home Appliances").build();
            mainServiceService.save(mainService);
         } catch (RuntimeException e) {
            System.out.println(e.getMessage());
         }
         try {
-            MainService mainService = MainServiceBuilder.aMainService().withName("Cleaning and hygiene").build();
+            MainService mainService = MainService.builder().name("Cleaning and hygiene").build();
             mainServiceService.save(mainService);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
         try {
-            MainService mainService = MainServiceBuilder.aMainService().withName("Building decoration").build();
+            MainService mainService = MainService.builder().name("Building decoration").build();
             mainServiceService.save(mainService);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
         try {
-            MainService mainService = MainServiceBuilder.aMainService().withName("Building Facilities").build();
+            MainService mainService = MainService.builder().name("Building Facilities").build();
             mainServiceService.save(mainService);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
         try {
-            MainService mainService = MainServiceBuilder.aMainService().withName("vehicles").build();
+            MainService mainService = MainService.builder().name("vehicles").build();
             mainServiceService.save(mainService);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }*/
         // خدمت تکراری
         /*try {
-            MainService mainService = MainServiceBuilder.aMainService().withName("vehicles").build();
+            MainService mainService = MainService.builder().name("vehicles").build();
             mainServiceService.save(mainService);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }*/
         //اضافه کردن سرویس فرعی
-        /*try {
+        try {
             MainService mainService = mainServiceService.findByName("Cleaning and hygiene");
-            SubService subService = SubServiceBuilder
-                    .aSubService()
-                    .withName("cleaning")
-                    .withBasePrice(100000L)
-                    .withDescription("description")
-                    .withMainService(mainService)
+            SubService subService = SubService.builder()
+                    .name("cleaning")
+                    .basePrice(100000L)
+                    .description("description")
+                    .mainService(mainService)
                     .build();
             subServiceService.save(subService);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
-        try {
+       /* try {
             MainService mainService = mainServiceService.findByName("Home Appliances");
-            SubService subService = SubServiceBuilder
-                    .aSubService()
-                    .withName("Kitchen appliances")
-                    .withBasePrice(500000L)
-                    .withDescription("description")
-                    .withMainService(mainService)
+            SubService subService =SubService.builder()
+                    .name("Kitchen appliances")
+                    .basePrice(500000L)
+                    .description("description")
+                    .mainService(mainService)
                     .build();
             subServiceService.save(subService);
         } catch (RuntimeException e) {
@@ -105,12 +109,11 @@ public class HardCoreMain {
         //زیر خدمت تکراری
         /*try {
             MainService mainService = mainServiceService.findByName("Cleaning and hygiene");
-            SubService subService = SubServiceBuilder
-                    .aSubService()
-                    .withName("cleaning")
-                    .withBasePrice(100000L)
-                    .withDescription("description")
-                    .withMainService(mainService)
+            SubService subService =SubService.builder()
+                    .name("cleaning")
+                    .basePrice(100000L)
+                    .description("description")
+                    .mainService(mainService)
                     .build();
             subServiceService.save(subService);
         } catch (RuntimeException e) {
@@ -140,15 +143,14 @@ public class HardCoreMain {
             validation.validateEmail(email);
             String password = "nedA1377";
             validation.validatePassword(password);
-            User customer = CustomerBuilder
-                    .aCustomer()
-                    .withFirstname(firstname)
-                    .withLastname(lastname)
-                    .withEmailAddress(email)
-                    .withPassword(password)
-                    .withCredit(0L)
-                    .withUserStatus(UserStatus.NEW)
-                    .withRole(Role.CUSTOMER)
+            User customer = Customer.builder()
+                    .firstname(firstname)
+                    .lastname(lastname)
+                    .emailAddress(email)
+                    .password(password)
+                    .role(Role.CUSTOMER)
+                    .userStatus(UserStatus.NEW)
+                    .credit(0L)
                     .build();
             userService.save(customer);
         } catch (RuntimeException e) {
@@ -163,15 +165,14 @@ public class HardCoreMain {
             validation.validateEmail(email);
             String password = "Maryam1245";
             validation.validatePassword(password);
-            User customer = CustomerBuilder
-                    .aCustomer()
-                    .withFirstname(firstname)
-                    .withLastname(lastname)
-                    .withEmailAddress(email)
-                    .withPassword(password)
-                    .withCredit(0L)
-                    .withUserStatus(UserStatus.NEW)
-                    .withRole(Role.CUSTOMER)
+            User customer = Customer.builder()
+                    .firstname(firstname)
+                    .lastname(lastname)
+                    .emailAddress(email)
+                    .password(password)
+                    .role(Role.CUSTOMER)
+                    .userStatus(UserStatus.NEW)
+                    .credit(0L)
                     .build();
             userService.save(customer);
         } catch (RuntimeException e) {
@@ -179,6 +180,60 @@ public class HardCoreMain {
         }*/
         //اضافه کردن متخصص
         /*try {
+            String firstname = "aliakbar";
+            validation.validateName(firstname);
+            String lastname = "godarzi";
+            validation.validateName(lastname);
+            String email = "aliakbargodarzi@gmail.com";
+            validation.validateEmail(email);
+            String password = "akBar1234";
+            validation.validatePassword(password);
+            String imagePath = "\\nasim.jpg";
+            byte[] image = myImage.fileToBytes(imagePath);
+
+            User expert = Expert.builder()
+                    .firstname(firstname)
+                    .lastname(lastname)
+                    .emailAddress(email)
+                    .password(password)
+                    .credit(0L)
+                    .userStatus(UserStatus.NEW)
+                    .score(5.0)
+                    .photo(image)
+                    .role(Role.EXPERT)
+                    .build();
+            userService.save(expert);
+        } catch (RuntimeException | IOException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            String firstname = "faeze";
+            validation.validateName(firstname);
+            String lastname = "shariati";
+            validation.validateName(lastname);
+            String email = "faezeshariati@gmail.com";
+            validation.validateEmail(email);
+            String password = "Faeze1234";
+            validation.validatePassword(password);
+            String imagePath = "\\nasim.jpg";
+            byte[] image = myImage.fileToBytes(imagePath);
+
+            User expert = Expert.builder()
+                    .firstname(firstname)
+                    .lastname(lastname)
+                    .emailAddress(email)
+                    .password(password)
+                    .credit(0L)
+                    .userStatus(UserStatus.NEW)
+                    .score(5.0)
+                    .photo(image)
+                    .role(Role.EXPERT)
+                    .build();
+            userService.save(expert);
+        } catch (RuntimeException | IOException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
             String firstname = "ali";
             validation.validateName(firstname);
             String lastname = "jafari";
@@ -190,16 +245,16 @@ public class HardCoreMain {
             String imagePath = "\\nasim.jpg";
             byte[] image = myImage.fileToBytes(imagePath);
 
-            User expert = ExpertBuilder.anExpert()
-                    .withFirstname(firstname)
-                    .withLastname(lastname)
-                    .withEmailAddress(email)
-                    .withPassword(password)
-                    .withCredit(0L)
-                    .withUserStatus(UserStatus.NEW)
-                    .withScore(5.0)
-                    .withPhoto(image)
-                    .withRole(Role.EXPERT)
+            User expert = Expert.builder()
+                    .firstname(firstname)
+                    .lastname(lastname)
+                    .emailAddress(email)
+                    .password(password)
+                    .credit(0L)
+                    .userStatus(UserStatus.NEW)
+                    .score(5.0)
+                    .photo(image)
+                    .role(Role.EXPERT)
                     .build();
             userService.save(expert);
         } catch (RuntimeException | IOException e) {
@@ -218,16 +273,16 @@ public class HardCoreMain {
             String imagePath = "\\nasim.jpg";
             byte[] image = myImage.fileToBytes(imagePath);
 
-            User expert = ExpertBuilder.anExpert()
-                    .withFirstname(firstname)
-                    .withLastname(lastname)
-                    .withEmailAddress(email)
-                    .withPassword(password)
-                    .withCredit(0L)
-                    .withUserStatus(UserStatus.NEW)
-                    .withScore(5.0)
-                    .withPhoto(image)
-                    .withRole(Role.EXPERT)
+            User expert = Expert.builder()
+                    .firstname(firstname)
+                    .lastname(lastname)
+                    .emailAddress(email)
+                    .password(password)
+                    .credit(0L)
+                    .userStatus(UserStatus.NEW)
+                    .score(5.0)
+                    .photo(image)
+                    .role(Role.EXPERT)
                     .build();
             userService.save(expert);
         } catch (RuntimeException | IOException e) {
@@ -245,6 +300,34 @@ public class HardCoreMain {
         }*/
         //اضافه کردن متخصص به زیر خدمت
         /*try {
+            SubService subService = subServiceService.findByName("Kitchen appliances");
+            Expert expert = expertService.findByEmailAddress("faezeshariati@gmail.com");
+            subServiceService.addExpertToSubService(expert, subService);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            SubService subService = subServiceService.findByName("cleaning");
+            Expert expert = expertService.findByEmailAddress("faezeshariati@gmail.com");
+            subServiceService.addExpertToSubService(expert, subService);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            SubService subService = subServiceService.findByName("Kitchen appliances");
+            Expert expert = expertService.findByEmailAddress("aliakbargodarzi@gmail.com");
+            subServiceService.addExpertToSubService(expert, subService);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            SubService subService = subServiceService.findByName("cleaning");
+            Expert expert = expertService.findByEmailAddress("aliakbargodarzi@gmail.com");
+            subServiceService.addExpertToSubService(expert, subService);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
             SubService subService = subServiceService.findByName("Kitchen appliances");
             Expert expert = expertService.findByEmailAddress("alijafari@gmail.com");
             subServiceService.addExpertToSubService(expert, subService);
@@ -294,53 +377,142 @@ public class HardCoreMain {
             Customer customer = customerService.findByEmailAddress("maryamgoli213@gmail.com");
             Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse("1400-10-15 12:30");
             SubService subService = subServiceService.findByName("cleaning");
-            Instruction instruction = InstructionBuilder
-                    .anInstruction()
-                    .withProposedPrice(1000000L)
-                    .withJobDescription("description")
-                    .withDateOfWorkPerformed(date)
-                    .withAddress("address")
-                    .withCustomer(customer)
-                    .withOrderStatus(InstructionStatus.WAITING_FOR_EXPERT_SUGGESTIONS)
-                    .withSubService(subService)
+            Address address = Address
+                    .builder()
+                    .city("tehran")
+                    .state("resalat")
+                    .streetAddress("ghazvini.st")
+                    .houseNumber("12")
+                    .zipCode(86165841L)
                     .build();
-            instructionService.save(instruction);
+
+            Order order = Order.builder()
+                    .proposedPrice(1000000L)
+                    .jobDescription("description")
+                    .dateOfWorkPerformed(date)
+                    .address(address)
+                    .customer(customer)
+                    .orderStatus(OrderStatus.WAITING_FOR_EXPERT_SUGGESTIONS)
+                    .subService(subService)
+                    .build();
+            orderService.save(order);
+        }catch (RuntimeException e){
+            System.out.println(e.getMessage());
+        }
+        try {
+            Customer customer = customerService.findByEmailAddress("maryamgoli213@gmail.com");
+            Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse("1401-02-20 08:00");
+            SubService subService = subServiceService.findByName("cleaning");
+            Address address = Address
+                    .builder()
+                    .city("tehran")
+                    .state("resalat")
+                    .streetAddress("ghazvini.st")
+                    .houseNumber("12")
+                    .zipCode(86165841L)
+                    .build();
+
+            Order order = Order.builder()
+                    .proposedPrice(1000000L)
+                    .jobDescription("description")
+                    .dateOfWorkPerformed(date)
+                    .address(address)
+                    .customer(customer)
+                    .orderStatus(OrderStatus.WAITING_FOR_EXPERT_SUGGESTIONS)
+                    .subService(subService)
+                    .build();
+            orderService.save(order);
+        }catch (RuntimeException e){
+            System.out.println(e.getMessage());
+        }
+        try {
+            Customer customer = customerService.findByEmailAddress("maryamgoli213@gmail.com");
+            Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse("1400-12-20 09:00");
+            SubService subService = subServiceService.findByName("cleaning");
+            Address address = Address
+                    .builder()
+                    .city("tehran")
+                    .state("resalat")
+                    .streetAddress("ghazvini.st")
+                    .houseNumber("12")
+                    .zipCode(86165841L)
+                    .build();
+
+            Order order = Order.builder()
+                    .proposedPrice(1000000L)
+                    .jobDescription("description")
+                    .dateOfWorkPerformed(date)
+                    .address(address)
+                    .customer(customer)
+                    .orderStatus(OrderStatus.WAITING_FOR_EXPERT_SUGGESTIONS)
+                    .subService(subService)
+                    .build();
+            orderService.save(order);
         }catch (RuntimeException e){
             System.out.println(e.getMessage());
         }*/
         // ایجاد پیشنهاد برای یک سفارش
         /*try {
-            Instruction instruction = instructionService.get(1);
+            Order order = orderService.findByTrackingNumber(1L);
             Expert expert = expertService.findByEmailAddress("zamaninasim213@gmail.com");
             Date startDate = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse("1400-10-15 13:30");
-            Offer offer = OfferBuilder
-                    .anOffer()
-                    .withExpert(expert)
-                    .withInstruction(instruction)
-                    .withProposedPrice(500000L)
-                    .withDurationOfWork(5)
-                    .withStartTime(startDate)
-                    .withOfferStatus(OfferStatus.UNCHECKED)
+            Offer offer = Offer.builder()
+                    .expert(expert)
+                    .order(order)
+                    .proposedPrice(500000L)
+                    .durationOfWork(5)
+                    .startTime(startDate)
+                    .offerStatus(OfferStatus.UNCHECKED)
                     .build();
-            offerService.addOfferToInstruction(offer);
+            offerService.addOfferToOrder(offer);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
-
         try {
-            Instruction instruction = instructionService.get(1);
+            Order order = orderService.findByTrackingNumber(1L);
             Expert expert = expertService.findByEmailAddress("alijafari@gmail.com");
-            Date startDate = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse("1400-10-15 00:30");
-            Offer offer = OfferBuilder
-                    .anOffer()
-                    .withExpert(expert)
-                    .withInstruction(instruction)
-                    .withProposedPrice(500000L)
-                    .withDurationOfWork(5)
-                    .withStartTime(startDate)
-                    .withOfferStatus(OfferStatus.UNCHECKED)
+            Date startDate = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse("1400-10-15 13:30");
+            Offer offer = Offer.builder()
+                    .expert(expert)
+                    .order(order)
+                    .proposedPrice(500000L)
+                    .durationOfWork(5)
+                    .startTime(startDate)
+                    .offerStatus(OfferStatus.UNCHECKED)
                     .build();
-            offerService.addOfferToInstruction(offer);
+            offerService.addOfferToOrder(offer);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            Order order = orderService.findByTrackingNumber(1L);
+            Expert expert = expertService.findByEmailAddress("faezeshariati@gmail.com");
+            Date startDate = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse("1400-10-15 13:30");
+            Offer offer = Offer.builder()
+                    .expert(expert)
+                    .order(order)
+                    .proposedPrice(500000L)
+                    .durationOfWork(5)
+                    .startTime(startDate)
+                    .offerStatus(OfferStatus.UNCHECKED)
+                    .build();
+            offerService.addOfferToOrder(offer);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            Order order = orderService.findByTrackingNumber(1L);
+            Expert expert = expertService.findByEmailAddress("aliakbargodarzi@gmail.com");
+            Date startDate = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse("1400-10-15 13:30");
+            Offer offer = Offer.builder()
+                    .expert(expert)
+                    .order(order)
+                    .proposedPrice(500000L)
+                    .durationOfWork(5)
+                    .startTime(startDate)
+                    .offerStatus(OfferStatus.UNCHECKED)
+                    .build();
+            offerService.addOfferToOrder(offer);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }*/
