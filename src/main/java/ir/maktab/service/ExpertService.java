@@ -4,8 +4,9 @@ import ir.maktab.data.dao.ExpertRepository;
 import ir.maktab.data.model.entity.services.SubService;
 import ir.maktab.data.model.entity.users.Expert;
 import ir.maktab.dto.SubServiceDto;
-import ir.maktab.dto.mapper.Mapper;
+import ir.maktab.dto.mapper.SubServiceMapper;
 import ir.maktab.exception.EntityIsExistException;
+import ir.maktab.exception.EntityNotExistException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ExpertService {
     private final ExpertRepository expertRepository;
-    private final Mapper mapper;
+    private final SubServiceMapper subServiceMapper;
 
     public void save(Expert expert) {
         Optional<Expert> foundedExpert = expertRepository.findByEmailAddress(expert.getEmailAddress());
@@ -31,32 +32,18 @@ public class ExpertService {
 
     public Expert findByEmailAddress(String emailAddress) {
         Optional<Expert> expert = expertRepository.findByEmailAddress(emailAddress);
-        if (expert.isPresent()) {
-            Expert foundedExpert = expert.get();
-            return foundedExpert;
-        } else {
-            throw new RuntimeException("emailAddress not exist!");
-        }
+        return expert.orElseThrow(() -> new EntityNotExistException("emailAddress not exist!"));
     }
 
-    public boolean isExist(String emailAddress) {
-        Optional<Expert> expert = expertRepository.findByEmailAddress(emailAddress);
-        if (expert.isPresent()) {
-            throw new EntityIsExistException("this emailAddress exist!");
-        } else {
-            return false;
-        }
-    }
-
-    //TODO Update ro ba save neveshtam
     public void update(Expert expert) {
         expertRepository.save(expert);
     }
 
+    //TODO by expert
     public List<SubServiceDto> findServicesByEmail(String emailAddress) {
         Expert expert = findByEmailAddress(emailAddress);
         Set<SubService> services = expert.getServices();
-        List<SubServiceDto> serviceDtos = services.stream().map(mapper::subServiceDto).collect(Collectors.toList());
+        List<SubServiceDto> serviceDtos = services.stream().map(subServiceMapper::subServiceToSubServiceDto).collect(Collectors.toList());
         return serviceDtos;
     }
 
