@@ -8,18 +8,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExpertDto {
+    private Long identificationNumber;
     private String firstname;
     private String lastname;
     private String emailAddress;
     private UserStatus userStatus;
     private Date registrationDate;
-    private Long credit;
     private Role role;
     private byte[] photo;
     private Double score;
