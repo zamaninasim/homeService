@@ -1,7 +1,10 @@
 package ir.maktab.service.reader;
 
+import org.springframework.stereotype.Component;
+
 import java.io.*;
 
+@Component
 public class ImageReader {
     public byte[] fileToBytes(String filename) throws IOException {
         final byte[] buffer = new byte[256];
