@@ -32,13 +32,25 @@ public class SubServiceServiceTest {
     @Test
     public void givenNewSubServiceWhitNotExistMainService_WhenSave_ThenReturnSubService(){
         subService = SubService.builder()
-                .name("Kitchen appliances")
+                .name("cleaning")
                 .basePrice(100000L)
                 .description("description")
                 .mainService(notExistMainService)
                 .build();
         EntityNotExistException thrown = assertThrows(EntityNotExistException.class, () -> subServiceService.save(subService));
         assertTrue(thrown.getMessage().contains("this mainService not exist!"));
+    }
+
+    @Test
+    public void givenExistSubServiceName_WhenFindByName_ThenReturnSubService() {
+        SubService subService = subServiceService.findByName("cleaning");
+        assertNotNull(subService);
+    }
+
+    @Test
+    public void givenNotExistSubServiceName_WhenFindByName_ThenThrowException() {
+        EntityNotExistException thrown = assertThrows(EntityNotExistException.class, () -> subServiceService.findByName("aaa"));
+        assertTrue(thrown.getMessage().contains("this subService not exist!"));
     }
 
 }
