@@ -26,10 +26,6 @@ public class MainServiceService {
 
     public MainService findByName(String name) {
         Optional<MainService> mainService = mainServiceRepository.findByName(name);
-        if (mainService.isPresent()) {
-            return mainService.get();
-        } else {
-            throw new EntityNotExistException("this mainService not exist!");
-        }
+        return mainService.orElseThrow(() -> new EntityNotExistException("this mainService not exist!"));
     }
 }
