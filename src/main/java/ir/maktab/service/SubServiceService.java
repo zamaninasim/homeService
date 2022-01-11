@@ -50,20 +50,17 @@ public class SubServiceService {
         return subServices;
     }
 
-    public void addExpertToSubService(Expert expert, SubService subService) {
+    public SubService addExpertToSubService(Expert expert, SubService subService) {
         subService.getExperts().add(expert);
-        update(subService);
-        System.out.println("expert add successfully");
+        return update(subService);
     }
 
-    public void removeExpertFromSubService(Expert expert, SubService subService) {
+    public SubService removeExpertFromSubService(Expert expert, SubService subService) {
         subService.getExperts().remove(expert);
-        update(subService);
-        System.out.println("expert remove successfully");
+        return update(subService);
     }
 
-    //TODO
-    public List<ExpertDto> findExpertsByName(String name) {
+    public List<ExpertDto> findSubServiceExpertsBySubServiceName(String name) {
         SubService subService = findByName(name);
         Set<Expert> experts = subService.getExperts();
         List<ExpertDto> expertDtos = experts.stream().map(expertMapper::expertToExpertDto).collect(Collectors.toList());
