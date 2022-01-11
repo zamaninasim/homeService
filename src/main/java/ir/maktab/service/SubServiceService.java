@@ -4,12 +4,13 @@ import ir.maktab.data.dao.SubServiceRepository;
 import ir.maktab.data.model.entity.services.SubService;
 import ir.maktab.data.model.entity.users.Expert;
 import ir.maktab.dto.ExpertDto;
-import ir.maktab.dto.mapper.Mapper;
+import ir.maktab.dto.mapper.ExpertMapper;
 import ir.maktab.exception.EntityIsExistException;
 import ir.maktab.exception.EntityNotExistException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -21,42 +22,32 @@ import java.util.stream.Collectors;
 public class SubServiceService {
     private final SubServiceRepository subServiceRepository;
     private final MainServiceService mainServiceService;
-    private final Mapper mapper;
+    private final ExpertMapper expertMapper;
 
-    public void save(SubService subService) {
-        Optional<SubService> subService1 = subServiceRepository.findByName(subService.getName());
-        if (subService1.isPresent()) {
+    public SubService save(SubService subService) {
+        mainServiceService.findByName(subService.getMainService().getName());
+        Optional<SubService> foundedSubService = subServiceRepository.findByName(subService.getName());
+        if (foundedSubService.isPresent()) {
             throw new EntityIsExistException("this subService exist!");
         } else {
-            subServiceRepository.save(subService);
+            return subServiceRepository.save(subService);
         }
     }
 
-    public void update(SubService subService) {
-        subServiceRepository.save(subService);
-    }
-
-    public boolean isSubServiceExist(String name) {
-        Optional<SubService> subService = subServiceRepository.findByName(name);
-        if (subService.isPresent()) {
-            throw new EntityIsExistException("this subService exist!");
-        }
-        return false;
+    public SubService update(SubService subService) {
+        return subServiceRepository.save(subService);
     }
 
     public SubService findByName(String name) {
         Optional<SubService> subService = subServiceRepository.findByName(name);
-        if (subService.isPresent()) {
-            SubService foundedSubService = subService.get();
-            return foundedSubService;
-        } else {
-            throw new EntityNotExistException("this subService not exist!");
-        }
+        return subService.orElseThrow(() -> new EntityNotExistException("this subService not exist!"));
     }
 
-    //TODO iterable ro bekhonam
-    public Iterable<SubService> findAll() {
-        return subServiceRepository.findAll();
+    public List<SubService> findAll() {
+        List<SubService> subServices = new ArrayList<>();
+        Iterable<SubService> subServiceIterable = subServiceRepository.findAll();
+        subServiceIterable.forEach(subServices::add);
+        return subServices;
     }
 
     public void addExpertToSubService(Expert expert, SubService subService) {
@@ -71,10 +62,11 @@ public class SubServiceService {
         System.out.println("expert remove successfully");
     }
 
+    //TODO
     public List<ExpertDto> findExpertsByName(String name) {
         SubService subService = findByName(name);
         Set<Expert> experts = subService.getExperts();
-        List<ExpertDto> expertDtos = experts.stream().map(mapper::expertDto).collect(Collectors.toList());
+        List<ExpertDto> expertDtos = experts.stream().map(expertMapper::expertToExpertDto).collect(Collectors.toList());
         return expertDtos;
     }
 }
