@@ -23,7 +23,6 @@ public class SubServiceServiceTest {
     SubServiceService subServiceService = context.getBean(SubServiceService.class);
     MainServiceService mainServiceService = context.getBean(MainServiceService.class);
     ExpertService expertService = context.getBean(ExpertService.class);
-    ExpertMapper expertMapper = context.getBean(ExpertMapper.class);
     SubService subService;
 
     @Test
