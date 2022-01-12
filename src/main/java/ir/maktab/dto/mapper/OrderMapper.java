@@ -2,23 +2,16 @@ package ir.maktab.dto.mapper;
 
 import ir.maktab.data.model.entity.Order;
 import ir.maktab.dto.OrderDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class OrderMapper {
-    private AddressMapper addressMapper;
-    private CustomerMapper customerMapper;
-    private ExpertMapper expertMapper;
-    private SubServiceMapper subServiceMapper;
-
-    @Autowired
-    public OrderMapper(AddressMapper addressMapper, CustomerMapper customerMapper, ExpertMapper expertMapper, SubServiceMapper subServiceMapper) {
-        this.addressMapper = addressMapper;
-        this.customerMapper = customerMapper;
-        this.expertMapper = expertMapper;
-        this.subServiceMapper = subServiceMapper;
-    }
+    private final AddressMapper addressMapper;
+    private final CustomerMapper customerMapper;
+    private final ExpertMapper expertMapper;
+    private final SubServiceMapper subServiceMapper;
 
     public OrderDto orderToOrderDto(Order order) {
         return OrderDto.builder()
