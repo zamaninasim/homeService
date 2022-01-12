@@ -38,7 +38,7 @@ public class Order {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date dateOfWorkPerformed;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(nullable = false)
     private Address address;
     @ManyToOne
