@@ -18,18 +18,21 @@ public class OfferService {
     private final OfferRepository offerRepository;
     private final OrderRepository orderRepository;
 
-    public void save(Offer offer) {
-        offerRepository.save(offer);
+    public Offer save(Offer offer) {
+        return offerRepository.save(offer);
     }
 
-    public void addOfferToOrder(Offer offer) {
+    public Order addOfferToOrder(Offer offer) {
         Set<SubService> expertServices = offer.getExpert().getServices();
         SubService subService = offer.getOrder().getSubService();
         if (expertServices.contains(subService)) {
-            save(offer);
-            Order order = offer.getOrder();
+            Offer savedOffer = save(offer);
+            System.out.println(savedOffer);
+            Order order = savedOffer.getOrder();
             order.setOrderStatus(OrderStatus.WAITING_FOR_EXPERT_SELECTION);
+            order.getOffers().add(offer);
             orderRepository.save(order);
+            return order;
         } else {
             throw new NotMatchException("this Instruction service is not in your field.");
         }
