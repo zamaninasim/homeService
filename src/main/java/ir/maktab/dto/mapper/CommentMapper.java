@@ -3,18 +3,12 @@ package ir.maktab.dto.mapper;
 import ir.maktab.data.model.entity.Comment;
 import ir.maktab.dto.CommentDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class CommentMapper {
-    private OrderMapper orderMapper;
-
-    @Autowired
-    public CommentMapper(OrderMapper orderMapper) {
-        this.orderMapper = orderMapper;
-    }
+    private final OrderMapper orderMapper;
 
     public CommentDto commentToCommentDto(Comment comment) {
         return CommentDto.builder()
