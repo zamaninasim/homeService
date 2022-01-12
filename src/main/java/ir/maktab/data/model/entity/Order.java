@@ -29,14 +29,17 @@ public class Order {
     @ManyToOne
     @JoinColumn(nullable = false)
     private SubService subService;
+    @Column(nullable = false)
     private Long proposedPrice;
-    @Column(length = 300)
+    @Column(length = 300,nullable = false)
     private String jobDescription;
     @CreationTimestamp
     private Date orderRegistrationDate;
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false)
     private Date dateOfWorkPerformed;
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(nullable = false)
     private Address address;
     @ManyToOne
     @JoinColumn(nullable = false)
