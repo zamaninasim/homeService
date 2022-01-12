@@ -18,13 +18,8 @@ import java.util.Set;
 public class OrderService {
     private final OrderRepository orderRepository;
 
-    public void save(Order order) {
-        Optional<Order> orderByTrackingNumber = orderRepository.findById(order.getId());
-        if (orderByTrackingNumber.isPresent()) {
-            throw new EntityIsExistException("this order is exist!");
-        } else {
-            orderRepository.save(order);
-        }
+    public Order save(Order order) {
+        return orderRepository.save(order);
     }
 
     public Order findById(Integer id) {
@@ -32,7 +27,7 @@ public class OrderService {
         return order.orElseThrow(() -> new EntityNotExistException("this order not exist!"));
     }
 
-    public Offer findAcceptedOfferOfInstruction(Order order) {
+    public Offer findAcceptedOfferOfOrder(Order order) {
         Offer acceptedOffer = null;
         if (order.getOrderStatus().equals(OrderStatus.PAID)) {
             Set<Offer> offers = order.getOffers();
@@ -43,7 +38,7 @@ public class OrderService {
             }
             return acceptedOffer;
         } else {
-            throw new RuntimeException("Instruction not Paid!");
+            throw new RuntimeException("Order not Paid!");
         }
     }
 }
