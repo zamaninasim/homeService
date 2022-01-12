@@ -2,19 +2,14 @@ package ir.maktab.dto.mapper;
 
 import ir.maktab.data.model.entity.Offer;
 import ir.maktab.dto.OfferDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class OfferMapper {
-    private ExpertMapper expertMapper;
-    private OrderMapper orderMapper;
-
-    @Autowired
-    public OfferMapper(ExpertMapper expertMapper, OrderMapper orderMapper) {
-        this.expertMapper = expertMapper;
-        this.orderMapper = orderMapper;
-    }
+    private final ExpertMapper expertMapper;
+    private final OrderMapper orderMapper;
 
     public OfferDto offerToOfferDto(Offer offer) {
         return OfferDto.builder()
