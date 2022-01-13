@@ -17,12 +17,12 @@ import java.util.Set;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Expert extends User {
+public class Expert extends User implements Comparable<Expert> {
     @Lob
-    @Column(columnDefinition = "BLOB",length = 300000)
+    @Column(columnDefinition = "BLOB", length = 300000)
     private byte[] photo;
     private Double score;
-    @ManyToMany(mappedBy = "experts",fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "experts", fetch = FetchType.EAGER)
     private Set<SubService> services = new HashSet<>();
 
     @Override
@@ -46,5 +46,14 @@ public class Expert extends User {
         int result = Objects.hash(super.hashCode(), score, services);
         result = 31 * result + Arrays.hashCode(photo);
         return result;
+    }
+
+    @Override
+    public int compareTo(Expert o) {
+        if (this.score == o.score)
+            return Double.compare(this.score, o.score);
+        else if (this.score < o.score)
+            return 1;
+        else return -1;
     }
 }
