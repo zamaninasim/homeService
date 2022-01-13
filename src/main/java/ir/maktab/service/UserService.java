@@ -3,17 +3,16 @@ package ir.maktab.service;
 import ir.maktab.data.dao.UserRepository;
 import ir.maktab.data.model.entity.users.User;
 import ir.maktab.data.model.enumeration.Role;
-import ir.maktab.dto.UserDto;
 import ir.maktab.dto.mapper.UserMapper;
 import ir.maktab.exception.EntityIsExistException;
 import ir.maktab.exception.EntityNotExistException;
 import ir.maktab.exception.InCorrectException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -44,10 +43,9 @@ public class UserService {
         }
     }
 
-    public List<UserDto> findUserByCondition(String firstname, String lastname, String email, Role role) {
-        List<User> users = userRepository.findUserByCondition(firstname, lastname, email, role);
-        List<UserDto> userDtos = users.stream().map(userMapper::userToUserDto).collect(Collectors.toList());
-        return userDtos;
+    public List<User> findUserByCondition(String firstname, String lastname, String email, Role role) {
+        Specification<User> specification = UserRepository.selectByCondition(firstname, lastname, email, role);
+        return userRepository.findAll(specification);
     }
 
     public User changePassword(User user, String currentPassword, String newPassword) {
@@ -56,7 +54,7 @@ public class UserService {
             user.setPassword(newPassword);
             System.out.println("your password change successfully.");
             return update(user);
-        }else {
+        } else {
             throw new InCorrectException("password is wrong!");
         }
     }
