@@ -5,11 +5,16 @@ import ir.maktab.data.dao.OrderRepository;
 import ir.maktab.data.model.entity.Offer;
 import ir.maktab.data.model.entity.Order;
 import ir.maktab.data.model.entity.services.SubService;
+import ir.maktab.data.model.entity.users.Expert;
 import ir.maktab.data.model.enumeration.OrderStatus;
+import ir.maktab.exception.EntityNotExistException;
 import ir.maktab.exception.NotMatchException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -25,7 +30,7 @@ public class OfferService {
     public Order addOfferToOrder(Offer offer) {
         Set<SubService> expertServices = offer.getExpert().getServices();
         SubService subService = offer.getOrder().getSubService();
-        if (expertServices.contains(subService)) {
+        if (expertServices.contains(subService)&& subService.getBasePrice()<=offer.getProposedPrice()) {
             Offer savedOffer = save(offer);
             System.out.println(savedOffer);
             Order order = savedOffer.getOrder();
@@ -34,7 +39,16 @@ public class OfferService {
             orderRepository.save(order);
             return order;
         } else {
-            throw new NotMatchException("this Instruction service is not in your field.");
+            throw new NotMatchException("your offer is not match for this Order!");
         }
+    }
+
+    public List<Offer> findeByOrder(Order order, Sort var1){
+        return offerRepository.findByOrder(order,var1);
+    }
+
+    public Offer findByOrderAndExpert(Order order, Expert expert){
+        Optional<Offer> offer = offerRepository.findByOrderAndExpert(order, expert);
+        return offer.orElseThrow(()->new EntityNotExistException("offer not found!"));
     }
 }
