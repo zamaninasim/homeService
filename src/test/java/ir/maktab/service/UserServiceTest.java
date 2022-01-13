@@ -13,6 +13,9 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class UserServiceTest {
@@ -64,11 +67,26 @@ public class UserServiceTest {
         User updatedUser = userService.changePassword(user, "akBar1234", "aliA1234");
         assertEquals(updatedUser.getPassword(), "aliA1234");
     }
+
     @Test
     public void givenUserAndWrongCurrentPass_WhenChangePassword_ThenThrowException() {
         User user = userService.findByEmailAddress("aliakbargodarzi@gmail.com");
         InCorrectException thrown =
-                assertThrows(InCorrectException.class, () -> userService.changePassword(user,"aliA1234", "akBar1234"));
+                assertThrows(InCorrectException.class, () -> userService.changePassword(user, "aliA1234", "akBar1234"));
         assertTrue(thrown.getMessage().contains("password is wrong!"));
+    }
+
+    @Test
+    public void givenAllCondition_WhenFindUserByCondition_ThenReturnUserList() {
+        List<User> usersByCondition = userService.findUserByCondition(this.user.getFirstname(), this.user.getLastname(), this.user.getEmailAddress(), this.user.getRole());
+        assertEquals(1, usersByCondition.size());
+        assertEquals(usersByCondition.get(0).getEmailAddress(), user.getEmailAddress());
+    }
+
+    @Test
+    public void givenSomeCondition_WhenFindUserByCondition_ThenReturnUserList() {
+        List<User> usersByCondition = userService.findUserByCondition(this.user.getFirstname(), null, this.user.getEmailAddress(), null);
+        assertEquals(1, usersByCondition.size());
+        assertEquals(usersByCondition.get(0).getEmailAddress(), user.getEmailAddress());
     }
 }
