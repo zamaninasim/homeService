@@ -43,6 +43,8 @@ public class Offer {
                 ", durationOfWork=" + durationOfWork +
                 ", startTime=" + startTime +
                 ", offerStatus=" + offerStatus +
+                ", expertScore=" + expert.getScore() +
+                ", expert=" + expert.getFirstname() + " " + expert.getLastname() +
                 '}';
     }
 
