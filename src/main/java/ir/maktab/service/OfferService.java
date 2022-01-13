@@ -30,7 +30,7 @@ public class OfferService {
     public Order addOfferToOrder(Offer offer) {
         Set<SubService> expertServices = offer.getExpert().getServices();
         SubService subService = offer.getOrder().getSubService();
-        if (expertServices.contains(subService)&& subService.getBasePrice()<=offer.getProposedPrice()) {
+        if (expertServices.contains(subService) && subService.getBasePrice() <= offer.getProposedPrice()) {
             Offer savedOffer = save(offer);
             System.out.println(savedOffer);
             Order order = savedOffer.getOrder();
@@ -43,12 +43,12 @@ public class OfferService {
         }
     }
 
-    public List<Offer> findeByOrder(Order order, Sort var1){
-        return offerRepository.findByOrder(order,var1);
+    public List<Offer> findByOrder(Order order) {
+        return offerRepository.findByOrder(order, Sort.by("expert.score", "proposedPrice").descending());
     }
 
-    public Offer findByOrderAndExpert(Order order, Expert expert){
+    public Offer findByOrderAndExpert(Order order, Expert expert) {
         Optional<Offer> offer = offerRepository.findByOrderAndExpert(order, expert);
-        return offer.orElseThrow(()->new EntityNotExistException("offer not found!"));
+        return offer.orElseThrow(() -> new EntityNotExistException("offer not found!"));
     }
 }

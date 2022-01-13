@@ -31,7 +31,7 @@ public class Order {
     private SubService subService;
     @Column(nullable = false)
     private Long proposedPrice;
-    @Column(length = 300,nullable = false)
+    @Column(length = 300, nullable = false)
     private String jobDescription;
     @CreationTimestamp
     private Date orderRegistrationDate;

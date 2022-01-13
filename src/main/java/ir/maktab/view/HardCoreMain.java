@@ -1,29 +1,20 @@
 package ir.maktab.view;
 
 import ir.maktab.config.Config;
-import ir.maktab.data.model.entity.Address;
 import ir.maktab.data.model.entity.Offer;
 import ir.maktab.data.model.entity.Order;
-import ir.maktab.data.model.entity.services.MainService;
-import ir.maktab.data.model.entity.services.SubService;
-import ir.maktab.data.model.entity.users.Customer;
 import ir.maktab.data.model.entity.users.Expert;
-import ir.maktab.data.model.entity.users.User;
-import ir.maktab.data.model.enumeration.OfferStatus;
-import ir.maktab.data.model.enumeration.OrderStatus;
-import ir.maktab.data.model.enumeration.Role;
-import ir.maktab.data.model.enumeration.UserStatus;
-import ir.maktab.service.reader.ImageReader;
 import ir.maktab.service.*;
-import ir.maktab.dto.mapper.OfferMapper;
+import ir.maktab.service.reader.ImageReader;
 import ir.maktab.validation.Validation;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
-import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class HardCoreMain {
@@ -38,6 +29,7 @@ public class HardCoreMain {
     final static OrderService orderService = context.getBean(OrderService.class);
     final static OfferService offerService = context.getBean(OfferService.class);
     final static CommentService commentService = context.getBean(CommentService.class);
+    final static AddressService addressService = context.getBean(AddressService.class);
     final static ImageReader myImage = new ImageReader();
     final static Validation validation = new Validation();
 
@@ -82,7 +74,7 @@ public class HardCoreMain {
             System.out.println(e.getMessage());
         }*/
         //اضافه کردن سرویس فرعی
-        try {
+       /* try {
             MainService mainService = mainServiceService.findByName("Cleaning and hygiene");
             SubService subService = SubService.builder()
                     .name("cleaning")
@@ -94,7 +86,7 @@ public class HardCoreMain {
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
-       /* try {
+        try {
             MainService mainService = mainServiceService.findByName("Home Appliances");
             SubService subService =SubService.builder()
                     .name("Kitchen appliances")
@@ -366,26 +358,21 @@ public class HardCoreMain {
         //جستجو یوزر
         /*List<UserDto> userDtos = userService.findUserByCondition("nasim", "zamani", "zamaninasim213@gmail.com", Role.EXPERT);
         System.out.println(userDtos);*/
+        //جستجو یوزر با jsp
+        /*List<User> users = userService.findUserByCondition("nasim", null, "zamaninasim213@gmail.com", Role.EXPERT);
+        System.out.println(users);*/
         //جستجو حوزه تخصصی متخصصان
         /*List<SubServiceDto> serviceDtos = expertService.findServicesByEmail("zamaninasim213@gmail.com");
         System.out.println(serviceDtos);*/
         //جستجو مختصصان یک حوزه
-        /*List<ExpertDto> expertDtos = subServiceService.findExpertsByName("Kitchen appliances");
+        /*List<ExpertDto> expertDtos = subServiceService.findSubServiceExpertsBySubServiceName("Kitchen appliances");
         System.out.println(expertDtos);*/
         //ایجاد سفارش
-        /*try {
+       /*try {
             Customer customer = customerService.findByEmailAddress("maryamgoli213@gmail.com");
             Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse("1400-10-15 12:30");
             SubService subService = subServiceService.findByName("cleaning");
-            Address address = Address
-                    .builder()
-                    .city("tehran")
-                    .state("resalat")
-                    .streetAddress("ghazvini.st")
-                    .houseNumber("12")
-                    .zipCode(86165841L)
-                    .build();
-
+            Address address = addressService.findByZipCode(86165841L);
             Order order = Order.builder()
                     .proposedPrice(1000000L)
                     .jobDescription("description")
@@ -396,22 +383,14 @@ public class HardCoreMain {
                     .subService(subService)
                     .build();
             orderService.save(order);
-        }catch (RuntimeException e){
+       }catch (RuntimeException e){
             System.out.println(e.getMessage());
         }
         try {
             Customer customer = customerService.findByEmailAddress("maryamgoli213@gmail.com");
             Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse("1401-02-20 08:00");
-            SubService subService = subServiceService.findByName("cleaning");
-            Address address = Address
-                    .builder()
-                    .city("tehran")
-                    .state("resalat")
-                    .streetAddress("ghazvini.st")
-                    .houseNumber("12")
-                    .zipCode(86165841L)
-                    .build();
-
+            SubService subService = subServiceService.findByName("Kitchen appliances");
+            Address address = addressService.findByZipCode(86165841L);
             Order order = Order.builder()
                     .proposedPrice(1000000L)
                     .jobDescription("description")
@@ -426,23 +405,49 @@ public class HardCoreMain {
             System.out.println(e.getMessage());
         }
         try {
-            Customer customer = customerService.findByEmailAddress("maryamgoli213@gmail.com");
-            Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse("1400-12-20 09:00");
-            SubService subService = subServiceService.findByName("cleaning");
+            Customer customer = customerService.findByEmailAddress("nedaakbari213@gmail.com");
+            Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse("1400-12-25 09:00");
+            SubService subService = subServiceService.findByName("Kitchen appliances");
             Address address = Address
                     .builder()
                     .city("tehran")
-                    .state("resalat")
-                    .streetAddress("ghazvini.st")
-                    .houseNumber("12")
-                    .zipCode(86165841L)
+                    .state("madani")
+                    .streetAddress("rezaee")
+                    .houseNumber("16")
+                    .zipCode(65165261L)
                     .build();
-
+            Address savedAddress = addressService.save(address);
             Order order = Order.builder()
                     .proposedPrice(1000000L)
                     .jobDescription("description")
                     .dateOfWorkPerformed(date)
-                    .address(address)
+                    .address(savedAddress)
+                    .customer(customer)
+                    .orderStatus(OrderStatus.WAITING_FOR_EXPERT_SUGGESTIONS)
+                    .subService(subService)
+                    .build();
+            orderService.save(order);
+        }catch (RuntimeException e){
+            System.out.println(e.getMessage());
+        }
+        try {
+            Customer customer = customerService.findByEmailAddress("nedaakbari213@gmail.com");
+            Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse("1400-06-12 15:00");
+            SubService subService = subServiceService.findByName("cleaning");
+            Address address = Address
+                    .builder()
+                    .city("tehran")
+                    .state("madani")
+                    .streetAddress("rezaee")
+                    .houseNumber("16")
+                    .zipCode(65165261L)
+                    .build();
+            Address savedAddress = addressService.save(address);
+            Order order = Order.builder()
+                    .proposedPrice(1000000L)
+                    .jobDescription("description")
+                    .dateOfWorkPerformed(date)
+                    .address(savedAddress)
                     .customer(customer)
                     .orderStatus(OrderStatus.WAITING_FOR_EXPERT_SUGGESTIONS)
                     .subService(subService)
@@ -453,7 +458,7 @@ public class HardCoreMain {
         }*/
         // ایجاد پیشنهاد برای یک سفارش
         /*try {
-            Order order = orderService.findByTrackingNumber(1L);
+            Order order = orderService.findById(5);
             Expert expert = expertService.findByEmailAddress("zamaninasim213@gmail.com");
             Date startDate = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse("1400-10-15 13:30");
             Offer offer = Offer.builder()
@@ -469,7 +474,7 @@ public class HardCoreMain {
             System.out.println(e.getMessage());
         }
         try {
-            Order order = orderService.findByTrackingNumber(1L);
+            Order order = orderService.findById(5);
             Expert expert = expertService.findByEmailAddress("alijafari@gmail.com");
             Date startDate = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse("1400-10-15 13:30");
             Offer offer = Offer.builder()
@@ -485,7 +490,7 @@ public class HardCoreMain {
             System.out.println(e.getMessage());
         }
         try {
-            Order order = orderService.findByTrackingNumber(1L);
+            Order order = orderService.findById(5);
             Expert expert = expertService.findByEmailAddress("faezeshariati@gmail.com");
             Date startDate = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse("1400-10-15 13:30");
             Offer offer = Offer.builder()
@@ -501,7 +506,7 @@ public class HardCoreMain {
             System.out.println(e.getMessage());
         }
         try {
-            Order order = orderService.findByTrackingNumber(1L);
+            Order order = orderService.findById(5);
             Expert expert = expertService.findByEmailAddress("aliakbargodarzi@gmail.com");
             Date startDate = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse("1400-10-15 13:30");
             Offer offer = Offer.builder()
@@ -532,5 +537,20 @@ public class HardCoreMain {
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }*/
+        //لیست پیشنهاد های یک سفارش
+        /*try {
+            Order order = orderService.findById(5);
+            List<Offer> offers = offerService.findByOrder(order);
+            System.out.println(offers);
+            //offers.stream().sorted(Comparator.comparingLong(Offer::getProposedPrice)).forEach(System.out::println);
+            //offers.stream().sorted(Comparator.comparing(Offer::getExpert)).forEach(System.out::println);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }*/
+        //انتخاب پیشنهاد
+        /*Order order = orderService.findById(5);
+        Expert expert = expertService.findById(5);
+        customerService.acceptOfferForOrder(order, expert);*/
     }
 }
+

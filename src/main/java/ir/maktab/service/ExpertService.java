@@ -54,7 +54,7 @@ public class ExpertService {
         update(expert);
     }
 
-    public Expert findById(Integer id){
+    public Expert findById(Integer id) {
         Optional<Expert> expert = expertRepository.findById(id);
         return expert.orElseThrow(() -> new EntityNotExistException("expert not exist!"));
     }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class ExpertMapper {
     public ExpertDto expertToExpertDto(Expert expert) {
         return ExpertDto.builder()
-                .identificationNumber(1000L+(expert.getId()))
+                .identificationNumber(1000L + (expert.getId()))
                 .firstname(expert.getFirstname())
                 .lastname(expert.getLastname())
                 .emailAddress(expert.getEmailAddress())
@@ -19,9 +19,10 @@ public class ExpertMapper {
                 .score(expert.getScore())
                 .build();
     }
+
     public Expert expertDtoToExpert(ExpertDto expertDto) {
         return Expert.builder()
-                .id((int) ((expertDto.getIdentificationNumber())-1000))
+                .id((int) ((expertDto.getIdentificationNumber()) - 1000))
                 .firstname(expertDto.getFirstname())
                 .lastname(expertDto.getLastname())
                 .emailAddress(expertDto.getEmailAddress())

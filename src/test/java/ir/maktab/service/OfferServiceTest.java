@@ -67,6 +67,7 @@ public class OfferServiceTest {
         NotMatchException thrown = assertThrows(NotMatchException.class, () -> offerService.addOfferToOrder(offer));
         assertTrue(thrown.getMessage().contains("your offer is not match for this Order!"));
     }
+
     @Test
     public void givenOfferWhitProposedPriceLessThanBasePrice_WhenAddOfferToOrder_ThenThrowException() {
         Order order = orderService.findById(5);

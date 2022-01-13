@@ -5,7 +5,6 @@ import ir.maktab.data.model.entity.Offer;
 import ir.maktab.data.model.entity.Order;
 import ir.maktab.data.model.enumeration.OfferStatus;
 import ir.maktab.data.model.enumeration.OrderStatus;
-import ir.maktab.exception.EntityIsExistException;
 import ir.maktab.exception.EntityNotExistException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

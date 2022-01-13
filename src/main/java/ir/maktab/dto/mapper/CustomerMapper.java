@@ -21,7 +21,7 @@ public class CustomerMapper {
 
     public Customer customerDtoToCustomer(CustomerDto customerDto) {
         return Customer.builder()
-                .id((int) ((customerDto.getIdentificationNumber())-1000L))
+                .id((int) ((customerDto.getIdentificationNumber()) - 1000L))
                 .firstname(customerDto.getFirstname())
                 .lastname(customerDto.getLastname())
                 .emailAddress(customerDto.getEmailAddress())

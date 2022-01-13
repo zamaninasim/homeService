@@ -2,7 +2,6 @@ package ir.maktab.service;
 
 import ir.maktab.data.dao.AddressRepository;
 import ir.maktab.data.model.entity.Address;
-import ir.maktab.exception.EntityIsExistException;
 import ir.maktab.exception.EntityNotExistException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
