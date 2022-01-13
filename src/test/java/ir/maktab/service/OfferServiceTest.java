@@ -13,6 +13,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
@@ -88,5 +89,15 @@ public class OfferServiceTest {
                 .build();
         NotMatchException thrown = assertThrows(NotMatchException.class, () -> offerService.addOfferToOrder(offer));
         assertTrue(thrown.getMessage().contains("your offer is not match for this Order!"));
+    }
+
+    @Test
+    public void givenOrder_WhenFindByOrder_ThenReturnOffers() {
+        Order order = orderService.findById(5);
+        List<Offer> offers = offerService.findByOrder(order);
+        assertTrue(offers.size()==3);
+        Offer firstOffer = offers.get(0);
+        assertTrue(firstOffer.getExpert().getFirstname().equals("aliakbar"));
+        assertTrue(firstOffer.getExpert().getScore()==4);
     }
 }

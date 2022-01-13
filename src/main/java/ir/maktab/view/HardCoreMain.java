@@ -538,7 +538,7 @@ public class HardCoreMain {
             System.out.println(e.getMessage());
         }*/
         //لیست پیشنهاد های یک سفارش
-        /*try {
+        try {
             Order order = orderService.findById(5);
             List<Offer> offers = offerService.findByOrder(order);
             System.out.println(offers);
@@ -546,7 +546,7 @@ public class HardCoreMain {
             //offers.stream().sorted(Comparator.comparing(Offer::getExpert)).forEach(System.out::println);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
-        }*/
+        }
         //انتخاب پیشنهاد
         /*Order order = orderService.findById(5);
         Expert expert = expertService.findById(5);
