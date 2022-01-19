@@ -26,5 +26,5 @@ public class OrderDto {
     private OrderStatus orderStatus;
     private Set<OfferDto> offers = new HashSet<>();
     private ExpertDto expert;
-    private UUID trackingNumber;
+    private String trackingCode;
 }
