@@ -11,6 +11,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -33,6 +34,7 @@ public class Offer {
     private Date startTime;
     @Enumerated(EnumType.STRING)
     private OfferStatus offerStatus;
+    private UUID trackingNumber = UUID.randomUUID();
 
     @Override
     public String toString() {
