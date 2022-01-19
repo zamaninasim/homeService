@@ -3,21 +3,21 @@ package ir.maktab.dto;
 import ir.maktab.data.model.enumeration.Role;
 import ir.maktab.data.model.enumeration.UserStatus;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 
 @Data
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
-    private Long identificationNumber;
     private String firstname;
     private String lastname;
     private String emailAddress;
+    private String password;
     private UserStatus userStatus;
     private Date registrationDate;
     private Long credit;
