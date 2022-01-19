@@ -4,6 +4,7 @@ import ir.maktab.data.dao.SubServiceRepository;
 import ir.maktab.data.model.entity.services.SubService;
 import ir.maktab.data.model.entity.users.Expert;
 import ir.maktab.dto.ExpertDto;
+import ir.maktab.dto.OfferDto;
 import ir.maktab.dto.SubServiceDto;
 import ir.maktab.exception.EntityIsExistException;
 import ir.maktab.exception.EntityNotExistException;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -75,8 +77,6 @@ public class SubServiceService {
         SubServiceDto subServiceDto = findByName(name);
         SubService subService = modelMapper.map(subServiceDto, SubService.class);
         Set<Expert> experts = subService.getExperts();
-        List<ExpertDto> expertDtos = new ArrayList<>();
-        experts.stream().forEach(expert -> expertDtos.add(modelMapper.map(expert, ExpertDto.class)));
-        return expertDtos;
+        return experts.stream().map(expert->modelMapper.map(expert, ExpertDto.class)).collect(Collectors.toList());
     }
 }
