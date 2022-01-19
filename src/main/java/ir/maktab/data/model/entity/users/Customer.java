@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import java.util.List;
 
@@ -16,8 +17,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Customer extends User {
-    @OneToMany(mappedBy = "customer")
-    private List<Order> instruction;
+    @OneToMany(mappedBy = "customer",fetch = FetchType.EAGER)
+    private List<Order> orders;
 
     @Override
     public String toString() {
