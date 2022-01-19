@@ -3,11 +3,13 @@ package ir.maktab.service;
 import ir.maktab.data.dao.ExpertRepository;
 import ir.maktab.data.model.entity.services.SubService;
 import ir.maktab.data.model.entity.users.Expert;
+import ir.maktab.dto.ExpertDto;
 import ir.maktab.dto.SubServiceDto;
 import ir.maktab.dto.mapper.SubServiceMapper;
 import ir.maktab.exception.EntityIsExistException;
 import ir.maktab.exception.EntityNotExistException;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,42 +22,46 @@ import java.util.stream.Collectors;
 public class ExpertService {
     private final ExpertRepository expertRepository;
     private final SubServiceMapper subServiceMapper;
+    private final ModelMapper modelMapper;
 
-    public Expert save(Expert expert) {
+    public void save(ExpertDto expertDto) {
+        Expert expert = modelMapper.map(expertDto, Expert.class);
         Optional<Expert> foundedExpert = expertRepository.findByEmailAddress(expert.getEmailAddress());
         if (foundedExpert.isPresent()) {
             throw new EntityIsExistException("this emailAddress exist!");
         } else {
-            return expertRepository.save(expert);
+            expertRepository.save(expert);
         }
     }
 
-    public Expert findByEmailAddress(String emailAddress) {
-        Optional<Expert> expert = expertRepository.findByEmailAddress(emailAddress);
-        return expert.orElseThrow(() -> new EntityNotExistException("emailAddress not exist!"));
+    public ExpertDto findByEmailAddress(String emailAddress) {
+        Optional<Expert> optionalExpert = expertRepository.findByEmailAddress(emailAddress);
+        Expert expert = optionalExpert.orElseThrow(() -> new EntityNotExistException("emailAddress not exist!"));
+        return modelMapper.map(expert, ExpertDto.class);
     }
 
-    public void update(Expert expert) {
+    public void update(ExpertDto expertDto) {
+        Expert expert = modelMapper.map(expertDto, Expert.class);
         expertRepository.save(expert);
     }
 
-    //TODO by expert
-    public List<SubServiceDto> findServicesByEmail(String emailAddress) {
-        Expert expert = findByEmailAddress(emailAddress);
+    public List<SubServiceDto> findServicesByEmail(ExpertDto expertDto) {
+        Expert expert = modelMapper.map(expertDto, Expert.class);
         Set<SubService> services = expert.getServices();
-        List<SubServiceDto> serviceDtos = services.stream().map(subServiceMapper::subServiceToSubServiceDto).collect(Collectors.toList());
-        return serviceDtos;
+        return services.stream()
+                .map(subService -> modelMapper.map(subService, SubServiceDto.class)).collect(Collectors.toList());
     }
 
-    public void updateScore(Expert expert, Double instructionsScore) {
-        Double expertScore = expert.getScore();
+    public void updateScore(ExpertDto expertDto, Double instructionsScore) {
+        Double expertScore = expertDto.getScore();
         Double newScore = (expertScore + instructionsScore) / 2;
-        expert.setScore(newScore);
-        update(expert);
+        expertDto.setScore(newScore);
+        update(expertDto);
     }
 
-    public Expert findById(Integer id) {
-        Optional<Expert> expert = expertRepository.findById(id);
-        return expert.orElseThrow(() -> new EntityNotExistException("expert not exist!"));
+    public ExpertDto findById(Integer id) {
+        Optional<Expert> optionalExpert = expertRepository.findById(id);
+        Expert expert = optionalExpert.orElseThrow(() -> new EntityNotExistException("expert not exist!"));
+        return modelMapper.map(expert, ExpertDto.class);
     }
 }
