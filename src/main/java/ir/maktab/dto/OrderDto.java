@@ -7,20 +7,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDto {
-    private Long identificationNumber;
-    private SubServiceDto subServiceDto;
+    private SubServiceDto subService;
     private Long proposedPrice;
     private String jobDescription;
     private Date orderRegistrationDate;
     private Date dateOfWorkPerformed;
-    private AddressDto addressDto;
-    private CustomerDto customerDto;
+    private AddressDto address;
+    private CustomerDto customer;
     private OrderStatus orderStatus;
-    private ExpertDto expertDto;
+    private Set<OfferDto> offers = new HashSet<>();
+    private ExpertDto expert;
+    private UUID trackingNumber;
 }
