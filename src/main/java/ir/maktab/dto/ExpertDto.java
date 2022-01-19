@@ -1,26 +1,19 @@
 package ir.maktab.dto;
 
-import ir.maktab.data.model.enumeration.Role;
-import ir.maktab.data.model.enumeration.UserStatus;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExpertDto {
-    private Long identificationNumber;
-    private String firstname;
-    private String lastname;
-    private String emailAddress;
-    private UserStatus userStatus;
-    private Date registrationDate;
-    private Role role;
+public class ExpertDto extends UserDto {
     private byte[] photo;
     private Double score;
+    private Set<SubServiceDto> services = new HashSet<>();
 }
