@@ -47,7 +47,7 @@ public class Order {
     private Set<Offer> offers = new HashSet<>();
     @ManyToOne
     private Expert expert;
-    private UUID trackingNumber = UUID.randomUUID();
+    private String trackingCode;
 
     @Override
     public String toString() {
