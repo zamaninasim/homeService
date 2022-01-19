@@ -19,5 +19,6 @@ public class Comment {
     private Double score;
     private String opinion;
     @OneToOne
+    @JoinColumn(unique = true)
     private Order order;
 }
