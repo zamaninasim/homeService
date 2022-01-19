@@ -5,7 +5,6 @@ import ir.maktab.data.model.entity.services.SubService;
 import ir.maktab.data.model.entity.users.Expert;
 import ir.maktab.dto.ExpertDto;
 import ir.maktab.dto.SubServiceDto;
-import ir.maktab.dto.mapper.SubServiceMapper;
 import ir.maktab.exception.EntityIsExistException;
 import ir.maktab.exception.EntityNotExistException;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ExpertService {
     private final ExpertRepository expertRepository;
-    private final SubServiceMapper subServiceMapper;
     private final ModelMapper modelMapper;
 
     public void save(ExpertDto expertDto) {
