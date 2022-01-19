@@ -13,12 +13,12 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OfferDto {
-    private Long identificationNumber;
-    private ExpertDto expertDto;
-    private OrderDto orderDto;
+    private ExpertDto expert;
+    private OrderDto order;
     private Date registrationDate;
     private Long proposedPrice;
     private int durationOfWork;
     private Date startTime;
     private OfferStatus offerStatus;
+    private String trackingCode;
 }
