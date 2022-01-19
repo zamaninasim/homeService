@@ -11,10 +11,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "orders")
@@ -50,6 +47,7 @@ public class Order {
     private Set<Offer> offers = new HashSet<>();
     @ManyToOne
     private Expert expert;
+    private UUID trackingNumber = UUID.randomUUID();
 
     @Override
     public String toString() {
