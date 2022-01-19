@@ -5,8 +5,10 @@ import ir.maktab.data.model.entity.Offer;
 import ir.maktab.data.model.entity.Order;
 import ir.maktab.data.model.enumeration.OfferStatus;
 import ir.maktab.data.model.enumeration.OrderStatus;
+import ir.maktab.dto.OrderDto;
 import ir.maktab.exception.EntityNotExistException;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,17 +18,20 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
+    private final ModelMapper modelMapper;
 
-    public Order save(Order order) {
-        return orderRepository.save(order);
+    public void save(OrderDto orderDto) {
+        Order order = modelMapper.map(orderDto, Order.class);
+        orderRepository.save(order);
     }
 
-    public Order findById(Integer id) {
-        Optional<Order> order = orderRepository.findById(id);
-        return order.orElseThrow(() -> new EntityNotExistException("this order not exist!"));
+    public OrderDto findById(Integer id) {
+        Optional<Order> optionalOrder = orderRepository.findById(id);
+        Order order = optionalOrder.orElseThrow(() -> new EntityNotExistException("this order not exist!"));
+        return modelMapper.map(order,OrderDto.class);
     }
-
-    public Offer findAcceptedOfferOfOrder(Order order) {
+//TODO
+/*    public Offer findAcceptedOfferOfOrder(Order order) {
         Offer acceptedOffer = null;
         if (order.getOrderStatus().equals(OrderStatus.PAID)) {
             Set<Offer> offers = order.getOffers();
@@ -39,5 +44,5 @@ public class OrderService {
         } else {
             throw new RuntimeException("Order not Paid!");
         }
-    }
+    }*/
 }
