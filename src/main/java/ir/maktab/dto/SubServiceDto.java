@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -14,4 +17,5 @@ public class SubServiceDto {
     private Long basePrice;
     private String description;
     private MainServiceDto mainServiceDto;
+    private Set<ExpertDto> experts = new HashSet<>();
 }
