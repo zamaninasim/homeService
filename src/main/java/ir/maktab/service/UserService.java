@@ -12,9 +12,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -51,9 +51,7 @@ public class UserService {
     public List<UserDto> findUserByCondition(String firstname, String lastname, String email, Role role) {
         Specification<User> specification = UserRepository.selectByCondition(firstname, lastname, email, role);
         List<User> users = userRepository.findAll(specification);
-        List<UserDto> userDtos = new ArrayList<>();
-        users.stream().forEach(user -> userDtos.add(modelMapper.map(user, UserDto.class)));
-        return userDtos;
+        return users.stream().map(user -> modelMapper.map(user, UserDto.class)).collect(Collectors.toList());
     }
 
     public void changePassword(UserDto userDto, String currentPassword, String newPassword) {
