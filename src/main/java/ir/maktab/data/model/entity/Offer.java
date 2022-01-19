@@ -34,7 +34,7 @@ public class Offer {
     private Date startTime;
     @Enumerated(EnumType.STRING)
     private OfferStatus offerStatus;
-    private UUID trackingNumber = UUID.randomUUID();
+    private String trackingCode;
 
     @Override
     public String toString() {
