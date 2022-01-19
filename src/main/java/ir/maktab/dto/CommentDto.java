@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommentDto {
-    private Long identificationNumber;
     private Double score;
     private String opinion;
-    private OrderDto orderDto;
+    private OrderDto order;
 }
