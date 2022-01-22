@@ -1,7 +1,7 @@
 package ir.maktab.data.dao;
 
 import ir.maktab.data.model.entity.users.User;
-import ir.maktab.data.model.enumeration.Role;
+import ir.maktab.dto.UserDto;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -16,20 +16,20 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecificationExecutor<User> {
     Optional<User> findByEmailAddress(String email);
 
-    static Specification<User> selectByCondition(String firstname, String lastname, String email, Role role) {
+    static Specification<User> selectByCondition(UserDto userDto) {
         return (root, cq, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
-            if (firstname != null) {
-                predicates.add(cb.equal(root.get("firstname"), firstname));
+            if (userDto.getFirstname() != null) {
+                predicates.add(cb.equal(root.get("firstname"), userDto.getFirstname()));
             }
-            if (lastname != null) {
-                predicates.add(cb.equal(root.get("lastname"), lastname));
+            if (userDto.getLastname() != null) {
+                predicates.add(cb.equal(root.get("lastname"), userDto.getLastname()));
             }
-            if (email != null) {
-                predicates.add(cb.equal(root.get("emailAddress"), email));
+            if (userDto.getEmailAddress() != null) {
+                predicates.add(cb.equal(root.get("emailAddress"), userDto.getEmailAddress()));
             }
-            if (role != null) {
-                predicates.add(cb.equal(root.get("role"), role));
+            if (userDto.getRole() != null) {
+                predicates.add(cb.equal(root.get("role"), userDto.getRole()));
             }
             return cb.and(predicates.toArray(new Predicate[0]));
         };
