@@ -33,14 +33,13 @@
 
         <div class="col-md-9 register-right">
             <div class="btn-group mt-5 mx-5">
-                <a href="<c:url value="/customerHome"/>" class="btn btn-outline-primary active">customer</a>
-                <a href="<c:url value="/expertHome"/>" class="btn btn-outline-primary">expert</a>
+                <a href="<c:url value="/customerHome"/>" class="btn btn-outline-primary">customer</a>
+                <a href="<c:url value="/expertHome"/>" class="btn btn-outline-primary active">expert</a>
             </div>
-
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="customer" role="tabpanel" aria-labelledby="home-tab">
                     <h3 class="register-heading">Register as a Customer</h3>
-                    <form:form action="/customerRegister" modelAttribute="customerDto">
+                    <form:form action="/expertRegister" modelAttribute="expertDto">
                         <div class="row register-form">
                             <div class="col-md-12" align="center">
                                 <table>
@@ -72,8 +71,19 @@
                                     <tr>
                                         <td><form:errors path="password" cssClass="error"/></td>
                                     </tr>
+                                    <tr>
+                                        <td>
+                                            <label>Upload Profile Image :</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="file" id="image" name="image">
+                                        </td>
+                                    </tr>
+                                    <%--<input type="submit" class="btnRegister" value="Register"/>--%>
                                 </table>
-                                <input type="submit" id="btnRegister" value="Register"/>
+                                <form:button id="btnRegister" name="register">Register</form:button>
                             </div>
                         </div>
                     </form:form>
