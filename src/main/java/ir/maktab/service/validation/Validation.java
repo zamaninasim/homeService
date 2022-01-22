@@ -1,9 +1,9 @@
-package ir.maktab.validation;
+package ir.maktab.service.validation;
 
-import ir.maktab.exception.InvalidEmailException;
-import ir.maktab.exception.InvalidNameException;
-import ir.maktab.exception.InvalidNumberException;
-import ir.maktab.exception.InvalidPasswordException;
+import ir.maktab.service.exception.InvalidEmailException;
+import ir.maktab.service.exception.InvalidNameException;
+import ir.maktab.service.exception.InvalidNumberException;
+import ir.maktab.service.exception.InvalidPasswordException;
 import org.springframework.stereotype.Component;
 
 @Component

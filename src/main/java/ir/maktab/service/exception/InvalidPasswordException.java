@@ -1,4 +1,4 @@
-package ir.maktab.exception;
+package ir.maktab.service.exception;
 
 public class InvalidPasswordException extends RuntimeException {
     public InvalidPasswordException(String message) {

@@ -1,4 +1,4 @@
-package ir.maktab.exception;
+package ir.maktab.service.exception;
 
 public class EntityNotExistException extends RuntimeException {
     public EntityNotExistException(String message) {
