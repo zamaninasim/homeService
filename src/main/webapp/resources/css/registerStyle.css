@@ -1,7 +1,7 @@
 .register{
     background: -webkit-linear-gradient(left, #3931af, #00c6ff);
     padding: 3%;
-    height:100%;
+    height:100vh;
 }
 .register-left{
     text-align: center;
