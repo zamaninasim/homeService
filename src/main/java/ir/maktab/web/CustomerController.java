@@ -6,6 +6,8 @@ import ir.maktab.data.model.enumeration.UserStatus;
 import ir.maktab.dto.CustomerDto;
 import ir.maktab.service.CustomerService;
 import ir.maktab.service.exception.CustomerIsExistException;
+import ir.maktab.service.exception.CustomerNotFoundException;
+import ir.maktab.service.validation.OnLogin;
 import ir.maktab.service.validation.OnRegister;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -51,5 +53,25 @@ public class CustomerController {
         model.put("customerDto", new CustomerDto());
         model.put("error", ex.getMessage());
         return new ModelAndView("customer/register", model);
+    }
+
+    @GetMapping("/customerLogin")
+    public ModelAndView showLoginPage() {
+        return new ModelAndView("customer/login", "customerDto", new CustomerDto());
+    }
+
+    @PostMapping("/submitCustomerLogin")
+    public String loginCustomer(@ModelAttribute("customerDto") @Validated(OnLogin.class) CustomerDto customerDto, Model model) {
+        CustomerDto found = customerService.findByEmailAddressAndPassword(customerDto.getEmailAddress(), customerDto.getPassword());
+        model.addAttribute("customerDto",found);
+        return "customer/profile";
+    }
+
+    @ExceptionHandler(value = CustomerNotFoundException.class)
+    public ModelAndView LoginExceptionHandler(CustomerNotFoundException ex) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("customerDto", new CustomerDto());
+        model.put("error", ex.getMessage());
+        return new ModelAndView("customer/login", model);
     }
 }
