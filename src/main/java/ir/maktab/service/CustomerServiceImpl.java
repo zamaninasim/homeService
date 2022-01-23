@@ -10,7 +10,6 @@ import ir.maktab.dto.OfferDto;
 import ir.maktab.dto.OrderDto;
 import ir.maktab.service.exception.CustomerIsExistException;
 import ir.maktab.service.exception.CustomerNotFoundException;
-import ir.maktab.service.exception.EntityIsExistException;
 import ir.maktab.service.exception.EntityNotExistException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
