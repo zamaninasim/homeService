@@ -43,6 +43,7 @@
                     <form:form action="/customerRegister" modelAttribute="customerDto">
                         <div class="row register-form">
                             <div class="col-md-12" align="center">
+                                <p class="text-danger">${customerExist}</p>
                                 <table>
                                     <tr>
                                         <td><form:input path="firstname" cssClass="form-control"
@@ -73,7 +74,7 @@
                                         <td><form:errors path="password" cssClass="error"/></td>
                                     </tr>
                                 </table>
-                                <input type="submit" id="btnRegister" value="Register"/>
+                                <form:button id="btnRegister" name="register">Register</form:button>
                             </div>
                         </div>
                     </form:form>
