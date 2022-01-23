@@ -1,9 +1,11 @@
 package ir.maktab.service;
 
+import ir.maktab.data.model.entity.users.Expert;
 import ir.maktab.dto.ExpertDto;
 import ir.maktab.dto.SubServiceDto;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ExpertService {
 
@@ -18,4 +20,6 @@ public interface ExpertService {
     public void updateScore(ExpertDto expertDto, Double instructionsScore);
 
     public ExpertDto findById(Integer id);
+
+    ExpertDto findByEmailAddressAndPassword(String email, String password);
 }
