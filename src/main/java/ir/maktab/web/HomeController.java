@@ -1,4 +1,4 @@
-package ir.maktab.controller;
+package ir.maktab.web;
 
 import ir.maktab.dto.CustomerDto;
 import org.springframework.stereotype.Controller;
