@@ -39,7 +39,7 @@
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="customer" role="tabpanel" aria-labelledby="home-tab">
                     <h3 class="register-heading">Register as a Customer</h3>
-                    <form:form action="/expertRegister" modelAttribute="expertDto">
+                    <form:form enctype="multipart/form-data" action="/expertRegister" modelAttribute="expertDto">
                         <div class="row register-form">
                             <div class="col-md-12" align="center">
                                 <table>
@@ -81,7 +81,6 @@
                                             <input type="file" id="image" name="image">
                                         </td>
                                     </tr>
-                                    <%--<input type="submit" class="btnRegister" value="Register"/>--%>
                                 </table>
                                 <form:button id="btnRegister" name="register">Register</form:button>
                             </div>
@@ -92,5 +91,6 @@
         </div>
     </div>
 </div>
+<script src="resources/js/register.js"></script>
 </body>
 </html>
