@@ -45,12 +45,11 @@ public class CustomerController {
         return new ModelAndView(lastView, ex.getBindingResult().getModel());
     }
 
-    //TODO
     @ExceptionHandler(value = CustomerIsExistException.class)
     public ModelAndView registerExceptionHandler(CustomerIsExistException ex) {
         Map<String, Object> model = new HashMap<>();
-        model.put("customer", new CustomerDto());
-        model.put("customerExist", ex.getMessage());
+        model.put("customerDto", new CustomerDto());
+        model.put("error", ex.getMessage());
         return new ModelAndView("customer/register", model);
     }
 }
