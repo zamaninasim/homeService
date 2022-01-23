@@ -9,6 +9,7 @@
     <title>Customer Login Form</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="resources/css/loginStyle.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
             crossorigin="anonymous"></script>
@@ -20,27 +21,36 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-
-<form:form method="POST" action="/submitCustomerLogin" modelAttribute="customerDto">
-    <div align="center">
-        <p class="text-danger">${error}</p>
-        <table>
-            <tr>
-                <td>Email Address</td>
-                <td><form:input path="emailAddress"/></td>
-                <td><form:errors path="emailAddress" cssClass="error"/></td>
-            </tr>
-            <tr>
-                <td>Password</td>
-                <td><form:password path="password"/></td>
-                <td><form:errors path="password" cssClass="error"/></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><input type="submit" value="Submit"/></td>
-            </tr>
-        </table>
+<div class="container register">
+    <div id="login">
+        <h1 class="text-center text-white pt-5">Home Service</h1>
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+                        <form:form id="login-form" cssclass="form" method="POST" action="/submitCustomerLogin"
+                                   modelAttribute="customerDto">
+                            <h3 class="text-center text-info">Customer Login</h3>
+                            <p class="error">${error}</p>
+                            <div class="form-group">
+                                <label for="username" class="text-info">EmailAddress:</label><br>
+                                <form:input name="username" cssClass="form-control" path="emailAddress"/>
+                                <form:errors path="emailAddress" cssClass="error"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="text-info">Password:</label><br>
+                                <form:password path="password" cssClass="form-control"/>
+                                <form:errors path="password" cssClass="error"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
+                            </div>
+                        </form:form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</form:form>
+</div>
 </body>
 </html>
