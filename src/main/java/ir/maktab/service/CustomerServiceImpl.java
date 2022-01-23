@@ -8,6 +8,8 @@ import ir.maktab.dto.CustomerDto;
 import ir.maktab.dto.ExpertDto;
 import ir.maktab.dto.OfferDto;
 import ir.maktab.dto.OrderDto;
+import ir.maktab.service.exception.CustomerIsExistException;
+import ir.maktab.service.exception.CustomerNotFoundException;
 import ir.maktab.service.exception.EntityIsExistException;
 import ir.maktab.service.exception.EntityNotExistException;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +32,7 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = modelMapper.map(customerDto, Customer.class);
         Optional<Customer> foundedCustomer = customerRepository.findByEmailAddress(customer.getEmailAddress());
         if (foundedCustomer.isPresent()) {
-            throw new EntityIsExistException("this emailAddress exist!");
+            throw new CustomerIsExistException();
         } else {
             customerRepository.save(customer);
         }
@@ -58,5 +60,12 @@ public class CustomerServiceImpl implements CustomerService {
             }
             offerService.save(offerDto);
         }
+    }
+
+    @Override
+    public CustomerDto findByEmailAddressAndPassword(String email, String password) {
+        Optional<Customer> optionalCustomer = customerRepository.findByEmailAddressAndPassword(email,password);
+        Customer customer = optionalCustomer.orElseThrow(() -> new CustomerNotFoundException());
+        return modelMapper.map(customer, CustomerDto.class);
     }
 }
