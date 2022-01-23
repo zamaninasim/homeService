@@ -4,6 +4,6 @@
     <title>Customer profile</title>
 </head>
 <body>
-<h3>welcome ${firstname} ${lastname}</h3>
+<h3>welcome ${customerDto.firstname} ${customerDto.lastname}</h3>
 </body>
 </html>

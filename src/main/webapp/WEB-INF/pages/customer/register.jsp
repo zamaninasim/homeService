@@ -43,7 +43,7 @@
                     <form:form action="/customerRegister" modelAttribute="customerDto">
                         <div class="row register-form">
                             <div class="col-md-12" align="center">
-                                <p class="text-danger">${customerExist}</p>
+                                <p class="text-danger">${error}</p>
                                 <table>
                                     <tr>
                                         <td><form:input path="firstname" cssClass="form-control"
