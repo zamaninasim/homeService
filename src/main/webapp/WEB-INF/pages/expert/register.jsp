@@ -26,7 +26,7 @@
             <img src="resources/image/service.png" alt=""/>
             <h3>Home Service</h3>
             <p>We are your partner until the end of the service ...</p>
-            <form:form method="GET" action="/customerLogin">
+            <form:form method="GET" action="/ExpertLogin">
                 <input type="submit" name="" value="Login"/><br/>
             </form:form>
         </div>
@@ -42,6 +42,7 @@
                     <form:form enctype="multipart/form-data" action="/expertRegister" modelAttribute="expertDto">
                         <div class="row register-form">
                             <div class="col-md-12" align="center">
+                                <p class="error">${error}</p>
                                 <table>
                                     <tr>
                                         <td><form:input path="firstname" cssClass="form-control"
