@@ -3,7 +3,7 @@ package ir.maktab.service;
 import ir.maktab.data.dao.ManagerRepository;
 import ir.maktab.data.model.entity.users.Manager;
 import ir.maktab.dto.ManagerDto;
-import ir.maktab.service.exception.EntityNotExistException;
+import ir.maktab.service.exception.ManagerNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -23,9 +23,9 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public ManagerDto findByUsername(String username) {
-        Optional<Manager> optionalManager = managerRepository.findByUsername(username);
-        Manager manager = optionalManager.orElseThrow(() -> new EntityNotExistException("username not exist!"));
+    public ManagerDto findByEmailAddressAndPassword(String email, String password) {
+        Optional<Manager> optionalManager = managerRepository.findByEmailAddressAndPassword(email, password);
+        Manager manager = optionalManager.orElseThrow(() -> new ManagerNotFoundException());
         return modelMapper.map(manager, ManagerDto.class);
     }
 }

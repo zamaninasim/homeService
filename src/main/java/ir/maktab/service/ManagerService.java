@@ -4,7 +4,7 @@ import ir.maktab.dto.ManagerDto;
 
 public interface ManagerService {
 
-    public void save(ManagerDto managerDto);
+    void save(ManagerDto managerDto);
 
-    public ManagerDto findByUsername(String username);
+    ManagerDto findByEmailAddressAndPassword(String email, String password);
 }

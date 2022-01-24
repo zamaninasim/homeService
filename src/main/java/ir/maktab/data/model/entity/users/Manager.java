@@ -19,6 +19,6 @@ public class Manager {
     private String firstname;
     private String lastname;
     @Column(unique = true)
-    private String username;
+    private String emailAddress;
     private String password;
 }
