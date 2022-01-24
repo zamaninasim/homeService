@@ -21,7 +21,7 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="container register">
+<div class="register">
     <div id="login">
         <h1 class="text-center text-white pt-5">Home Service</h1>
         <div class="container">

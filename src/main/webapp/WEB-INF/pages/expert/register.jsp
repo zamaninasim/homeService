@@ -18,7 +18,7 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="container register">
+<div class="register">
 
     <%--left part of page--%>
     <div class="row">
