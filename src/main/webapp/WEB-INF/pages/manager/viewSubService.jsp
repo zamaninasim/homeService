@@ -19,28 +19,28 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<h1>MainService List</h1>
+<h1>SubService List</h1>
 <table class="table table-hover">
     <thead>
     <tr>
         <th scope="col">Id</th>
         <th scope="col">Name</th>
-        <th scope="col">add SubService</th>
-        <th scope="col">SubService</th>
+        <th scope="col">basePrice</th>
+        <th scope="col">description</th>
+        <th scope="col">mainServiceName</th>
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="mainService" items="${list}">
+    <c:forEach var="subService" items="${list}">
         <tr>
-            <td>${mainService.identificationNumber}</td>
-            <td>${mainService.name}</td>
-            <td><a href="/addSubService/${mainService.name}">add</a></td>
-            <td><a href="/showSubService/${mainService.name}">show</a></td>
+            <td>${subService.identificationNumber}</td>
+            <td>${subService.name}</td>
+            <td>${subService.basePrice}</td>
+            <td>${subService.description}</td>
+            <td>${subService.mainServiceName}</td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
-<br/>
-<a href="saveMainService">Add New MainService</a>
 </body>
 </html>

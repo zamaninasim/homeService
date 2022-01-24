@@ -7,6 +7,7 @@ import ir.maktab.dto.SubServiceDto;
 import ir.maktab.service.MainServiceService;
 import ir.maktab.service.ManagerService;
 import ir.maktab.service.SubServiceService;
+import ir.maktab.service.exception.MainServiceIsExistException;
 import ir.maktab.service.exception.ManagerNotFoundException;
 import ir.maktab.service.validation.OnLogin;
 import ir.maktab.service.validation.OnRegister;
@@ -69,6 +70,15 @@ public class ManagerController {
         return "redirect:/viewMainService";
     }
 
+    //TODO
+    @ExceptionHandler(value = MainServiceIsExistException.class)
+    public ModelAndView saveSubServiceExceptionHandler(MainServiceIsExistException ex) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("mainServiceDto", new ManagerDto());
+        model.put("error", ex.getMessage());
+        return new ModelAndView("manager/saveMainService", model);
+    }
+
     @GetMapping("/viewMainService")
     public String viewMainService(Model model) {
         List<MainServiceDto> list = mainServiceService.findAll();
@@ -77,17 +87,25 @@ public class ManagerController {
     }
 
     @GetMapping("/addSubService/{name}")
-    public String showAddSubServicePage(@PathVariable String name, Model model,HttpServletRequest httpServletRequest) {
+    public String showAddSubServicePage(@PathVariable String name, Model model, HttpServletRequest httpServletRequest) {
         model.addAttribute("subServiceDto", new SubServiceDto());
-        httpServletRequest.getSession().setAttribute("mainServiceName",name);
+        httpServletRequest.getSession().setAttribute("mainServiceName", name);
         return "manager/saveSubService";
     }
 
     @PostMapping("addSubService/submitSaveSubService")
-    public String submitSaveSubServicePage(@ModelAttribute("subServiceDto") SubServiceDto subServiceDto,HttpServletRequest httpServletRequest) {
+    public String submitSaveSubServicePage(@ModelAttribute("subServiceDto") SubServiceDto subServiceDto, HttpServletRequest httpServletRequest) {
         String name = (String) httpServletRequest.getSession().getAttribute("mainServiceName");
         subServiceDto.setMainServiceName(name);
         subServiceService.save(subServiceDto);
         return "redirect:/viewMainService";
+    }
+
+    @GetMapping("/showSubService/{name}")
+    public String showAllSubServicePage(@PathVariable String name,Model model) {
+        MainServiceDto mainServiceDto = mainServiceService.findByName(name);
+        List<SubServiceDto> list = subServiceService.findByMainService(mainServiceDto);
+        model.addAttribute("list", list);
+        return "manager/viewSubService";
     }
 }

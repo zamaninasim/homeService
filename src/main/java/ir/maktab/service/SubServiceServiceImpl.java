@@ -1,10 +1,13 @@
 package ir.maktab.service;
 
 import ir.maktab.data.dao.SubServiceRepository;
+import ir.maktab.data.model.entity.services.MainService;
 import ir.maktab.data.model.entity.services.SubService;
 import ir.maktab.data.model.entity.users.Expert;
 import ir.maktab.dto.ExpertDto;
+import ir.maktab.dto.MainServiceDto;
 import ir.maktab.dto.SubServiceDto;
+import ir.maktab.dto.mapper.MainServiceMapper;
 import ir.maktab.dto.mapper.SubServiceMapper;
 import ir.maktab.service.exception.EntityIsExistException;
 import ir.maktab.service.exception.EntityNotExistException;
@@ -12,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -25,6 +27,7 @@ public class SubServiceServiceImpl implements SubServiceService {
     private final SubServiceRepository subServiceRepository;
     private final MainServiceService mainServiceService;
     private final SubServiceMapper subServiceMapper;
+    private final MainServiceMapper mainServiceMapper;
     private final ModelMapper modelMapper;
 
     @Override
@@ -55,6 +58,13 @@ public class SubServiceServiceImpl implements SubServiceService {
     @Override
     public List<SubServiceDto> findAll() {
         List<SubService> subServices = subServiceRepository.findAll();
+        return subServices.stream().map(subService -> subServiceMapper.getSubServiceDto(subService)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SubServiceDto> findByMainService(MainServiceDto mainServiceDto) {
+        MainService mainService = mainServiceMapper.getMainService(mainServiceDto);
+        List<SubService> subServices = subServiceRepository.findByMainService(mainService);
         return subServices.stream().map(subService -> subServiceMapper.getSubServiceDto(subService)).collect(Collectors.toList());
     }
 
