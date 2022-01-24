@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface SubServiceService {
 
-    public void save(SubServiceDto subServiceDto);
+    void save(SubServiceDto subServiceDto);
 
-    public void update(SubServiceDto subServiceDto);
+    void update(SubServiceDto subServiceDto);
 
-    public SubServiceDto findByName(String name);
+    SubServiceDto findByName(String name);
 
-    public List<SubServiceDto> findAll();
+    List<SubServiceDto> findAll();
 
     public SubServiceDto addExpertToSubService(ExpertDto expertDto, SubServiceDto subServiceDto);
 

@@ -5,6 +5,7 @@ import ir.maktab.data.model.entity.services.SubService;
 import ir.maktab.data.model.entity.users.Expert;
 import ir.maktab.dto.ExpertDto;
 import ir.maktab.dto.SubServiceDto;
+import ir.maktab.dto.mapper.SubServiceMapper;
 import ir.maktab.service.exception.EntityIsExistException;
 import ir.maktab.service.exception.EntityNotExistException;
 import lombok.RequiredArgsConstructor;
@@ -22,12 +23,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SubServiceServiceImpl implements SubServiceService {
     private final SubServiceRepository subServiceRepository;
-    private final MainServiceServiceImpl mainServiceService;
+    private final MainServiceService mainServiceService;
+    private final SubServiceMapper subServiceMapper;
     private final ModelMapper modelMapper;
 
     @Override
     public void save(SubServiceDto subServiceDto) {
-        SubService subService = modelMapper.map(subServiceDto, SubService.class);
+        SubService subService = subServiceMapper.getSubServiceWithOutId(subServiceDto);
         mainServiceService.findByName(subService.getMainService().getName());
         Optional<SubService> foundedSubService = subServiceRepository.findByName(subService.getName());
         if (foundedSubService.isPresent()) {
@@ -39,7 +41,7 @@ public class SubServiceServiceImpl implements SubServiceService {
 
     @Override
     public void update(SubServiceDto subServiceDto) {
-        SubService subService = modelMapper.map(subServiceDto, SubService.class);
+        SubService subService = subServiceMapper.getSubService(subServiceDto);
         subServiceRepository.save(subService);
     }
 
@@ -47,15 +49,13 @@ public class SubServiceServiceImpl implements SubServiceService {
     public SubServiceDto findByName(String name) {
         Optional<SubService> optionalSubService = subServiceRepository.findByName(name);
         SubService subService = optionalSubService.orElseThrow(() -> new EntityNotExistException("this subService not exist!"));
-        return modelMapper.map(subService, SubServiceDto.class);
+        return subServiceMapper.getSubServiceDto(subService);
     }
 
     @Override
     public List<SubServiceDto> findAll() {
-        List<SubServiceDto> subServiceDtos = new ArrayList<>();
-        Iterable<SubService> subServiceIterable = subServiceRepository.findAll();
-        subServiceIterable.forEach(subService -> subServiceDtos.add(modelMapper.map(subService, SubServiceDto.class)));
-        return subServiceDtos;
+        List<SubService> subServices = subServiceRepository.findAll();
+        return subServices.stream().map(subService -> subServiceMapper.getSubServiceDto(subService)).collect(Collectors.toList());
     }
 
     @Override
