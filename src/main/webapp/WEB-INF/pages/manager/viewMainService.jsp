@@ -19,7 +19,7 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<h1>SubService List</h1>
+<h1>MainService List</h1>
 <table class="table table-hover">
     <thead>
     <tr>

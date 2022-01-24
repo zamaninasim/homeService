@@ -7,6 +7,7 @@
 </head>
 <body>
 <h1>Add New MainService</h1>
+<p class="error">${error}</p>
 <form:form method="post" action="submitSaveMainService" modelAttribute="mainServiceDto">
     <table >
         <tr>

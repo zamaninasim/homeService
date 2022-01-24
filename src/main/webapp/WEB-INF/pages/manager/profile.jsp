@@ -29,7 +29,7 @@
                     <a class="nav-link" href="/saveMainService">Add MainService</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Add SubService</a>
+                    <a class="nav-link" href="/viewMainService">Show all MainService</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Blog</a>
