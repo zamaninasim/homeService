@@ -26,7 +26,7 @@
             <img src="resources/image/service.png" alt=""/>
             <h3>Home Service</h3>
             <p>We are your partner until the end of the service ...</p>
-            <form:form method="GET" action="/ExpertLogin">
+            <form:form method="GET" action="/expertLogin">
                 <input type="submit" name="" value="Login"/><br/>
             </form:form>
         </div>
