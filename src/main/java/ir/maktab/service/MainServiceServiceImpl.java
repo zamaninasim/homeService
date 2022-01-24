@@ -3,11 +3,10 @@ package ir.maktab.service;
 import ir.maktab.data.dao.MainServiceRepository;
 import ir.maktab.data.model.entity.services.MainService;
 import ir.maktab.dto.MainServiceDto;
-import ir.maktab.dto.OfferDto;
-import ir.maktab.service.exception.EntityIsExistException;
-import ir.maktab.service.exception.EntityNotExistException;
+import ir.maktab.dto.mapper.MainServiceMapper;
+import ir.maktab.service.exception.MainServiceIsExistException;
+import ir.maktab.service.exception.MainServiceNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,14 +17,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MainServiceServiceImpl implements MainServiceService {
     private final MainServiceRepository mainServiceRepository;
-    private final ModelMapper modelMapper;
+    private final MainServiceMapper mainServiceMapper;
 
     @Override
     public void save(MainServiceDto mainServiceDto) {
-        MainService mainService = modelMapper.map(mainServiceDto, MainService.class);
+        MainService mainService = mainServiceMapper.getMainServiceWithOutId(mainServiceDto);
         Optional<MainService> foundedMainService = mainServiceRepository.findByName(mainService.getName());
         if (foundedMainService.isPresent()) {
-            throw new EntityIsExistException("this mainService exist!");
+            throw new MainServiceIsExistException();
         } else {
             mainServiceRepository.save(mainService);
         }
@@ -34,13 +33,13 @@ public class MainServiceServiceImpl implements MainServiceService {
     @Override
     public MainServiceDto findByName(String name) {
         Optional<MainService> optionalMainService = mainServiceRepository.findByName(name);
-        MainService mainService = optionalMainService.orElseThrow(() -> new EntityNotExistException("this mainService not exist!"));
-        return modelMapper.map(mainService, MainServiceDto.class);
+        MainService mainService = optionalMainService.orElseThrow(() -> new MainServiceNotFoundException());
+        return mainServiceMapper.getMainServiceDto(mainService);
     }
 
     @Override
     public List<MainServiceDto> findAll() {
         List<MainService> mainServices = mainServiceRepository.findAll();
-        return mainServices.stream().map(mainService -> modelMapper.map(mainService, MainServiceDto.class)).collect(Collectors.toList());
+        return mainServices.stream().map(mainService -> mainServiceMapper.getMainServiceDto(mainService)).collect(Collectors.toList());
     }
 }
