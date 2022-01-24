@@ -5,9 +5,9 @@ import ir.maktab.data.model.entity.services.SubService;
 import ir.maktab.data.model.entity.users.Expert;
 import ir.maktab.dto.ExpertDto;
 import ir.maktab.dto.SubServiceDto;
-import ir.maktab.service.exception.EntityIsExistException;
 import ir.maktab.service.exception.EntityNotExistException;
 import ir.maktab.service.exception.ExpertIsExistException;
+import ir.maktab.service.exception.ExpertNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -37,7 +37,7 @@ public class ExpertServiceImpl implements ExpertService {
     @Override
     public ExpertDto findByEmailAddress(String emailAddress) {
         Optional<Expert> optionalExpert = expertRepository.findByEmailAddress(emailAddress);
-        Expert expert = optionalExpert.orElseThrow(() -> new EntityNotExistException("emailAddress not exist!"));
+        Expert expert = optionalExpert.orElseThrow(() -> new ExpertNotFoundException());
         return modelMapper.map(expert, ExpertDto.class);
     }
 
@@ -72,8 +72,8 @@ public class ExpertServiceImpl implements ExpertService {
 
     @Override
     public ExpertDto findByEmailAddressAndPassword(String email, String password) {
-        Optional<Expert> optionalExpert = expertRepository.findByEmailAddressAndPassword(email,password);
-        Expert expert = optionalExpert.orElseThrow(() -> new EntityNotExistException("emailAddress not exist!"));
+        Optional<Expert> optionalExpert = expertRepository.findByEmailAddressAndPassword(email, password);
+        Expert expert = optionalExpert.orElseThrow(() -> new ExpertNotFoundException());
         return modelMapper.map(expert, ExpertDto.class);
     }
 }
