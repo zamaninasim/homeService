@@ -7,7 +7,10 @@ import ir.maktab.dto.CustomerDto;
 import ir.maktab.dto.ExpertDto;
 import ir.maktab.service.ExpertService;
 import ir.maktab.service.exception.CustomerIsExistException;
+import ir.maktab.service.exception.CustomerNotFoundException;
 import ir.maktab.service.exception.ExpertIsExistException;
+import ir.maktab.service.exception.ExpertNotFoundException;
+import ir.maktab.service.validation.OnLogin;
 import ir.maktab.service.validation.OnRegister;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -57,5 +60,25 @@ public class ExpertController {
         model.put("expertDto", new CustomerDto());
         model.put("error", ex.getMessage());
         return new ModelAndView("expert/register", model);
+    }
+
+    @GetMapping("/expertLogin")
+    public ModelAndView showLoginPage() {
+        return new ModelAndView("expert/login", "expertDto", new ExpertDto());
+    }
+
+    @PostMapping("/submitExpertLogin")
+    public String loginCustomer(@ModelAttribute("expertDto") @Validated(OnLogin.class) ExpertDto expertDto, Model model) {
+        ExpertDto found = expertService.findByEmailAddressAndPassword(expertDto.getEmailAddress(), expertDto.getPassword());
+        model.addAttribute("expertDto",found);
+        return "expert/profile";
+    }
+
+    @ExceptionHandler(value = ExpertNotFoundException.class)
+    public ModelAndView LoginExceptionHandler(ExpertNotFoundException ex) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("expertDto", new ExpertDto());
+        model.put("error", ex.getMessage());
+        return new ModelAndView("expert/login", model);
     }
 }
