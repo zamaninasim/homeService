@@ -6,12 +6,21 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Add New MainService</h1>
-<form:form method="post" action="submitSaveMainService" modelAttribute="mainServiceDto">
+<h1>Add New SubService</h1>
+<form:form action="submitSaveSubService" modelAttribute="subServiceDto" method="post">
+   <%-- <p>${subServiceDto.mainServiceName}</p>--%>
     <table >
         <tr>
             <td>Name : </td>
             <td><form:input path="name"/></td>
+        </tr>
+        <tr>
+            <td>basePrice : </td>
+            <td><form:input path="basePrice"/></td>
+        </tr>
+        <tr>
+            <td>description : </td>
+            <td><form:input path="description"/></td>
         </tr>
         <tr>
             <td> </td>
