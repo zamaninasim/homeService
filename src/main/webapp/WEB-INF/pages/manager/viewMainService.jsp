@@ -23,15 +23,17 @@
 <table class="table table-hover">
     <thead>
     <tr>
+        <th scope="col">Id</th>
         <th scope="col">Name</th>
-        <th scope="col">action</th>
+        <th scope="col">add SubService</th>
     </tr>
     </thead>
     <tbody>
     <c:forEach var="mainService" items="${list}">
         <tr>
+            <td>${mainService.identificationNumber}</td>
             <td>${mainService.name}</td>
-            <td><a href="delete/${mainService.name}">Delete</a></td>
+            <td><a href="/addSubService/${mainService.name}">add</a></td>
         </tr>
     </c:forEach>
     </tbody>
