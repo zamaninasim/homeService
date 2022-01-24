@@ -30,7 +30,7 @@
                     <div id="login-box" class="col-md-12">
                         <form:form id="login-form" cssclass="form" method="POST" action="/submitManagerLogin"
                                    modelAttribute="managerDto">
-                            <h3 class="text-center text-info">Expert Login</h3>
+                            <h3 class="text-center text-info">Manager Login</h3>
                             <p class="error">${error}</p>
                             <div class="form-group">
                                 <label for="username" class="text-info">EmailAddress:</label><br>
