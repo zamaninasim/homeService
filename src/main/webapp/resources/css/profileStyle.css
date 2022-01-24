@@ -1,0 +1,7 @@
+.register {
+    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+    height: 100vh;
+}
+#name {
+    color:  #3931af;
+}
