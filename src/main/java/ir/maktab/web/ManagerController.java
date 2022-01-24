@@ -1,30 +1,32 @@
 package ir.maktab.web;
 
 import ir.maktab.configuration.LastViewInterceptor;
-import ir.maktab.dto.ExpertDto;
+import ir.maktab.dto.MainServiceDto;
 import ir.maktab.dto.ManagerDto;
+import ir.maktab.service.MainServiceService;
 import ir.maktab.service.ManagerService;
 import ir.maktab.service.exception.ManagerNotFoundException;
 import ir.maktab.service.validation.OnLogin;
+import ir.maktab.service.validation.OnRegister;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
+@SessionAttributes({"managerDto"})
 @RequiredArgsConstructor
 public class ManagerController {
     private final ManagerService managerService;
+    private final MainServiceService mainServiceService;
 
     @GetMapping("/managerLogin")
     public ModelAndView showLoginPage() {
@@ -32,7 +34,7 @@ public class ManagerController {
     }
 
     @PostMapping("/submitManagerLogin")
-    public String loginManager(@ModelAttribute("managerDto") @Validated(OnLogin.class) ManagerDto managerDto, Model model) {
+    public String loginManagerPage(@ModelAttribute("managerDto") @Validated(OnLogin.class) ManagerDto managerDto, Model model) {
         ManagerDto found = managerService.findByEmailAddressAndPassword(managerDto.getEmailAddress(), managerDto.getPassword());
         model.addAttribute("managerDto", found);
         return "manager/profile";
@@ -47,8 +49,26 @@ public class ManagerController {
     @ExceptionHandler(value = ManagerNotFoundException.class)
     public ModelAndView LoginExceptionHandler(ManagerNotFoundException ex) {
         Map<String, Object> model = new HashMap<>();
-        model.put("managerDto", new ExpertDto());
+        model.put("managerDto", new ManagerDto());
         model.put("error", ex.getMessage());
         return new ModelAndView("manager/login", model);
+    }
+
+    @GetMapping("/saveMainService")
+    public ModelAndView showAddMainServicePage() {
+        return new ModelAndView("manager/saveMainService", "mainServiceDto", new MainServiceDto());
+    }
+    @PostMapping("/submitSaveMainService")
+    public String submitSaveMainServicePage(@ModelAttribute("mainServiceDto")
+                                   @Validated(OnRegister.class) MainServiceDto mainServiceDto) {
+       mainServiceService.save(mainServiceDto);
+        return "redirect:/viewMainService";
+    }
+
+    @GetMapping("/viewMainService")
+    public String viewMainService(Model model){
+        List<MainServiceDto> list = mainServiceService.findAll();
+        model.addAttribute("list",list);
+        return "manager/viewMainService";
     }
 }
