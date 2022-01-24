@@ -2,9 +2,13 @@ package ir.maktab.service;
 
 import ir.maktab.dto.MainServiceDto;
 
+import java.util.List;
+
 public interface MainServiceService {
 
-    public void save(MainServiceDto mainServiceDto);
+    void save(MainServiceDto mainServiceDto);
 
-    public MainServiceDto findByName(String name);
+    MainServiceDto findByName(String name);
+
+    List<MainServiceDto> findAll();
 }
